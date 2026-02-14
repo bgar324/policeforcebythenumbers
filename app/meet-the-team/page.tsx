@@ -1,27 +1,65 @@
 import TeamMemberCard from "@/app/components/TeamMemberCard";
 
-const TEAM_MEMBERS = [
-  { name: "Mattin Aframian", role: "TBD" },
-  { name: "Benjamin Garcia", role: "TBD" },
-  { name: "Zoe Santos", role: "TBD" },
-  { name: "Lily Sarkissian", role: "TBD" },
-  { name: "Maelynn Vu", role: "TBD" },
-  { name: "Elaine Xia", role: "TBD" },
-];
+type TeamMember = {
+  name: string;
+  role: string;
+  email?: string; 
+  linkedin?: string; 
+  imageSrc?: string; 
+};
 
-function getContactSeeds(name: string) {
-  const compact = name.toLowerCase().replace(",", "").replace(/\s+/g, ".");
-  return {
-    emailHref: `mailto:${compact}@example.com`,
-    linkedinHref: `https://www.linkedin.com/in/${compact}`,
-  };
-}
+const TEAM_MEMBERS: TeamMember[] = [
+  {
+    name: "Mattin Aframian",
+    role: "TBD",
+    email: undefined,
+    linkedin: undefined,
+    imageSrc: undefined,
+  },
+  {
+    name: "Benjamin Garcia",
+    role: "Web Developer",
+    email: "btgarcia@ucla.edu",
+    linkedin: "https://www.linkedin.com/in/btgarcia05",
+    imageSrc: undefined,
+  },
+  {
+    name: "Zoe Santos",
+    role: "TBD",
+    email: undefined,
+    linkedin: undefined,
+    imageSrc: undefined,
+  },
+  {
+    name: "Lily Sarkissian",
+    role: "TBD",
+    email: undefined,
+    linkedin: undefined,
+    imageSrc: undefined,
+  },
+  {
+    name: "Maelynn Vu",
+    role: "TBD",
+    email: undefined,
+    linkedin: undefined,
+    imageSrc: undefined,
+  },
+  {
+    name: "Elaine Xia",
+    role: "TBD",
+    email: undefined,
+    linkedin: undefined,
+    imageSrc: undefined,
+  },
+];
 
 export default function MeetTheTeamPage() {
   return (
     <main className="mx-auto w-full max-w-[1200px] border-x border-black px-6 py-10 sm:px-10 sm:py-14">
       <header className="border-b border-black pb-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">About</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
+          About
+        </p>
         <h1 className="mt-4 font-[family:var(--font-masthead)] text-4xl font-medium leading-tight sm:text-6xl">
           Meet the Team
         </h1>
@@ -31,18 +69,16 @@ export default function MeetTheTeamPage() {
       </header>
 
       <section className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
-        {TEAM_MEMBERS.map((member) => {
-          const contacts = getContactSeeds(member.name);
-          return (
-            <TeamMemberCard
-              key={member.name}
-              name={member.name}
-              role={member.role}
-              emailHref={contacts.emailHref}
-              linkedinHref={contacts.linkedinHref}
-            />
-          );
-        })}
+        {TEAM_MEMBERS.map((member) => (
+          <TeamMemberCard
+            key={member.name}
+            name={member.name}
+            role={member.role}
+            emailHref={member.email ? `mailto:${member.email}` : undefined}
+            linkedinHref={member.linkedin}
+            imageSrc={member.imageSrc}
+          />
+        ))}
       </section>
     </main>
   );

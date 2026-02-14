@@ -37,8 +37,8 @@ export default function TeamMemberCard({
   name,
   role,
   imageSrc,
-  emailHref = "#",
-  linkedinHref = "#",
+  emailHref = "",
+  linkedinHref = "",
 }: TeamMemberCardProps) {
   const initials = getInitials(name);
 
@@ -52,7 +52,7 @@ export default function TeamMemberCard({
             <Image src={imageSrc} alt={`${name} profile`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 320px" />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(135deg,#f2f2f2_0%,#e6e6e6_100%)]">
-              <div className="border border-black px-5 py-3 font-[family:var(--font-masthead)] text-4xl font-medium tracking-[0.08em] text-black">
+              <div className="border border-black px-5 py-3  text-4xl font-medium tracking-[0.08em] text-black">
                 {initials}
               </div>
             </div>
@@ -60,7 +60,7 @@ export default function TeamMemberCard({
         </div>
 
         <div className="space-y-5 px-6 py-6 text-center">
-          <h3 className="font-[family:var(--font-masthead)] text-[1.85rem] font-medium leading-tight tracking-tight">
+          <h3 className=" text-[1.85rem] font-medium leading-tight tracking-tight">
             {name}
           </h3>
           <p className="text-xl leading-none text-black/65">{role}</p>
