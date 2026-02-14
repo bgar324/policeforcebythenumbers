@@ -2,25 +2,124 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #050505;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-nav);
+  --font-serif: var(--font-masthead);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-nav), sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: #050505;
+  color: #ffffff;
+}
+
+/* ── Page entrance (fallback for browsers without View Transitions) ── */
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-fade-in {
+  animation: page-fade-in 0.35s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+/* ── Keep navbar static during transitions ───────────────── */
+
+::view-transition-group(site-navbar) {
+  animation: none;
+}
+
+::view-transition-old(site-navbar),
+::view-transition-new(site-navbar) {
+  animation: none;
+}
+
+/* ── Native View Transitions ─────────────────────────────── */
+
+@supports (view-transition-name: root) {
+  /* When native view transitions are active, skip the
+     manual CSS animation — the API handles everything. */
+  .page-fade-in {
+    animation: none;
+  }
+
+  ::view-transition-old(root) {
+    animation: vt-out 0.25s cubic-bezier(0.4, 0, 1, 1) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: vt-in 0.35s cubic-bezier(0, 0, 0.2, 1) both;
+  }
+
+  ::view-transition-group(root) {
+    animation: none;
+  }
+}
+
+@keyframes vt-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade-in {
+    animation-duration: 0.01s !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.01s !important;
+  }
 }
