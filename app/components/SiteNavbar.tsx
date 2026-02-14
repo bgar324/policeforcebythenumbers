@@ -2,7 +2,7 @@
 
 import { Link } from "next-view-transitions";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type DropdownKey = "narrative" | "data" | "about";
 
@@ -12,11 +12,10 @@ type MenuSection = {
   items: Array<{ label: string; href: string }>;
 };
 
-const SHRINK_THRESHOLD = 96;
+const SHRINK_AT = 96;
+const EXPAND_AT = 40;
 
-const PRIMARY_LINKS = [
-  { label: "Timeline", href: "/timeline" },
-];
+const PRIMARY_LINKS = [{ label: "Timeline", href: "/timeline" }];
 
 const MENU_SECTIONS: MenuSection[] = [
   {
@@ -57,18 +56,30 @@ const MOBILE_ITEM =
 export default function SiteNavbar() {
   const pathname = usePathname();
   const [isCompact, setIsCompact] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<DropdownKey | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<DropdownKey | null>(
+    null,
+  );
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<DropdownKey | null>(null);
+
   const closeMenus = () => {
     setActiveDropdown(null);
     setMobileOpen(false);
     setMobileSection(null);
   };
 
+  const compactRef = useRef(false);
+
   useEffect(() => {
     const handleScroll = () => {
-      setIsCompact(window.scrollY > SHRINK_THRESHOLD);
+      const y = window.scrollY;
+      if (!compactRef.current && y > SHRINK_AT) {
+        compactRef.current = true;
+        setIsCompact(true);
+      } else if (compactRef.current && y < EXPAND_AT) {
+        compactRef.current = false;
+        setIsCompact(false);
+      }
     };
 
     handleScroll();
@@ -87,7 +98,10 @@ export default function SiteNavbar() {
         }`}
       />
 
-      <header className="sticky top-0 z-50 w-full bg-white" style={{ viewTransitionName: "site-navbar" }}>
+      <header
+        className="sticky top-0 z-50 w-full bg-white"
+        style={{ viewTransitionName: "site-navbar" }}
+      >
         <div
           className={`relative flex w-full items-center justify-between border-b border-black transition-all duration-300 ease-out ${
             isCompact ? "h-[60px]" : "h-[104px]"
@@ -95,33 +109,45 @@ export default function SiteNavbar() {
         >
           <Link
             href="/"
-            className="group flex h-full min-w-0 items-center border-x border-black px-3 sm:px-4"
-            aria-label="Police Force by the Numbers Home"
             onClick={closeMenus}
+            aria-label="Police Force by the Numbers Home"
+            className={`group flex h-full items-center border-x border-black px-3 transition-[width,background-color,color] duration-300 ease-out sm:px-4 ${
+              isActive("/")
+                ? "bg-black !text-white"
+                : "text-black hover:bg-black hover:!text-white"
+            }`}
           >
-            <span className="relative block overflow-hidden">
-              <span
-                className={`whitespace-nowrap text-[1.3rem] font-semibold leading-none tracking-tight transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] sm:text-[1.7rem] ${
-                  isCompact
-                    ? "pointer-events-none absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 opacity-0"
-                    : "relative translate-x-0 opacity-100"
-                }`}
-              >
-                Police Force by the Numbers
-              </span>
-              <span
-                className={`block text-xl font-semibold leading-none tracking-[0.08em] transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] sm:text-[1.7rem] ${
-                  isCompact
-                    ? "relative translate-x-0 opacity-100"
-                    : "pointer-events-none absolute left-0 top-1/2 translate-x-2 -translate-y-1/2 opacity-0"
-                }`}
-              >
-                PFBN
-              </span>
+            {/* FULL TITLE */}
+            <span
+              className={`block whitespace-nowrap text-[1.3rem] font-semibold leading-none tracking-tight
+  transition-transform transition-opacity duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]
+  sm:text-[1.7rem] ${
+    isCompact
+      ? "pointer-events-none absolute opacity-0 -translate-x-3"
+      : "relative opacity-100 translate-x-0"
+  }`}
+            >
+              Police Force by the Numbers
+            </span>
+
+            {/* PFBN */}
+            <span
+              className={`block whitespace-nowrap text-xl font-semibold leading-none tracking-[0.08em]
+  transition-transform transition-opacity duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]
+  sm:text-[1.7rem] ${
+    isCompact
+      ? "relative opacity-100 translate-x-0"
+      : "pointer-events-none absolute opacity-0 translate-x-3"
+  }`}
+            >
+              PFBN
             </span>
           </Link>
 
-          <nav className="hidden h-full items-stretch font-[family:var(--font-nav)] md:flex" aria-label="Primary navigation">
+          <nav
+            className="hidden h-full items-stretch font-[family:var(--font-nav)] md:flex"
+            aria-label="Primary navigation"
+          >
             {PRIMARY_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -151,12 +177,11 @@ export default function SiteNavbar() {
                       ? "bg-black !text-white"
                       : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white"
                   }`}
-                  aria-expanded={activeDropdown === section.key}
                 >
                   {section.label}
                   <span
-                    className={`text-sm leading-none transition-transform duration-200 ${
-                      activeDropdown === section.key ? "rotate-45" : "rotate-0"
+                    className={`text-sm transition-transform duration-200 ${
+                      activeDropdown === section.key ? "rotate-45" : ""
                     }`}
                   >
                     +
@@ -170,17 +195,17 @@ export default function SiteNavbar() {
                       : "invisible -translate-y-1 opacity-0"
                   }`}
                 >
-                  {section.items.map((item, itemIndex) => (
+                  {section.items.map((item, i) => (
                     <Link
                       key={item.href}
                       href={item.href}
                       onClick={closeMenus}
-                      className={`block px-4 py-3 text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 ${
-                        itemIndex === 0 ? "" : "border-t border-black"
+                      className={`block px-4 py-3 text-[12px] font-semibold uppercase tracking-[0.14em] ${
+                        i === 0 ? "" : "border-t border-black"
                       } ${
                         isActive(item.href)
                           ? "bg-black !text-white"
-                          : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white"
+                          : "text-black hover:bg-black hover:!text-white"
                       }`}
                     >
                       {item.label}
@@ -194,86 +219,26 @@ export default function SiteNavbar() {
           <button
             type="button"
             className="ml-3 inline-flex h-11 w-11 items-center justify-center border border-black text-black md:hidden"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            onClick={() => setMobileOpen((open) => !open)}
+            onClick={() => setMobileOpen((o) => !o)}
           >
             <span className="relative block h-4 w-5">
               <span
-                className={`absolute left-0 top-1/2 block h-[2px] w-full bg-black transition-transform duration-200 ${
-                  mobileOpen ? "translate-y-0 rotate-45" : "-translate-y-[6px]"
+                className={`absolute left-0 top-1/2 h-[2px] w-full bg-black transition-transform duration-200 ${
+                  mobileOpen ? "rotate-45" : "-translate-y-[6px]"
                 }`}
               />
               <span
-                className={`absolute left-0 top-1/2 block h-[2px] w-full bg-black transition-opacity duration-200 ${
-                  mobileOpen ? "opacity-0" : "opacity-100"
+                className={`absolute left-0 top-1/2 h-[2px] w-full bg-black transition-opacity duration-200 ${
+                  mobileOpen ? "opacity-0" : ""
                 }`}
               />
               <span
-                className={`absolute left-0 top-1/2 block h-[2px] w-full bg-black transition-transform duration-200 ${
-                  mobileOpen ? "translate-y-0 -rotate-45" : "translate-y-[6px]"
+                className={`absolute left-0 top-1/2 h-[2px] w-full bg-black transition-transform duration-200 ${
+                  mobileOpen ? "-rotate-45" : "translate-y-[6px]"
                 }`}
               />
             </span>
           </button>
-
-          <div
-            className={`absolute left-0 top-full w-full border-b border-black bg-white font-[family:var(--font-nav)] transition-[opacity,transform,visibility] duration-200 md:hidden ${
-              mobileOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
-            }`}
-          >
-            <div className="flex flex-col">
-              {PRIMARY_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={closeMenus}
-                  className={`${MOBILE_ITEM} ${isActive(link.href) ? "bg-black !text-white" : "text-black"}`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-
-              {MENU_SECTIONS.map((section) => (
-                <div key={section.key} className="border-t border-black">
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between px-4 py-3 text-[12px] font-semibold uppercase tracking-[0.14em]"
-                    onClick={() =>
-                      setMobileSection((openSection) =>
-                        openSection === section.key ? null : section.key,
-                      )
-                    }
-                    aria-expanded={mobileSection === section.key}
-                  >
-                    {section.label}
-                    <span className="text-sm leading-none">{mobileSection === section.key ? "-" : "+"}</span>
-                  </button>
-
-                  <div
-                    className={`grid transition-[grid-template-rows] duration-200 ${
-                      mobileSection === section.key ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                    }`}
-                  >
-                    <div className="overflow-hidden border-t border-black">
-                      {section.items.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={closeMenus}
-                          className={`block border-b border-black px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] ${
-                            isActive(item.href) ? "bg-black !text-white" : "text-black"
-                          }`}
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </header>
     </>
