@@ -27,6 +27,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.cdnfonts.com" crossOrigin="" />
+        <link
+          rel="preload"
+          as="style"
+          href="https://fonts.cdnfonts.com/css/chomsky"
+        />
+        <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/chomsky" />
+      </head>
       <body
         className={`${masthead.variable} ${navSans.variable} bg-white text-black antialiased`}
       >

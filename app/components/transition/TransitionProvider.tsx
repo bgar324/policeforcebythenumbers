@@ -15,6 +15,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 const COVER_DURATION_MS = 500;
 const REVEAL_DURATION_MS = 550;
 const COVER_HOLD_MS = 70;
+const FONT_LOAD_WAIT_MS = 900;
 const FAILSAFE_MS = 4500;
 const SEED_SALT = "pfbn-curtain-v1";
 const CURTAIN_COLOR = "#171716" as const;
@@ -232,6 +233,8 @@ export default function TransitionProvider({ children }: { children: ReactNode }
   const transitionIdRef = useRef(0);
   const coverCompleteAtRef = useRef(0);
   const scrollLockRef = useRef<ScrollLockSnapshot | null>(null);
+  const chomskyReadyRef = useRef(false);
+  const chomskyLoadPromiseRef = useRef<Promise<void> | null>(null);
   const prefersReducedMotionRef = useRef(false);
   const currentRouteKeyRef = useRef(
     typeof window === "undefined"
@@ -292,6 +295,36 @@ export default function TransitionProvider({ children }: { children: ReactNode }
     }
   }, []);
 
+  const ensureChomskyLoaded = useCallback(() => {
+    if (typeof document === "undefined") {
+      return Promise.resolve();
+    }
+
+    if (chomskyReadyRef.current) {
+      return Promise.resolve();
+    }
+
+    if (chomskyLoadPromiseRef.current) {
+      return chomskyLoadPromiseRef.current;
+    }
+
+    chomskyLoadPromiseRef.current = Promise.race([
+      document.fonts.load('400 16px "Chomsky"').then(() => undefined),
+      new Promise<void>((resolve) => {
+        window.setTimeout(resolve, FONT_LOAD_WAIT_MS);
+      }),
+    ])
+      .catch(() => undefined)
+      .then(() => {
+        chomskyReadyRef.current = document.fonts.check('400 16px "Chomsky"');
+      })
+      .finally(() => {
+        chomskyLoadPromiseRef.current = null;
+      });
+
+    return chomskyLoadPromiseRef.current;
+  }, []);
+
   const prepareCanvas = useCallback((seed: number) => {
     const canvas = canvasRef.current;
     if (!canvas) {
@@ -345,7 +378,7 @@ export default function TransitionProvider({ children }: { children: ReactNode }
     const pattern = patternRef.current;
     const context = contextRef.current;
 
-    if (!pattern || !context) {
+    if (!pattern || !context || !chomskyReadyRef.current) {
       return;
     }
 
@@ -562,19 +595,35 @@ export default function TransitionProvider({ children }: { children: ReactNode }
           return;
         }
 
-        lockScroll();
+        const beginCurtain = () => {
+          const current = activeRef.current;
+          if (!current || current.id !== id || phaseRef.current === "idle") {
+            return;
+          }
 
-        const seed = hashString(`${fromKey}|${toKey}|${SEED_SALT}`);
-        prepareCanvas(seed);
-        setIsTransitioning(true);
-        drawCells(0);
-        beginCover(id);
+          lockScroll();
+          const seed = hashString(`${fromKey}|${toKey}|${SEED_SALT}`);
+          prepareCanvas(seed);
+          setIsTransitioning(true);
+          drawCells(0);
+          beginCover(id);
+        };
+
+        void ensureChomskyLoaded().finally(beginCurtain);
       });
 
       inFlightPromiseRef.current = transitionPromise;
       return transitionPromise;
     },
-    [beginCover, drawCells, lockScroll, navigateToTarget, prepareCanvas, resolveTransition],
+    [
+      beginCover,
+      drawCells,
+      ensureChomskyLoaded,
+      lockScroll,
+      navigateToTarget,
+      prepareCanvas,
+      resolveTransition,
+    ],
   );
 
   const handleRouteChange = useCallback(
@@ -635,6 +684,10 @@ export default function TransitionProvider({ children }: { children: ReactNode }
   }, []);
 
   useEffect(() => {
+    void ensureChomskyLoaded();
+  }, [ensureChomskyLoaded]);
+
+  useEffect(() => {
     const active = activeRef.current;
     if (
       !active ||
@@ -687,6 +740,13 @@ export default function TransitionProvider({ children }: { children: ReactNode }
       <Suspense fallback={null}>
         <RouteChangeSignal onRouteChange={handleRouteChange} />
       </Suspense>
+      <span
+        aria-hidden
+        className="pointer-events-none fixed -left-[9999px] -top-[9999px] select-none opacity-0"
+        style={{ fontFamily: '"Chomsky", Georgia, "Times New Roman", Times, serif' }}
+      >
+        PFBN
+      </span>
       {children}
       <canvas
         ref={canvasRef}
