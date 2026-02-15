@@ -25,9 +25,9 @@ const TEAM_MEMBERS: TeamMember[] = [
   },
   {
     name: "Zoe Santos",
-    role: "TBD",
-    email: undefined,
-    linkedin: undefined,
+    role: "Project Manager",
+    email: "zoesantos@g.ucla.edu",
+    linkedin: "https://www.linkedin.com/in/zoe-santos-9708a0261/",
     imageSrc: undefined,
   },
   {
@@ -39,9 +39,9 @@ const TEAM_MEMBERS: TeamMember[] = [
   },
   {
     name: "Maelynn Vu",
-    role: "TBD",
-    email: undefined,
-    linkedin: undefined,
+    role: "Project Manager",
+    email: "maevu@g.ucla.edu",
+    linkedin: "https://www.linkedin.com/in/maelynn-vu-076012283/",
     imageSrc: undefined,
   },
   {
