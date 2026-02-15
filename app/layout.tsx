@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import PageTransition from "@/app/components/PageTransition";
 import { Newsreader, Source_Sans_3 } from "next/font/google";
-import { ViewTransitions } from "next-view-transitions";
-import SiteFooter from "@/app/components/SiteFooter";
-import SiteNavbar from "@/app/components/SiteNavbar";
+import TransitionProvider from "@/app/components/transition/TransitionProvider";
 import "./globals.css";
 
 const masthead = Newsreader({
@@ -30,16 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${masthead.variable} ${navSans.variable} bg-white text-black antialiased`}>
-        <ViewTransitions>
-          <div className="flex min-h-screen flex-col">
-            <SiteNavbar />
-            <div className="flex-1">
-              <PageTransition>{children}</PageTransition>
-            </div>
-            <SiteFooter />
-          </div>
-        </ViewTransitions>
+      <body
+        className={`${masthead.variable} ${navSans.variable} bg-white text-black antialiased`}
+      >
+        <TransitionProvider>{children}</TransitionProvider>
       </body>
     </html>
   );

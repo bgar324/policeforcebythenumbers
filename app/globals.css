@@ -1,3 +1,4 @@
+@import url("https://fonts.cdnfonts.com/css/chomsky");
 @import "tailwindcss";
 
 :root {
@@ -37,89 +38,4 @@ a {
 ::selection {
   background: #050505;
   color: #ffffff;
-}
-
-/* ── Page entrance (fallback for browsers without View Transitions) ── */
-
-@keyframes page-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.page-fade-in {
-  animation: page-fade-in 0.35s cubic-bezier(0.25, 1, 0.5, 1) both;
-}
-
-/* ── Keep navbar static during transitions ───────────────── */
-
-::view-transition-group(site-navbar) {
-  animation: none;
-}
-
-::view-transition-old(site-navbar),
-::view-transition-new(site-navbar) {
-  animation: none;
-}
-
-/* ── Native View Transitions ─────────────────────────────── */
-
-@supports (view-transition-name: root) {
-  /* When native view transitions are active, skip the
-     manual CSS animation — the API handles everything. */
-  .page-fade-in {
-    animation: none;
-  }
-
-  ::view-transition-old(root) {
-    animation: vt-out 0.25s cubic-bezier(0.4, 0, 1, 1) both;
-  }
-
-  ::view-transition-new(root) {
-    animation: vt-in 0.35s cubic-bezier(0, 0, 0.2, 1) both;
-  }
-
-  ::view-transition-group(root) {
-    animation: none;
-  }
-}
-
-@keyframes vt-out {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-}
-
-@keyframes vt-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ── Reduced motion ──────────────────────────────────────── */
-
-@media (prefers-reduced-motion: reduce) {
-  .page-fade-in {
-    animation-duration: 0.01s !important;
-  }
-
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation-duration: 0.01s !important;
-  }
 }

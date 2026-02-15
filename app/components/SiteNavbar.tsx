@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "next-view-transitions";
+import TransitionLink from "@/app/components/transition/TransitionLink";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -50,9 +50,6 @@ const MENU_SECTIONS: MenuSection[] = [
 const DESKTOP_ITEM =
   "inline-flex h-full items-center px-4 text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150";
 
-const MOBILE_ITEM =
-  "block border-t border-black px-4 py-3 text-[12px] font-semibold uppercase tracking-[0.14em]";
-
 export default function SiteNavbar() {
   const pathname = usePathname();
   const [isCompact, setIsCompact] = useState(false);
@@ -60,12 +57,10 @@ export default function SiteNavbar() {
     null,
   );
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileSection, setMobileSection] = useState<DropdownKey | null>(null);
 
   const closeMenus = () => {
     setActiveDropdown(null);
     setMobileOpen(false);
-    setMobileSection(null);
   };
 
   const compactRef = useRef(false);
@@ -107,7 +102,7 @@ export default function SiteNavbar() {
             isCompact ? "h-[60px]" : "h-[104px]"
           }`}
         >
-          <Link
+          <TransitionLink
             href="/"
             onClick={closeMenus}
             aria-label="Police Force by the Numbers Home"
@@ -142,14 +137,14 @@ export default function SiteNavbar() {
             >
               PFBN
             </span>
-          </Link>
+          </TransitionLink>
 
           <nav
             className="hidden h-full items-stretch font-[family:var(--font-nav)] md:flex"
             aria-label="Primary navigation"
           >
             {PRIMARY_LINKS.map((link) => (
-              <Link
+              <TransitionLink
                 key={link.href}
                 href={link.href}
                 onClick={closeMenus}
@@ -160,7 +155,7 @@ export default function SiteNavbar() {
                 }`}
               >
                 {link.label}
-              </Link>
+              </TransitionLink>
             ))}
 
             {MENU_SECTIONS.map((section) => (
@@ -196,7 +191,7 @@ export default function SiteNavbar() {
                   }`}
                 >
                   {section.items.map((item, i) => (
-                    <Link
+                    <TransitionLink
                       key={item.href}
                       href={item.href}
                       onClick={closeMenus}
@@ -209,7 +204,7 @@ export default function SiteNavbar() {
                       }`}
                     >
                       {item.label}
-                    </Link>
+                    </TransitionLink>
                   ))}
                 </div>
               </div>

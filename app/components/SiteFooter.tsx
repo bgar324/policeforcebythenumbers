@@ -1,4 +1,4 @@
-import { Link } from "next-view-transitions";
+import TransitionLink from "@/app/components/transition/TransitionLink";
 
 const TEAM_MEMBERS = [
   "Mattin Aframian",
@@ -82,12 +82,12 @@ export default function SiteFooter() {
                   <ul className="mt-1.5 space-y-1.5">
                     {group.links.map((link) => (
                       <li key={link.href}>
-                        <Link
+                        <TransitionLink
                           href={link.href}
                           className="inline-block text-sm text-black/80 transition-colors duration-150 hover:text-black"
                         >
                           {link.label}
-                        </Link>
+                        </TransitionLink>
                       </li>
                     ))}
                   </ul>
