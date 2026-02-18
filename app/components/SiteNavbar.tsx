@@ -5,11 +5,12 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 type DropdownKey = "narrative" | "data" | "about";
+type NavItem = { label: string; href: string };
 
 type MenuSection = {
   key: DropdownKey;
   label: string;
-  items: Array<{ label: string; href: string }>;
+  items: NavItem[];
 };
 
 const SHRINK_AT = 96;
@@ -47,6 +48,17 @@ const MENU_SECTIONS: MenuSection[] = [
   },
 ];
 
+const MOBILE_SECTIONS: Array<{ heading: string; items: NavItem[] }> = [
+  {
+    heading: "Core",
+    items: [{ label: "Home", href: "/" }, ...PRIMARY_LINKS],
+  },
+  ...MENU_SECTIONS.map((section) => ({
+    heading: section.label,
+    items: section.items,
+  })),
+];
+
 const DESKTOP_ITEM =
   "inline-flex h-full items-center px-4 text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150";
 
@@ -82,14 +94,31 @@ export default function SiteNavbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileOpen]);
+
   const isActive = (href: string) => pathname === href;
+  const overlayActive = Boolean(activeDropdown || mobileOpen);
 
   return (
     <>
-      <div
-        aria-hidden
-        className={`pointer-events-none fixed inset-0 z-40 transition-all duration-200 ${
-          activeDropdown ? "backdrop-blur-[2px] bg-white/10" : "bg-transparent"
+      <button
+        type="button"
+        aria-label="Close navigation"
+        tabIndex={overlayActive ? 0 : -1}
+        onClick={closeMenus}
+        className={`fixed inset-0 z-40 transition-all duration-200 ${
+          overlayActive
+            ? "pointer-events-auto backdrop-blur-[2px] bg-white/10 opacity-100"
+            : "pointer-events-none bg-transparent opacity-0"
         }`}
       />
 
@@ -112,17 +141,19 @@ export default function SiteNavbar() {
                 : "text-black hover:bg-black hover:!text-white"
             }`}
           >
-            <span className="flex items-center whitespace-nowrap">
+            <span className="flex min-w-0 items-center whitespace-nowrap">
               <span
-                className={`block overflow-hidden text-[1.3rem] font-semibold leading-none tracking-tight transition-[max-width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-[1.7rem] ${
-                  isCompact ? "max-w-0 opacity-0" : "max-w-[26rem] opacity-100"
+                className={`block overflow-hidden text-[clamp(1rem,4vw,1.3rem)] font-semibold leading-none tracking-tight transition-[max-width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-[1.7rem] ${
+                  isCompact
+                    ? "max-w-0 opacity-0"
+                    : "max-w-[calc(100vw-8.75rem)] opacity-100 sm:max-w-[26rem]"
                 }`}
               >
                 Police Force by the Numbers
               </span>
               <span
                 className={`block overflow-hidden text-xl font-semibold leading-none tracking-[0.06em] transition-[max-width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-[1.7rem] ${
-                  isCompact ? "max-w-[7.8rem] opacity-100" : "max-w-0 opacity-0"
+                  isCompact ? "max-w-[7rem] opacity-100 sm:max-w-[7.8rem]" : "max-w-0 opacity-0"
                 }`}
               >
                 PFBN
@@ -204,7 +235,10 @@ export default function SiteNavbar() {
 
           <button
             type="button"
-            className="ml-3 inline-flex h-11 w-11 items-center justify-center border border-black text-black md:hidden"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-controls="mobile-site-menu"
+            aria-expanded={mobileOpen}
+            className="ml-3 mr-3 inline-flex h-11 w-11 items-center justify-center border border-black text-black md:hidden"
             onClick={() => setMobileOpen((o) => !o)}
           >
             <span className="relative block h-4 w-5">
@@ -225,6 +259,43 @@ export default function SiteNavbar() {
               />
             </span>
           </button>
+        </div>
+
+        <div
+          id="mobile-site-menu"
+          className={`overflow-hidden border-b border-black bg-white transition-[max-height,opacity] duration-300 ease-out md:hidden ${
+            mobileOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="max-h-[calc(100vh-64px)] overflow-y-auto">
+            {MOBILE_SECTIONS.map((section, index) => (
+              <section
+                key={section.heading}
+                className={`${index > 0 ? "border-t border-black" : ""}`}
+              >
+                <p className="px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
+                  {section.heading}
+                </p>
+                <ul className="border-t border-black">
+                  {section.items.map((item, itemIndex) => (
+                    <li key={item.href} className={`${itemIndex > 0 ? "border-t border-black" : ""}`}>
+                      <TransitionLink
+                        href={item.href}
+                        onClick={closeMenus}
+                        className={`block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.14em] ${
+                          isActive(item.href)
+                            ? "bg-black !text-white"
+                            : "text-black hover:bg-black hover:!text-white"
+                        }`}
+                      >
+                        {item.label}
+                      </TransitionLink>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
         </div>
       </header>
     </>

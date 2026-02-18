@@ -66,10 +66,10 @@ export default function TeamMemberCard({
         </div>
 
         <div className="space-y-5 px-6 py-6 text-center">
-          <h3 className=" text-[1.85rem] font-medium leading-tight tracking-tight">
+          <h3 className="break-words text-[1.5rem] font-medium leading-tight tracking-tight sm:text-[1.85rem]">
             {name}
           </h3>
-          <p className="text-xl leading-none text-black/65">{role}</p>
+          <p className="text-lg leading-none text-black/65 sm:text-xl">{role}</p>
 
           <div className="flex items-center justify-center gap-6">
             <a

@@ -68,7 +68,7 @@ export default function SiteFooter() {
               </div>
               <div>
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55">Team</dt>
-                <dd className="text-black/80">{TEAM_MEMBERS.join(" · ")}</dd>
+                <dd className="break-words text-black/80">{TEAM_MEMBERS.join(" · ")}</dd>
               </div>
             </dl>
           </section>
