@@ -106,36 +106,27 @@ export default function SiteNavbar() {
             href="/"
             onClick={closeMenus}
             aria-label="Police Force by the Numbers Home"
-            className={`group flex h-full items-center border-x border-black px-3 transition-[width,background-color,color] duration-300 ease-out sm:px-4 ${
+            className={`group flex h-full items-center overflow-hidden border-x border-black px-3 transition-colors duration-300 ease-out sm:px-4 ${
               isActive("/")
                 ? "bg-black !text-white"
                 : "text-black hover:bg-black hover:!text-white"
             }`}
           >
-            {/* FULL TITLE */}
-            <span
-              className={`block whitespace-nowrap text-[1.3rem] font-semibold leading-none tracking-tight
-  transition-transform transition-opacity duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]
-  sm:text-[1.7rem] ${
-    isCompact
-      ? "pointer-events-none absolute opacity-0 -translate-x-3"
-      : "relative opacity-100 translate-x-0"
-  }`}
-            >
-              Police Force by the Numbers
-            </span>
-
-            {/* PFBN */}
-            <span
-              className={`block whitespace-nowrap text-xl font-semibold leading-none tracking-[0.08em]
-  transition-transform transition-opacity duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]
-  sm:text-[1.7rem] ${
-    isCompact
-      ? "relative opacity-100 translate-x-0"
-      : "pointer-events-none absolute opacity-0 translate-x-3"
-  }`}
-            >
-              PFBN
+            <span className="flex items-center whitespace-nowrap">
+              <span
+                className={`block overflow-hidden text-[1.3rem] font-semibold leading-none tracking-tight transition-[max-width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-[1.7rem] ${
+                  isCompact ? "max-w-0 opacity-0" : "max-w-[26rem] opacity-100"
+                }`}
+              >
+                Police Force by the Numbers
+              </span>
+              <span
+                className={`block overflow-hidden text-xl font-semibold leading-none tracking-[0.06em] transition-[max-width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-[1.7rem] ${
+                  isCompact ? "max-w-[7.8rem] opacity-100" : "max-w-0 opacity-0"
+                }`}
+              >
+                PFBN
+              </span>
             </span>
           </TransitionLink>
 

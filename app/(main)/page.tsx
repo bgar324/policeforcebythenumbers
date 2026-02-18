@@ -1,6 +1,6 @@
 export default function HomePage() {
   return (
-    <main className="mx-auto w-full max-w-[1100px] border-x border-black font-[family:var(--font-nav)]">
+    <main className="mx-auto w-full max-w-[1200px] border-x border-black font-[family:var(--font-nav)]">
       <section className="border-b border-black px-6 py-12 sm:px-10 sm:py-16">
         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">Home</p>
         <h1 className="mt-5 max-w-3xl font-[family:var(--font-masthead)] text-4xl font-semibold leading-[1.05] sm:text-6xl">

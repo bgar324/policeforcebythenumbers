@@ -21,7 +21,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: "Web Developer",
     email: "btgarcia@ucla.edu",
     linkedin: "https://www.linkedin.com/in/btgarcia05",
-    imageSrc: undefined,
+    imageSrc: "/static/king.png",
   },
   {
     name: "Zoe Santos",

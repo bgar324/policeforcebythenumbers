@@ -49,7 +49,13 @@ export default function TeamMemberCard({
       <div className="relative border border-black bg-white transition-transform duration-300 ease-out group-hover:-translate-x-2 group-hover:-translate-y-2">
         <div className="relative aspect-[4/5] border-b border-black bg-zinc-100">
           {imageSrc ? (
-            <Image src={imageSrc} alt={`${name} profile`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 320px" />
+            <Image
+              src={imageSrc}
+              alt={`${name} profile`}
+              fill
+              className="object-cover grayscale-[35%] saturate-[85%] transition-[filter] duration-400 ease-out group-hover:grayscale-0 group-hover:saturate-100"
+              sizes="(max-width: 768px) 100vw, 320px"
+            />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(135deg,#f2f2f2_0%,#e6e6e6_100%)]">
               <div className="border border-black px-5 py-3  text-4xl font-medium tracking-[0.08em] text-black">
