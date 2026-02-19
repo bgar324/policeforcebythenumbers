@@ -41,9 +41,10 @@ const TEAM_MEMBERS: TeamMember[] = [
   {
     name: "Lily Sarkissian",
     role: "TBD",
-    email: undefined,
-    linkedin: undefined,
+    email: "lilysarkissian9@g.ucla.edu",
+    linkedin: "https://www.linkedin.com/in/lily-sarkissian-1678a63b1/",
     imageSrc: undefined,
+    bio: "Hello! My name is Lily Sarkissian and I'm a third year Bioengineering major with a Technical Breadth in Digital Humanities.",
   },
   {
     name: "Maelynn Vu",
