@@ -3,9 +3,11 @@ import TeamMemberCard from "@/app/components/TeamMemberCard";
 type TeamMember = {
   name: string;
   role: string;
-  email?: string; 
-  linkedin?: string; 
-  imageSrc?: string; 
+  bio?: string;
+  researchResponsibility?: string;
+  email?: string;
+  linkedin?: string;
+  imageSrc?: string;
 };
 
 const TEAM_MEMBERS: TeamMember[] = [
@@ -20,15 +22,19 @@ const TEAM_MEMBERS: TeamMember[] = [
     name: "Benjamin Garcia",
     role: "Web Developer",
     email: "btgarcia@ucla.edu",
+    bio : "Hello, my name is Benjamin Garcia and I am a third year Computer Science major.",
+    researchResponsibility : "As the Web Developer, I led the development and deployment of the website, building it with React and Tailwind from the ground up.",
     linkedin: "https://www.linkedin.com/in/btgarcia05",
     imageSrc: "/static/king.png",
   },
   {
     name: "Zoe Santos",
-    role: "Project Manager",
+    role: "Content Developer",
     email: "zoesantos@g.ucla.edu",
     linkedin: "https://www.linkedin.com/in/zoe-santos-9708a0261/",
     imageSrc: undefined,
+    bio: "Hello. My name is Zoe Santos. I'm a fourth year Statistics & Data Science Major with a Film, Television, and Digital Media minor",
+
   },
   {
     name: "Lily Sarkissian",
@@ -43,13 +49,16 @@ const TEAM_MEMBERS: TeamMember[] = [
     email: "maevu@g.ucla.edu",
     linkedin: "https://www.linkedin.com/in/maelynn-vu-076012283/",
     imageSrc: undefined,
+    bio: "Hi there! My name is Maelynn Vu. I'm a fourth year Psychology Major and Digital Humanities minor.",
+    researchResponsibility: "As the Project Manager, I coordinated meetings, organized our workflow, and kept deadlines on track. I also contributed to research and writing while overseeing the project’s overall direction to ensure our analysis and final presentation stayed cohesive and aligned with our goals."
   },
   {
     name: "Elaine Xia",
-    role: "TBD",
-    email: undefined,
-    linkedin: undefined,
+    role: "Data Specialist",
+    email: "xhy0331@.ucla.edu",
+    linkedin: "https://www.linkedin.com/in/elaine-xia-91184735a/",
     imageSrc: undefined,
+    bio: "Hi, my name is Elaine Xia. I'm a second year double majored in Cognitive Science and Statistics & Data Science."
   },
 ];
 
@@ -64,16 +73,18 @@ export default function MeetTheTeamPage() {
           Meet the Team
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-black/75">
-          Researchers and collaborators building Police Force by the Numbers.
+          Researchers and collaborators behind Police Force by the Numbers.
         </p>
       </header>
 
-      <section className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+      <section className="mt-10 grid grid-cols-1 gap-7 md:grid-cols-2">
         {TEAM_MEMBERS.map((member) => (
           <TeamMemberCard
             key={member.name}
             name={member.name}
             role={member.role}
+            bio={member.bio}
+            researchResponsibility={member.researchResponsibility}
             emailHref={member.email ? `mailto:${member.email}` : undefined}
             linkedinHref={member.linkedin}
             imageSrc={member.imageSrc}

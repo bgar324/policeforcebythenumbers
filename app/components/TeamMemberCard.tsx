@@ -3,6 +3,8 @@ import Image from "next/image";
 type TeamMemberCardProps = {
   name: string;
   role: string;
+  bio?: string;
+  researchResponsibility?: string;
   imageSrc?: string;
   emailHref?: string;
   linkedinHref?: string;
@@ -36,58 +38,98 @@ function getInitials(name: string) {
 export default function TeamMemberCard({
   name,
   role,
+  bio,
+  researchResponsibility,
   imageSrc,
-  emailHref = "",
-  linkedinHref = "",
+  emailHref,
+  linkedinHref,
 }: TeamMemberCardProps) {
   const initials = getInitials(name);
+  const bioText = bio?.trim();
+  const researchText = researchResponsibility?.trim();
+  const hasBio = Boolean(bioText);
+  const hasResearchResponsibility = Boolean(researchText);
+  const hasNarrative = hasBio || hasResearchResponsibility;
 
   return (
-    <article className="group relative mx-auto w-full max-w-[320px]">
-      <div className="pointer-events-none absolute inset-0 border border-black bg-black transition-transform duration-300 ease-out group-hover:translate-x-2 group-hover:translate-y-2" />
+    <article className="group relative h-full">
+      <div className="pointer-events-none absolute inset-0 border border-black bg-black opacity-0 transition-all duration-300 ease-out group-hover:translate-x-2 group-hover:translate-y-2 group-hover:opacity-100" />
 
-      <div className="relative border border-black bg-white transition-transform duration-300 ease-out group-hover:-translate-x-2 group-hover:-translate-y-2">
-        <div className="relative aspect-[4/5] border-b border-black bg-zinc-100">
+      <div className="relative flex h-full flex-col overflow-hidden border border-black bg-[linear-gradient(180deg,#ffffff_0%,#fafafa_100%)] transition-transform duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1 sm:flex-row">
+        <div className="relative aspect-square w-full border-b border-black bg-zinc-100 sm:w-[190px] sm:flex-none sm:border-r sm:border-b-0">
           {imageSrc ? (
             <Image
               src={imageSrc}
               alt={`${name} profile`}
               fill
-              className="object-cover grayscale-[35%] saturate-[85%] transition-[filter] duration-400 ease-out group-hover:grayscale-0 group-hover:saturate-100"
-              sizes="(max-width: 768px) 100vw, 320px"
+              className="object-cover grayscale-[25%] saturate-[90%] transition-[filter] duration-300 ease-out group-hover:grayscale-0 group-hover:saturate-100"
+              sizes="(max-width: 640px) 100vw, 190px"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(135deg,#f2f2f2_0%,#e6e6e6_100%)]">
-              <div className="border border-black px-5 py-3  text-4xl font-medium tracking-[0.08em] text-black">
+            <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_top,#f3f3f3_0%,#e4e4e4_100%)]">
+              <div className="border border-black bg-white/70 px-5 py-3 text-4xl font-medium tracking-[0.08em] text-black">
                 {initials}
               </div>
             </div>
           )}
         </div>
 
-        <div className="space-y-5 px-6 py-6 text-center">
-          <h3 className="break-words text-[1.5rem] font-medium leading-tight tracking-tight sm:text-[1.85rem]">
-            {name}
-          </h3>
-          <p className="text-lg leading-none text-black/65 sm:text-xl">{role}</p>
+        <div className="flex h-full flex-col p-5 sm:p-6">
+          <header className="border-b border-black/20 pb-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/55">
+              {role}
+            </p>
+            <h3 className="mt-2 break-words font-[family:var(--font-masthead)] text-[1.7rem] leading-tight tracking-tight sm:text-[1.95rem]">
+              {name}
+            </h3>
 
-          <div className="flex items-center justify-center gap-6">
-            <a
-              href={emailHref}
-              aria-label={`Email ${name}`}
-              className="inline-flex h-10 w-10 items-center justify-center border border-black !text-black transition-colors duration-150 hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white"
-            >
-              <EmailIcon />
-            </a>
-            <a
-              href={linkedinHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${name} LinkedIn`}
-              className="inline-flex h-10 w-10 items-center justify-center border border-black !text-black transition-colors duration-150 hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white"
-            >
-              <LinkedInIcon />
-            </a>
+            <div className="mt-3 flex min-h-9 items-center gap-2">
+              {emailHref ? (
+                <a
+                  href={emailHref}
+                  aria-label={`Email ${name}`}
+                  className="inline-flex h-9 w-9 items-center justify-center border border-black !text-black transition-colors duration-150 hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white"
+                >
+                  <EmailIcon />
+                </a>
+              ) : null}
+
+              {linkedinHref ? (
+                <a
+                  href={linkedinHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${name} LinkedIn`}
+                  className="inline-flex h-9 w-9 items-center justify-center border border-black !text-black transition-colors duration-150 hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white"
+                >
+                  <LinkedInIcon />
+                </a>
+              ) : null}
+            </div>
+          </header>
+
+          <div className="mt-4 space-y-4">
+            {hasNarrative ? (
+              <>
+                {hasBio ? (
+                  <section className="space-y-2">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/55">Bio</p>
+                    <p className="text-sm leading-relaxed text-black/80">{bioText}</p>
+                  </section>
+                ) : null}
+
+                {hasResearchResponsibility ? (
+                  <section className="space-y-2">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/55">
+                      Responsibility
+                    </p>
+                    <p className="text-sm leading-relaxed text-black/80">{researchText}</p>
+                  </section>
+                ) : null}
+              </>
+            ) : (
+              <div className="h-px bg-black/10" />
+            )}
           </div>
         </div>
       </div>
