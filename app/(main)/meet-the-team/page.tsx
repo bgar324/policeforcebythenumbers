@@ -72,7 +72,7 @@ export default function MeetTheTeamPage() {
         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
           About
         </p>
-        <h1 className="mt-4 font-[family:var(--font-masthead)] text-4xl font-medium leading-tight sm:text-6xl">
+        <h1 className="mt-4 text-4xl font-medium leading-tight sm:text-6xl">
           Meet the Team
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-black/75">

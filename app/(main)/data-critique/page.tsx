@@ -49,7 +49,7 @@ export default function DataCritiquePage() {
     <main className="mx-auto w-full max-w-[1200px] border-x border-black font-[family:var(--font-nav)]">
       <header className="border-b border-black px-6 py-10 sm:px-10 sm:py-14">
         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">Data</p>
-        <h1 className="mt-4 max-w-4xl font-[family:var(--font-masthead)] text-4xl font-semibold leading-[1.05] sm:text-6xl">
+        <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-[1.05] sm:text-6xl">
           Data Critique
         </h1>
         <p className="mt-5 max-w-3xl text-base leading-relaxed text-black/75">
@@ -67,11 +67,11 @@ export default function DataCritiquePage() {
         >
           <aside className="border-b border-black px-6 py-6 sm:px-10 lg:border-r lg:border-b-0 lg:px-6 lg:py-10">
             <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55">Section</p>
-            <p className="mt-3 font-[family:var(--font-masthead)] text-3xl font-semibold leading-none">{section.id}</p>
+            <p className="mt-3 text-3xl font-semibold leading-none">{section.id}</p>
           </aside>
 
           <div className="px-6 py-8 sm:px-10 sm:py-10">
-            <h2 className="font-[family:var(--font-masthead)] text-3xl font-semibold leading-tight sm:text-4xl">
+            <h2 className="text-3xl font-semibold leading-tight sm:text-4xl">
               {section.heading}
             </h2>
             <div className="mt-6 space-y-5">

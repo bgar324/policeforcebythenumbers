@@ -53,7 +53,7 @@ export default function HomePage() {
         <div className="grid gap-0 lg:grid-cols-[1.25fr_0.75fr]">
           <section className="border-b border-black px-6 py-12 sm:px-10 sm:py-16 lg:border-r lg:border-b-0">
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">Front Page</p>
-            <h1 className="mt-5 max-w-4xl font-[family:var(--font-masthead)] text-4xl font-semibold leading-[1.02] sm:text-6xl">
+            <h1 className="mt-5 max-w-4xl  text-4xl font-semibold leading-[1.02] sm:text-6xl">
               Police Force by the Numbers
             </h1>
             <p className="mt-6 max-w-3xl text-base leading-relaxed text-black/75">
@@ -93,7 +93,7 @@ export default function HomePage() {
         <div className="grid gap-0 lg:grid-cols-[1fr_1fr]">
           <article className="border-b border-black px-6 py-10 sm:px-10 sm:py-12 lg:border-r lg:border-b-0">
             <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">Navigation</p>
-            <h2 className="mt-4 font-[family:var(--font-masthead)] text-3xl font-semibold leading-tight sm:text-4xl">
+            <h2 className="mt-4  text-3xl font-semibold leading-tight sm:text-4xl">
               How to read this investigation
             </h2>
             <ol className="mt-6 space-y-4 border-l border-black pl-4">
@@ -129,7 +129,7 @@ export default function HomePage() {
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <h3 className="font-[family:var(--font-masthead)] text-2xl font-semibold leading-tight">
+                  <h3 className=" text-2xl font-semibold leading-tight">
                     {route.label}
                   </h3>
                   <p className="mt-2 max-w-3xl text-sm leading-relaxed text-black/75 transition-colors duration-150 group-hover:text-white/80">
