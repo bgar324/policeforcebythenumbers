@@ -12,9 +12,9 @@ import {
 } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const COVER_DURATION_MS = 500;
-const REVEAL_DURATION_MS = 550;
-const COVER_HOLD_MS = 70;
+const COVER_DURATION_MS = 420;
+const REVEAL_DURATION_MS = 420;
+const COVER_HOLD_MS = 30;
 const FONT_LOAD_WAIT_MS = 900;
 const FAILSAFE_MS = 4500;
 const SEED_SALT = "pfbn-curtain-v1";
@@ -169,21 +169,20 @@ function createPattern(
 function coverLabelAlpha(progress: number) {
   const p = clamp(progress, 0, 1);
 
-  if (p < 0.14) return 0;
-  if (p < 0.24) return (p - 0.14) / 0.1;
-  if (p < 0.4) return 1;
-  if (p < 0.46) return 1 - ((p - 0.4) / 0.06) * 0.8;
-  if (p < 0.52) return 0.2 + ((p - 0.46) / 0.06) * 0.8;
-  if (p < 0.66) return 1 - (p - 0.52) / 0.14;
+  // Single fade in + fade out avoids the previous pulsing effect.
+  if (p < 0.18) return 0;
+  if (p < 0.32) return (p - 0.18) / 0.14;
+  if (p < 0.65) return 1;
+  if (p < 0.9) return 1 - (p - 0.65) / 0.25;
   return 0;
 }
 
 function easeOutCubic(t: number) {
-  return 1 - (1 - t) ** 3;
+  return 1 - (1 - t) ** 2;
 }
 
 function easeInOutCubic(t: number) {
-  return t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2;
+  return t < 0.5 ? 2 * t ** 2 : 1 - ((-2 * t + 2) ** 2) / 2;
 }
 
 function buildRouteKey(pathname: string, search: string) {

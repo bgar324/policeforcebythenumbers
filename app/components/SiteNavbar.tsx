@@ -2,7 +2,7 @@
 
 import TransitionLink from "@/app/components/transition/TransitionLink";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type DropdownKey = "narrative" | "data" | "about";
 type NavItem = { label: string; href: string };
@@ -13,8 +13,7 @@ type MenuSection = {
   items: NavItem[];
 };
 
-const SHRINK_AT = 96;
-const EXPAND_AT = 40;
+const LABEL_SWAP_AT = 24;
 
 const PRIMARY_LINKS = [{ label: "Timeline", href: "/timeline" }];
 
@@ -75,18 +74,10 @@ export default function SiteNavbar() {
     setMobileOpen(false);
   };
 
-  const compactRef = useRef(false);
-
   useEffect(() => {
     const handleScroll = () => {
-      const y = window.scrollY;
-      if (!compactRef.current && y > SHRINK_AT) {
-        compactRef.current = true;
-        setIsCompact(true);
-      } else if (compactRef.current && y < EXPAND_AT) {
-        compactRef.current = false;
-        setIsCompact(false);
-      }
+      const nextCompact = window.scrollY > LABEL_SWAP_AT;
+      setIsCompact((prev) => (prev === nextCompact ? prev : nextCompact));
     };
 
     handleScroll();
@@ -127,9 +118,7 @@ export default function SiteNavbar() {
         style={{ viewTransitionName: "site-navbar" }}
       >
         <div
-          className={`relative flex w-full items-center justify-between border-b border-black transition-all duration-300 ease-out ${
-            isCompact ? "h-[60px]" : "h-[104px]"
-          }`}
+          className="relative flex h-[60px] w-full items-center justify-between border-b border-black"
         >
           <TransitionLink
             href="/"
@@ -143,7 +132,7 @@ export default function SiteNavbar() {
           >
             <span className="flex min-w-0 items-center whitespace-nowrap">
               <span
-                className={`block overflow-hidden text-[clamp(1rem,4vw,1.3rem)] font-semibold leading-none tracking-tight transition-[max-width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-[1.7rem] ${
+                className={`block overflow-hidden text-[clamp(1rem,4vw,1.3rem)] font-semibold leading-none tracking-tight transition-[max-width,opacity] duration-300 ease-out sm:text-[1.7rem] ${
                   isCompact
                     ? "max-w-0 opacity-0"
                     : "max-w-[calc(100vw-8.75rem)] opacity-100 sm:max-w-[26rem]"
@@ -152,8 +141,10 @@ export default function SiteNavbar() {
                 Police Force by the Numbers
               </span>
               <span
-                className={`block overflow-hidden text-xl font-semibold leading-none tracking-[0.06em] transition-[max-width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-[1.7rem] ${
-                  isCompact ? "max-w-[7rem] opacity-100 sm:max-w-[7.8rem]" : "max-w-0 opacity-0"
+                className={`block overflow-hidden text-xl font-semibold leading-none tracking-[0.06em] transition-[max-width,opacity] duration-300 ease-out sm:text-[1.7rem] ${
+                  isCompact
+                    ? "max-w-[7rem] opacity-100 sm:max-w-[7.8rem]"
+                    : "max-w-0 opacity-0"
                 }`}
               >
                 PFBN
@@ -267,7 +258,7 @@ export default function SiteNavbar() {
             mobileOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="max-h-[calc(100vh-64px)] overflow-y-auto">
+          <div className="max-h-[calc(100vh-60px)] overflow-y-auto">
             {MOBILE_SECTIONS.map((section, index) => (
               <section
                 key={section.heading}

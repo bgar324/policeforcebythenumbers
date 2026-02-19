@@ -13,10 +13,12 @@ type TeamMember = {
 const TEAM_MEMBERS: TeamMember[] = [
   {
     name: "Mattin Aframian",
-    role: "TBD",
-    email: undefined,
-    linkedin: undefined,
+    role: "Data specialist",
+    email: "mattinaframian@gmail.com",
+    linkedin: "https://www.linkedin.com/in/mattin-aframian",
     imageSrc: undefined,
+    bio : "Hi, my name is Mattin Aframian. I'm a third year, doubling majoring in Statistics & Data Science and Cognitive Science.",
+
   },
   {
     name: "Benjamin Garcia",
@@ -73,7 +75,7 @@ export default function MeetTheTeamPage() {
           Meet the Team
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-black/75">
-          Researchers and collaborators behind Police Force by the Numbers.
+          The team behind Police Force by the Numbers.
         </p>
       </header>
 
