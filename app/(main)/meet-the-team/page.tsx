@@ -18,7 +18,6 @@ const TEAM_MEMBERS: TeamMember[] = [
     linkedin: "https://www.linkedin.com/in/mattin-aframian",
     imageSrc: undefined,
     bio : "Hi, my name is Mattin Aframian. I'm a third year, doubling majoring in Statistics & Data Science and Cognitive Science.",
-
   },
   {
     name: "Benjamin Garcia",
@@ -27,7 +26,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     bio : "Hello, my name is Benjamin Garcia and I am a third year Computer Science major.",
     researchResponsibility : "As the Web Developer, I led the development and deployment of the website, building it with React and Tailwind from the ground up.",
     linkedin: "https://www.linkedin.com/in/btgarcia05",
-    imageSrc: "/static/king.png",
+    imageSrc: "/static/team-members/Benjamin_Garcia.jpg",
   },
   {
     name: "Zoe Santos",
@@ -36,15 +35,15 @@ const TEAM_MEMBERS: TeamMember[] = [
     linkedin: "https://www.linkedin.com/in/zoe-santos-9708a0261/",
     imageSrc: undefined,
     bio: "Hello. My name is Zoe Santos. I'm a fourth year Statistics & Data Science Major with a Film, Television, and Digital Media minor",
-
   },
   {
     name: "Lily Sarkissian",
-    role: "TBD",
+    role: "Editor",
     email: "lilysarkissian9@g.ucla.edu",
     linkedin: "https://www.linkedin.com/in/lily-sarkissian-1678a63b1/",
     imageSrc: undefined,
     bio: "Hello! My name is Lily Sarkissian and I'm a third year Bioengineering major with a Technical Breadth in Digital Humanities.",
+    researchResponsibility : "As the Editor, I concentrated on editing all of our written and visual content in order to maintain consistency across our data visualizations and helped ensure that a coherent narrative was present within our project. "
   },
   {
     name: "Maelynn Vu",

@@ -52,7 +52,7 @@ export default function SiteFooter() {
         <div className="grid grid-cols-1 md:grid-cols-12">
           <section className="border-b border-black px-6 py-6 md:col-span-3 md:border-b-0 md:border-r">
             <div className="space-y-3">
-              <p className="text-3xl font-medium leading-none tracking-[0.08em]">Police Force by the Numbers</p>
+              <p className="text-3xl font-medium leading-none">Police Force by the Numbers</p>
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/65">
                 DGT HUM 101 Research Project
               </p>
