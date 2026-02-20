@@ -35,15 +35,16 @@ const TEAM_MEMBERS: TeamMember[] = [
     linkedin: "https://www.linkedin.com/in/zoe-santos-9708a0261/",
     imageSrc: undefined,
     bio: "Hello. My name is Zoe Santos. I'm a fourth year Statistics & Data Science Major with a Film, Television, and Digital Media minor",
+    researchResponsibility : "As the Content Developer, I led the creation of our visual content to ensure the audience's visual understanding of our project."
   },
   {
     name: "Lily Sarkissian",
     role: "Editor",
     email: "lilysarkissian9@g.ucla.edu",
     linkedin: "https://www.linkedin.com/in/lily-sarkissian-1678a63b1/",
-    imageSrc: undefined,
+    imageSrc: "/static/team-members/Lily_Sarkissian.jpg",
     bio: "Hello! My name is Lily Sarkissian and I'm a third year Bioengineering major with a Technical Breadth in Digital Humanities.",
-    researchResponsibility : "As the Editor, I concentrated on editing all of our written and visual content in order to maintain consistency across our data visualizations and helped ensure that a coherent narrative was present within our project. "
+    researchResponsibility : "As the Editor, I concentrated on editing all of our written and visual content in order to maintain consistency across our data visualizations and helped ensure that a coherent narrative was present within our project."
   },
   {
     name: "Maelynn Vu",
@@ -60,7 +61,8 @@ const TEAM_MEMBERS: TeamMember[] = [
     email: "xhy0331@.ucla.edu",
     linkedin: "https://www.linkedin.com/in/elaine-xia-91184735a/",
     imageSrc: undefined,
-    bio: "Hi, my name is Elaine Xia. I'm a second year double majored in Cognitive Science and Statistics & Data Science."
+    bio: "Hi, my name is Elaine Xia. I'm a second year double majored in Cognitive Science and Statistics & Data Science.",
+    researchResponsibility : "As the Data Specialist, I cleaned and structured our datasets, conducted exploratory data analysis, and created visualizations using Tableau and R to help illustrating patterns in our data."
   },
 ];
 
