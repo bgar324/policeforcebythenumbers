@@ -60,7 +60,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: "Data Specialist",
     email: "xhy0331@.ucla.edu",
     linkedin: "https://www.linkedin.com/in/elaine-xia-91184735a/",
-    imageSrc: undefined,
+    imageSrc: "/static/team-members/Elaine_Xia.jpg",
     bio: "Hi, my name is Elaine Xia. I'm a second year double majored in Cognitive Science and Statistics & Data Science.",
     researchResponsibility : "As the Data Specialist, I cleaned and structured our datasets, conducted exploratory data analysis, and created visualizations using Tableau and R to help illustrating patterns in our data."
   },
