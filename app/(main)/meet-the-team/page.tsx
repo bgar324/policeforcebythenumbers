@@ -33,7 +33,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: "Content Developer",
     email: "zoesantos@g.ucla.edu",
     linkedin: "https://www.linkedin.com/in/zoe-santos-9708a0261/",
-    imageSrc: "/static/team-members/Zoe_Santos.png",
+    imageSrc: "/static/team-members/Zoe_Santos.jpg",
     bio: "Hello. My name is Zoe Santos. I'm a fourth year Statistics & Data Science Major with a Film, Television, and Digital Media minor",
     researchResponsibility : "As the Content Developer, I led the creation of our visual content to ensure the audience's visual understanding of our project."
   },
