@@ -51,7 +51,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: "Project Manager",
     email: "maevu@g.ucla.edu",
     linkedin: "https://www.linkedin.com/in/maelynn-vu-076012283/",
-    imageSrc: undefined,
+    imageSrc: "/static/team-members/Maelynn_Vu.jpg",
     bio: "Hi there! My name is Maelynn Vu. I'm a fourth year Psychology Major and Digital Humanities minor.",
     researchResponsibility: "As the Project Manager, I coordinated meetings, organized our workflow, and kept deadlines on track. I also contributed to research and writing while overseeing the project’s overall direction to ensure our analysis and final presentation stayed cohesive and aligned with our goals."
   },

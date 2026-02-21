@@ -64,9 +64,7 @@ const DESKTOP_ITEM =
 export default function SiteNavbar() {
   const pathname = usePathname();
   const [isCompact, setIsCompact] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<DropdownKey | null>(
-    null,
-  );
+  const [activeDropdown, setActiveDropdown] = useState<DropdownKey | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const closeMenus = () => {
@@ -90,7 +88,6 @@ export default function SiteNavbar() {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
     }
-
     return () => {
       document.body.style.overflow = previousOverflow;
     };
@@ -98,6 +95,9 @@ export default function SiteNavbar() {
 
   const isActive = (href: string) => pathname === href;
   const overlayActive = Boolean(activeDropdown || mobileOpen);
+
+  // The "Insane" easing curve
+  const premiumEase = "cubic-bezier(0.23, 1, 0.32, 1)";
 
   return (
     <>
@@ -117,39 +117,49 @@ export default function SiteNavbar() {
         className="sticky top-0 z-50 w-full bg-white"
         style={{ viewTransitionName: "site-navbar" }}
       >
-        <div
-          className="relative flex h-[60px] w-full items-center justify-between border-b border-black"
-        >
+        <div className="relative flex h-[60px] w-full items-center justify-between border-b border-black">
+          
           <TransitionLink
             href="/"
             onClick={closeMenus}
             aria-label="Police Force by the Numbers Home"
-            className={`group flex h-full items-center overflow-hidden border-x border-black px-3 transition-colors duration-300 ease-out sm:px-4 ${
+            className={`group relative flex h-full items-center overflow-hidden border-x border-black px-3 sm:px-4 transition-all duration-700 ${
               isActive("/")
                 ? "bg-black !text-white"
                 : "text-black hover:bg-black hover:!text-white"
             }`}
+            style={{ 
+              transitionTimingFunction: premiumEase,
+              // Animating the width of the box to follow the text
+              // Adjust these pixel values if your font size differs slightly
+              width: isCompact ? '105px' : '350px' 
+            }}
           >
-            <span className="flex min-w-0 items-center whitespace-nowrap">
+            <div className="relative grid w-full grid-cols-1 grid-rows-1 items-center">
+              {/* Full Title Label */}
               <span
-                className={`block overflow-hidden text-[clamp(1rem,4vw,1.3rem)] font-semibold leading-none tracking-tight transition-[max-width,opacity] duration-300 ease-out sm:text-[1.7rem] ${
+                className={`col-start-1 row-start-1 block whitespace-nowrap text-[clamp(1rem,4vw,1.3rem)] font-semibold leading-none tracking-tight transition-all duration-700 sm:text-[1.7rem] ${
                   isCompact
-                    ? "max-w-0 opacity-0"
-                    : "max-w-[calc(100vw-8.75rem)] opacity-100 sm:max-w-[26rem]"
+                    ? "pointer-events-none -translate-x-8 opacity-0 blur-md"
+                    : "translate-x-0 opacity-100 blur-0"
                 }`}
+                style={{ transitionTimingFunction: premiumEase }}
               >
                 Police Force by the Numbers
               </span>
+
+              {/* Compact Label (PFBN) */}
               <span
-                className={`block overflow-hidden text-xl font-semibold leading-none tracking-[0.06em] transition-[max-width,opacity] duration-300 ease-out sm:text-[1.7rem] ${
+                className={`col-start-1 row-start-1 block whitespace-nowrap text-xl font-semibold leading-none tracking-[0.06em] transition-all duration-700 sm:text-[1.7rem] ${
                   isCompact
-                    ? "max-w-[7rem] opacity-100 sm:max-w-[7.8rem]"
-                    : "max-w-0 opacity-0"
-                }`}
+                    ? "translate-x-0 opacity-100 blur-0"
+                    : "pointer-events-none translate-x-8 opacity-0 blur-md"
+                } ${isActive("/") ? "!text-white" : "group-hover:!text-white"}`}
+                style={{ transitionTimingFunction: premiumEase }}
               >
                 PFBN
               </span>
-            </span>
+            </div>
           </TransitionLink>
 
           <nav
