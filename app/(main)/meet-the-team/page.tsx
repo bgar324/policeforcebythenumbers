@@ -16,8 +16,9 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: "Data specialist",
     email: "mattinaframian@gmail.com",
     linkedin: "https://www.linkedin.com/in/mattin-aframian",
-    imageSrc: undefined,
+    imageSrc: "/static/team-members/Mattin_Aframian.jpg",
     bio : "Hi, my name is Mattin Aframian. I'm a third year, doubling majoring in Statistics & Data Science and Cognitive Science.",
+    researchResponsibility : "As the Data Specialist, I created and cloned a Github repository for the group. I additionally used R to clean and filter through the data to prep for the creation of visualizations. "
   },
   {
     name: "Benjamin Garcia",
