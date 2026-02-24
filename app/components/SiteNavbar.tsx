@@ -13,8 +13,6 @@ type MenuSection = {
   items: NavItem[];
 };
 
-const LABEL_SWAP_AT = 24;
-
 const PRIMARY_LINKS = [{ label: "Timeline", href: "/timeline" }];
 
 const MENU_SECTIONS: MenuSection[] = [
@@ -63,25 +61,15 @@ const DESKTOP_ITEM =
 
 export default function SiteNavbar() {
   const pathname = usePathname();
-  const [isCompact, setIsCompact] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<DropdownKey | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<DropdownKey | null>(
+    null,
+  );
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const closeMenus = () => {
     setActiveDropdown(null);
     setMobileOpen(false);
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const nextCompact = window.scrollY > LABEL_SWAP_AT;
-      setIsCompact((prev) => (prev === nextCompact ? prev : nextCompact));
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -95,9 +83,6 @@ export default function SiteNavbar() {
 
   const isActive = (href: string) => pathname === href;
   const overlayActive = Boolean(activeDropdown || mobileOpen);
-
-  // The "Insane" easing curve
-  const premiumEase = "cubic-bezier(0.23, 1, 0.32, 1)";
 
   return (
     <>
@@ -118,46 +103,22 @@ export default function SiteNavbar() {
         style={{ viewTransitionName: "site-navbar" }}
       >
         <div className="relative flex h-[60px] w-full items-center justify-between border-b border-black">
-          
           <TransitionLink
             href="/"
             onClick={closeMenus}
             aria-label="Police Force by the Numbers Home"
-            className={`group relative flex h-full items-center overflow-hidden border-x border-black px-3 sm:px-4 transition-all duration-700 ${
+            className={`group relative flex h-full w-[132px] flex-col items-start justify-center border-x border-black px-3 sm:w-[138px] sm:px-4 ${
               isActive("/")
                 ? "bg-black !text-white"
                 : "text-black hover:bg-black hover:!text-white"
             }`}
-            style={{ 
-              transitionTimingFunction: premiumEase,
-              // Animating the width of the box to follow the text
-              // Adjust these pixel values if your font size differs slightly
-              width: isCompact ? '105px' : '350px' 
-            }}
           >
-            <div className="relative grid w-full grid-cols-1 grid-rows-1 items-center">
-              {/* Full Title Label */}
-              <span
-                className={`col-start-1 row-start-1 block whitespace-nowrap text-[clamp(1rem,4vw,1.3rem)] font-semibold leading-none tracking-tight transition-all duration-700 sm:text-[1.7rem] ${
-                  isCompact
-                    ? "pointer-events-none -translate-x-8 opacity-0 blur-md"
-                    : "translate-x-0 opacity-100 blur-0"
-                }`}
-                style={{ transitionTimingFunction: premiumEase }}
-              >
-                Police Force by the Numbers
+            <div className="flex flex-col leading-none">
+              <span className="whitespace-nowrap text-[1.1rem] font-bold tracking-tight transition-colors duration-200 sm:text-[1.15rem]">
+                Police Force
               </span>
-
-              {/* Compact Label (PFBN) */}
-              <span
-                className={`col-start-1 row-start-1 block whitespace-nowrap text-xl font-semibold leading-none tracking-[0.06em] transition-all duration-700 sm:text-[1.7rem] ${
-                  isCompact
-                    ? "translate-x-0 opacity-100 blur-0"
-                    : "pointer-events-none translate-x-8 opacity-0 blur-md"
-                } ${isActive("/") ? "!text-white" : "group-hover:!text-white"}`}
-                style={{ transitionTimingFunction: premiumEase }}
-              >
-                PFBN
+              <span className="mt-0.5 whitespace-nowrap text-[0.6rem] font-bold transition-colors duration-200 sm:text-[0.75rem]">
+                by the Numbers
               </span>
             </div>
           </TransitionLink>
@@ -279,7 +240,10 @@ export default function SiteNavbar() {
                 </p>
                 <ul className="border-t border-black">
                   {section.items.map((item, itemIndex) => (
-                    <li key={item.href} className={`${itemIndex > 0 ? "border-t border-black" : ""}`}>
+                    <li
+                      key={item.href}
+                      className={`${itemIndex > 0 ? "border-t border-black" : ""}`}
+                    >
                       <TransitionLink
                         href={item.href}
                         onClick={closeMenus}
