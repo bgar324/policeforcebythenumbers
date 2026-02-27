@@ -107,7 +107,7 @@ export default function SiteNavbar() {
             href="/"
             onClick={closeMenus}
             aria-label="Police Force by the Numbers Home"
-            className={`group relative flex h-full w-[132px] flex-col items-start justify-center border-x border-black px-3 sm:w-[135.5px] sm:px-4 ${
+            className={`group relative flex h-full w-min flex-col items-start justify-center border-x border-black px-3 sm:px-4 ${
               isActive("/")
                 ? "bg-black !text-white"
                 : "text-black hover:bg-black hover:!text-white"
@@ -115,10 +115,7 @@ export default function SiteNavbar() {
           >
             <div className="flex flex-col leading-none">
               <span className="whitespace-nowrap text-[1.1rem] font-semibold tracking-tight transition-colors duration-200 sm:text-[1.15rem]">
-                Police Force
-              </span>
-              <span className="mt-0.5 whitespace-nowrap text-[0.6rem] font-semibold transition-colors duration-200 sm:text-[0.75rem]">
-                by the Numbers
+                Police Force by the Numbers
               </span>
             </div>
           </TransitionLink>

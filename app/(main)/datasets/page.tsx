@@ -252,12 +252,16 @@ const AGENCY_FIELDS: FieldDefinition[] = [
 function DatasetFieldList({
   heading,
   fields,
+  withBottomBorder = true,
 }: {
   heading: string;
   fields: FieldDefinition[];
+  withBottomBorder?: boolean;
 }) {
   return (
-    <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
+    <section
+      className={`${withBottomBorder ? "border-b border-black" : ""} px-6 py-10 sm:px-10 sm:py-12`}
+    >
       <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
         {heading}
       </p>
@@ -446,7 +450,11 @@ export default function DatasetsPage() {
         </p>
       </section>
 
-      <DatasetFieldList heading="Agency Fields" fields={AGENCY_FIELDS} />
+      <DatasetFieldList
+        heading="Agency Fields"
+        fields={AGENCY_FIELDS}
+        withBottomBorder={false}
+      />
     </main>
   );
 }
