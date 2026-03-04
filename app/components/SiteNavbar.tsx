@@ -197,22 +197,29 @@ export default function SiteNavbar() {
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-controls="mobile-site-menu"
             aria-expanded={mobileOpen}
-            className="ml-3 mr-3 inline-flex h-11 w-11 items-center justify-center border border-black text-black md:hidden"
+            className={`inline-flex h-full min-w-[92px] items-center justify-center gap-3 border-l border-black px-4 font-[family:var(--font-nav)] transition-colors duration-200 md:hidden ${
+              mobileOpen
+                ? "bg-black text-white"
+                : "bg-white text-black hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white"
+            }`}
             onClick={() => setMobileOpen((o) => !o)}
           >
-            <span className="relative block h-4 w-5">
+            <span className="w-12 text-center text-[10px] font-semibold uppercase tracking-[0.18em]">
+              {mobileOpen ? "Close" : "Menu"}
+            </span>
+            <span className="relative block h-4 w-5 shrink-0">
               <span
-                className={`absolute left-0 top-1/2 h-[2px] w-full bg-black transition-transform duration-200 ${
+                className={`absolute left-0 top-1/2 h-[2px] w-full bg-current transition-transform duration-200 ${
                   mobileOpen ? "rotate-45" : "-translate-y-[6px]"
                 }`}
               />
               <span
-                className={`absolute left-0 top-1/2 h-[2px] w-full bg-black transition-opacity duration-200 ${
+                className={`absolute left-0 top-1/2 h-[2px] w-full bg-current transition-opacity duration-200 ${
                   mobileOpen ? "opacity-0" : ""
                 }`}
               />
               <span
-                className={`absolute left-0 top-1/2 h-[2px] w-full bg-black transition-transform duration-200 ${
+                className={`absolute left-0 top-1/2 h-[2px] w-full bg-current transition-transform duration-200 ${
                   mobileOpen ? "-rotate-45" : "translate-y-[6px]"
                 }`}
               />
