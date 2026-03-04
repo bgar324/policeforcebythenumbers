@@ -53,10 +53,10 @@ const NEXT_STEPS = [
 export default function HomePage() {
   return (
     <main className="mx-auto w-full max-w-[1200px] border-x border-black font-[family:var(--font-nav)]">
-      <header className="border-b border-black bg-[linear-gradient(180deg,#ffffff_0%,#fbfbfb_68%,#f6f6f6_100%)]">
+      <header className="border-b border-black">
         <div className="px-6 py-12 sm:px-10 sm:py-16">
           <div className="max-w-5xl">
-            <h1 className="font-[family:var(--font-masthead)] text-5xl font-medium leading-[0.98] sm:text-7xl">
+            <h1 className="text-5xl font-medium leading-[0.98] sm:text-7xl">
               Police Force by the Numbers
             </h1>
             <p className="mt-6 max-w-3xl text-base leading-relaxed text-black/75 sm:text-lg">
@@ -103,7 +103,7 @@ export default function HomePage() {
             <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
               Introduction
             </p>
-            <h2 className="mt-3 font-[family:var(--font-masthead)] text-4xl font-medium leading-none sm:text-5xl">
+            <h2 className="mt-3 text-4xl font-medium leading-none sm:text-5xl">
               What the Dataset Contains
             </h2>
           </div>
@@ -120,7 +120,7 @@ export default function HomePage() {
         <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
           Literature Review
         </p>
-        <h2 className="mt-3 font-[family:var(--font-masthead)] text-4xl font-medium leading-none sm:text-5xl">
+        <h2 className="mt-3 text-4xl font-medium leading-none sm:text-5xl">
           Place in the Literature
         </h2>
 
@@ -142,7 +142,7 @@ export default function HomePage() {
             <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
               Significance
             </p>
-            <h2 className="mt-3 max-w-2xl font-[family:var(--font-masthead)] text-4xl font-medium leading-tight sm:text-5xl">
+            <h2 className="mt-3 max-w-2xl text-4xl font-medium leading-tight sm:text-5xl">
               Why the framing of the dataset matters
             </h2>
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-black/80">
