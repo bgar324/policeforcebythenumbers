@@ -210,6 +210,35 @@ export default function BibliographyPage() {
     }
   }, [activeAnnotation]);
 
+  useEffect(() => {
+    if (!activeAnnotation) {
+      return;
+    }
+
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtmlOverflow = html.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyPaddingRight = body.style.paddingRight;
+    const scrollbarCompensation = Math.max(
+      0,
+      window.innerWidth - html.clientWidth,
+    );
+
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+
+    if (scrollbarCompensation > 0) {
+      body.style.paddingRight = `${scrollbarCompensation}px`;
+    }
+
+    return () => {
+      html.style.overflow = previousHtmlOverflow;
+      body.style.overflow = previousBodyOverflow;
+      body.style.paddingRight = previousBodyPaddingRight;
+    };
+  }, [activeAnnotation]);
+
   return (
     <>
       <main className="mx-auto w-full max-w-[1200px] border-x border-black font-[family:var(--font-nav)]">
