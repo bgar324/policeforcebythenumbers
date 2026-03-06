@@ -17,6 +17,7 @@ const REVEAL_DURATION_MS = 420;
 const COVER_HOLD_MS = 30;
 const FONT_LOAD_WAIT_MS = 900;
 const FAILSAFE_MS = 4500;
+const MAX_CANVAS_DPR = 2;
 const SEED_SALT = "pfbn-curtain-v1";
 const CURTAIN_COLOR = "#171716" as const;
 const LABEL_TEXT = "PFBN";
@@ -27,7 +28,6 @@ type Phase = "idle" | "cover" | "wait-route" | "wait-paint" | "reveal";
 type Cell = {
   x: number;
   y: number;
-  color: typeof CURTAIN_COLOR;
 };
 
 type Pattern = {
@@ -38,6 +38,8 @@ type Pattern = {
   cells: Cell[];
   total: number;
 };
+
+type DrawMode = "auto" | "full";
 
 export type TransitionStartOptions = {
   replace?: boolean;
@@ -125,7 +127,6 @@ function createPattern(
   const cols = Math.ceil(viewportWidth / cellSize);
   const rows = Math.ceil(viewportHeight / cellSize);
   const random = mulberry32(seed);
-  const curtainColor = CURTAIN_COLOR;
 
   const orderedColumns: number[] = [];
   for (let col = 0; col < cols; ) {
@@ -151,7 +152,6 @@ function createPattern(
       cells.push({
         x: col * cellSize,
         y: row * cellSize,
-        color: curtainColor,
       });
     }
   }
@@ -231,6 +231,7 @@ export default function TransitionProvider({ children }: { children: ReactNode }
   const inFlightPromiseRef = useRef<Promise<void> | null>(null);
   const transitionIdRef = useRef(0);
   const coverCompleteAtRef = useRef(0);
+  const lastDrawRef = useRef({ start: 0, count: 0 });
   const scrollLockRef = useRef<ScrollLockSnapshot | null>(null);
   const chomskyReadyRef = useRef(false);
   const chomskyLoadPromiseRef = useRef<Promise<void> | null>(null);
@@ -332,7 +333,7 @@ export default function TransitionProvider({ children }: { children: ReactNode }
 
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    const dpr = clamp(window.devicePixelRatio || 1, 1, MAX_CANVAS_DPR);
     const pattern = createPattern(seed, width, height, dpr);
 
     patternRef.current = pattern;
@@ -345,6 +346,7 @@ export default function TransitionProvider({ children }: { children: ReactNode }
     const context = canvas.getContext("2d");
     if (!context) {
       contextRef.current = null;
+      lastDrawRef.current = { start: 0, count: 0 };
       return;
     }
 
@@ -352,26 +354,70 @@ export default function TransitionProvider({ children }: { children: ReactNode }
     context.imageSmoothingEnabled = false;
     context.clearRect(0, 0, pattern.width, pattern.height);
     contextRef.current = context;
+    lastDrawRef.current = { start: 0, count: 0 };
   }, []);
 
-  const drawCells = useCallback((visibleCount: number, startIndex = 0) => {
-    const pattern = patternRef.current;
-    const context = contextRef.current;
+  const drawCells = useCallback(
+    (visibleCount: number, startIndex = 0, mode: DrawMode = "auto") => {
+      const pattern = patternRef.current;
+      const context = contextRef.current;
 
-    if (!pattern || !context) {
-      return;
-    }
+      if (!pattern || !context) {
+        return;
+      }
 
-    const clampedStart = clamp(startIndex, 0, pattern.total);
-    const clampedCount = clamp(visibleCount, 0, pattern.total - clampedStart);
+      const nextStart = clamp(startIndex, 0, pattern.total);
+      const nextCount = clamp(visibleCount, 0, pattern.total - nextStart);
+      const previous = lastDrawRef.current;
 
-    context.clearRect(0, 0, pattern.width, pattern.height);
-    for (let i = clampedStart; i < clampedStart + clampedCount; i += 1) {
-      const cell = pattern.cells[i];
-      context.fillStyle = cell.color;
-      context.fillRect(cell.x, cell.y, pattern.cellSize, pattern.cellSize);
-    }
-  }, []);
+      if (mode === "auto") {
+        const isIncrementalCover =
+          nextStart === 0 &&
+          previous.start === 0 &&
+          nextCount >= previous.count;
+
+        if (isIncrementalCover) {
+          if (nextCount > previous.count) {
+            context.fillStyle = CURTAIN_COLOR;
+            for (let i = previous.count; i < nextCount; i += 1) {
+              const cell = pattern.cells[i];
+              context.fillRect(cell.x, cell.y, pattern.cellSize, pattern.cellSize);
+            }
+          }
+
+          lastDrawRef.current = { start: nextStart, count: nextCount };
+          return;
+        }
+
+        const removedCount = nextStart - previous.start;
+        const isIncrementalReveal =
+          removedCount >= 0 && nextCount === previous.count - removedCount;
+
+        if (isIncrementalReveal) {
+          if (removedCount > 0) {
+            for (let i = previous.start; i < nextStart; i += 1) {
+              const cell = pattern.cells[i];
+              context.clearRect(cell.x, cell.y, pattern.cellSize, pattern.cellSize);
+            }
+          }
+
+          lastDrawRef.current = { start: nextStart, count: nextCount };
+          return;
+        }
+      }
+
+      context.clearRect(0, 0, pattern.width, pattern.height);
+      if (nextCount > 0) {
+        context.fillStyle = CURTAIN_COLOR;
+        for (let i = nextStart; i < nextStart + nextCount; i += 1) {
+          const cell = pattern.cells[i];
+          context.fillRect(cell.x, cell.y, pattern.cellSize, pattern.cellSize);
+        }
+      }
+      lastDrawRef.current = { start: nextStart, count: nextCount };
+    },
+    [],
+  );
 
   const drawCenterLabel = useCallback((progress: number) => {
     const pattern = patternRef.current;
@@ -412,8 +458,9 @@ export default function TransitionProvider({ children }: { children: ReactNode }
       }
 
       clearScheduledWork();
-      drawCells(0);
+      drawCells(0, 0, "full");
       patternRef.current = null;
+      lastDrawRef.current = { start: 0, count: 0 };
       phaseRef.current = "idle";
       activeRef.current = null;
       inFlightPromiseRef.current = null;
@@ -507,16 +554,19 @@ export default function TransitionProvider({ children }: { children: ReactNode }
         const progress = clamp((now - startedAt) / COVER_DURATION_MS, 0, 1);
         const eased = easeOutCubic(progress);
         const visibleCells = Math.round(pattern.total * eased);
+        const shouldDrawLabel = chomskyReadyRef.current;
 
-        drawCells(visibleCells);
-        drawCenterLabel(progress);
+        drawCells(visibleCells, 0, shouldDrawLabel ? "full" : "auto");
+        if (shouldDrawLabel) {
+          drawCenterLabel(progress);
+        }
 
         if (progress < 1) {
           rafRef.current = window.requestAnimationFrame(step);
           return;
         }
 
-        drawCells(pattern.total);
+        drawCells(pattern.total, 0, "full");
         coverCompleteAtRef.current = performance.now();
         phaseRef.current = "wait-route";
         navigateToTarget(active);
@@ -608,7 +658,8 @@ export default function TransitionProvider({ children }: { children: ReactNode }
           beginCover(id);
         };
 
-        void ensureChomskyLoaded().finally(beginCurtain);
+        void ensureChomskyLoaded();
+        beginCurtain();
       });
 
       inFlightPromiseRef.current = transitionPromise;
