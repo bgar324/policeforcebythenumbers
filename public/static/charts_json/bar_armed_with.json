@@ -1,0 +1,101 @@
+{
+  "data": [
+    {
+      "x": [
+        36.299999999999997, 32.899999999999999, 29.399999999999999,
+        26.199999999999999, 24.100000000000001, 18.600000000000001,
+        16.800000000000001, 11.199999999999999, 9, 7.7000000000000002,
+        4.5999999999999996, 4
+      ],
+      "y": [
+        "replica",
+        "knife",
+        "blunt_object",
+        "gun;knife",
+        "other",
+        "unarmed",
+        "gun",
+        "undetermined",
+        "unknown",
+        "gun;vehicle",
+        "vehicle",
+        "vehicle;gun"
+      ],
+      "orientation": "h",
+      "marker": {
+        "color": "#2171b5",
+        "line": { "color": "rgba(31,119,180,1)" }
+      },
+      "text": [
+        "36.3%  (n=120/331)",
+        "32.9%  (n=585/1776)",
+        "29.4%  (n=74/252)",
+        "26.2%  (n=11/42)",
+        "24.1%  (n=26/108)",
+        "18.6%  (n=105/565)",
+        "16.8%  (n=1016/6040)",
+        "11.2%  (n=52/463)",
+        "9%  (n=34/376)",
+        "7.7%  (n=3/39)",
+        "4.6%  (n=17/372)",
+        "4%  (n=1/25)"
+      ],
+      "hoverinfo": [
+        "text",
+        "text",
+        "text",
+        "text",
+        "text",
+        "text",
+        "text",
+        "text",
+        "text",
+        "text",
+        "text",
+        "text"
+      ],
+      "type": "bar",
+      "error_y": { "color": "rgba(31,119,180,1)" },
+      "error_x": { "color": "rgba(31,119,180,1)" },
+      "xaxis": "x",
+      "yaxis": "y",
+      "frame": null
+    }
+  ],
+  "layout": {
+    "margin": { "b": 50, "l": 120, "t": 50, "r": 10 },
+    "title": {
+      "text": "<b>% Mental-Illness-Related by Armed With (top 12)<\/b>",
+      "font": { "size": 14 }
+    },
+    "xaxis": {
+      "domain": [0, 1],
+      "automargin": true,
+      "title": "% of incidents marked mental-illness-related",
+      "range": [0, 80]
+    },
+    "yaxis": {
+      "domain": [0, 1],
+      "automargin": true,
+      "title": "",
+      "type": "category",
+      "categoryorder": "array",
+      "categoryarray": [
+        "vehicle;gun",
+        "vehicle",
+        "gun;vehicle",
+        "unknown",
+        "undetermined",
+        "gun",
+        "unarmed",
+        "other",
+        "gun;knife",
+        "blunt_object",
+        "knife",
+        "replica"
+      ]
+    },
+    "hovermode": "closest",
+    "showlegend": false
+  }
+}
