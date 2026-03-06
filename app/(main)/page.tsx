@@ -1,12 +1,5 @@
 import TransitionLink from "@/app/components/transition/TransitionLink";
 
-const PAPER_FRAME = [
-  {
-    label: "Source",
-    value: "The Washington Post fatal police shootings dataset",
-  },
-] as const;
-
 const ABSTRACT_BODY =
   "Our project follows a dataset containing detailed records of fatal police shootings in the United States, taken from The Washington Post. This data was drawn from federal law enforcement datasets. The data itself includes information such as the manner of death, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location. It also includes information about the person who was killed. Victim variables include name, age, gender, race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers. The dataset also includes a separate set of agency-level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.";
 
