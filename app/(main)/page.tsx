@@ -1,26 +1,9 @@
 import TransitionLink from "@/app/components/transition/TransitionLink";
 
-const AUTHORS = [
-  "Mattin Aframian",
-  "Zoe Santos",
-  "Maelynn Vu",
-  "Benjamin Garcia",
-  "Elaine Xia",
-  "Lily Sarkissian",
-];
-
 const PAPER_FRAME = [
   {
     label: "Source",
     value: "The Washington Post fatal police shootings dataset",
-  },
-  {
-    label: "Scope",
-    value: "Victim, incident, and agency-level records",
-  },
-  {
-    label: "Focus",
-    value: "Data structure, literature context, and interpretive limits",
   },
 ] as const;
 
@@ -64,35 +47,12 @@ export default function HomePage() {
               existing scholarship, and the limits of how this dataset frames
               what can be seen.
             </p>
-          </div>
-
-          <div className="mt-8 border border-black bg-white/80">
-            <div className="border-b border-black px-5 py-5 sm:px-6">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-                Authors
-              </p>
-              <p className="mt-2 max-w-4xl text-sm leading-relaxed text-black/80 sm:text-base">
-                {AUTHORS.join(" · ")}
-              </p>
-            </div>
-
-            <dl className="grid gap-0 sm:grid-cols-3">
-              {PAPER_FRAME.map((item, index) => (
-                <div
-                  key={item.label}
-                  className={`px-5 py-4 sm:px-6 ${
-                    index > 0 ? "border-t border-black sm:border-t-0 sm:border-l" : ""
-                  }`}
-                >
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55">
-                    {item.label}
-                  </dt>
-                  <dd className="mt-2 text-sm leading-relaxed text-black/80">
-                    {item.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+            <TransitionLink
+              href="/meet-the-team"
+              className="mt-6 inline-flex w-fit items-center border border-black px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white"
+            >
+              meet the team
+            </TransitionLink>
           </div>
         </div>
       </header>
@@ -116,7 +76,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-b border-black bg-black/[0.02] px-6 py-10 sm:px-10 sm:py-12">
+      <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
         <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
           Literature Review
         </p>
@@ -136,8 +96,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[linear-gradient(180deg,#f8f8f8_0%,#ffffff_100%)]">
-        <div className="grid gap-0 lg:grid-cols-[1.02fr_0.98fr]">
+      <section>
+        <div className="grid gap-0 lg:grid-cols-2">
           <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12 lg:border-r lg:border-b-0">
             <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
               Significance
@@ -153,7 +113,7 @@ export default function HomePage() {
           <aside className="px-6 py-10 sm:px-10 sm:py-12">
             <div className="border border-black bg-[linear-gradient(180deg,#ffffff_0%,#fafafa_100%)] px-5 py-6 sm:px-6">
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-              Next
+                Next
               </p>
               <h3 className="mt-3 max-w-sm text-3xl font-semibold leading-tight sm:text-4xl">
                 Keep reading from the data outward.
