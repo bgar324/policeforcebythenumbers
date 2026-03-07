@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { Newsreader, Source_Sans_3 } from "next/font/google";
+import { Newsreader, Source_Sans_3, Geist } from "next/font/google";
 import TransitionProvider from "@/app/components/transition/TransitionProvider";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const masthead = Newsreader({
   variable: "--font-masthead",
@@ -26,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <head>
         <link rel="preconnect" href="https://fonts.cdnfonts.com" crossOrigin="" />
         <link
