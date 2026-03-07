@@ -1,9 +1,10 @@
 import ShootingsViz from "@/app/components/ShootingsViz";
+import TableauEmbeds from "@/app/components/TableauEmbeds";
 
 export default function DataAnalysisPage() {
   return (
-    <main className="mx-auto w-full max-w-[1200px] border-x border-black px-6 py-10 sm:px-10 sm:py-14">
-      <header className="border-b border-black pb-8">
+    <main className="mx-auto w-full max-w-[1200px] border-x border-black py-10 sm:py-14">
+      <header className="px-6 sm:px-10">
         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
           Narrative
         </p>
@@ -11,13 +12,68 @@ export default function DataAnalysisPage() {
           Data Analysis
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-black/75">
-          Visual analysis of police shootings across states, threat type, flee
-          status, and whether subjects were armed.
+          Research questions, visual evidence, and chart-specific interpretation
+          for our police force analysis.
         </p>
       </header>
 
-      <section className="mt-8">
-        <ShootingsViz />
+      <section className="mt-10 border-t border-black">
+        <div className="px-6 pt-8 sm:px-10">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
+            Research Question 1
+          </p>
+          <h2 className="mt-3 text-2xl font-medium leading-tight sm:text-3xl">
+            How have fatal police shootings changed after the
+            pandemic? Have they increased? Decreased?
+          </h2>
+
+          <div className="mt-6">
+            <TableauEmbeds ids={["fatal-over-time", "post-pandemic-increase"]} />
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-12 border-t border-black">
+        <div className="px-6 pt-8 sm:px-10">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
+            Research Question 2
+          </p>
+          <h2 className="mt-3 text-2xl font-medium leading-tight sm:text-3xl">
+            How has the racial distribution of people killed in
+            fatal police shootings in the United States changed from 2015 to
+            the present?
+          </h2>
+
+          <div className="mt-6">
+            <TableauEmbeds
+              ids={[
+                "racial-distribution-over-time",
+                "racial-composition-by-year",
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-12 border-t border-black">
+        <div className="px-6 pt-8 sm:px-10">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
+            Research Question 3
+          </p>
+          <h2 className="mt-3 text-2xl font-medium leading-tight sm:text-3xl">
+            How does the likelihood that a shooting is marked as
+            mental-illness-related differ across agency types and states, and
+            what incident context (
+            <span className="font-mono">threat_type</span>,{" "}
+            <span className="font-mono">armed_with</span>,{" "}
+            <span className="font-mono">flee_status</span>) are most associated
+            with the mental illness label?
+          </h2>
+
+          <div className="mt-8">
+            <ShootingsViz />
+          </div>
+        </div>
       </section>
     </main>
   );
