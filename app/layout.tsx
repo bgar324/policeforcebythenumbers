@@ -4,7 +4,7 @@ import TransitionProvider from "@/app/components/transition/TransitionProvider";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const masthead = Newsreader({
   variable: "--font-masthead",
@@ -29,15 +29,38 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
+    <html
+      lang="en"
+      className={cn("font-sans", geist.variable)}
+      suppressHydrationWarning
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.cdnfonts.com" crossOrigin="" />
+        <link
+          rel="preconnect"
+          href="https://fonts.cdnfonts.com"
+          crossOrigin=""
+        />
         <link
           rel="preload"
           as="style"
           href="https://fonts.cdnfonts.com/css/chomsky"
         />
         <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/chomsky" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                try {
+                  var key = "pfbn-theme";
+                  var stored = localStorage.getItem(key);
+                  var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                  var shouldDark = stored ? stored === "dark" : prefersDark;
+                  document.documentElement.classList.toggle("dark", shouldDark);
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
       </head>
       <body
         className={`${masthead.variable} ${navSans.variable} bg-white text-black antialiased`}

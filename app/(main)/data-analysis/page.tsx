@@ -17,7 +17,7 @@ export default function DataAnalysisPage() {
         </p>
       </header>
 
-      <section className="mt-10 border-t border-black">
+      <section id="question-1" className="mt-10 border-t border-black scroll-mt-20">
         <div className="px-6 pt-8 sm:px-10">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
             Research Question 1
@@ -33,7 +33,7 @@ export default function DataAnalysisPage() {
         </div>
       </section>
 
-      <section className="mt-12 border-t border-black">
+      <section id="question-2" className="mt-12 border-t border-black scroll-mt-20">
         <div className="px-6 pt-8 sm:px-10">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
             Research Question 2
@@ -55,7 +55,7 @@ export default function DataAnalysisPage() {
         </div>
       </section>
 
-      <section className="mt-12 border-t border-black">
+      <section id="question-3" className="mt-12 border-t border-black scroll-mt-20">
         <div className="px-6 pt-8 sm:px-10">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
             Research Question 3

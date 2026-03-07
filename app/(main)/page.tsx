@@ -21,7 +21,7 @@ const FINDINGS: Finding[] = [
     question: "How did fatal police shootings change after COVID-19?",
     takeaway:
       "Shootings rose from 4,923 (2015-2019) to 5,507 (2020-2024), a roughly 12% increase that persists beyond the immediate pandemic period.",
-    route: "/data-analysis",
+    route: "/data-analysis#question-1",
     routeLabel: "View Question 1 Analysis",
   },
   {
@@ -30,7 +30,7 @@ const FINDINGS: Finding[] = [
       "How has the racial distribution changed from 2015 to the present?",
     takeaway:
       "Total shootings increased, but racial composition remained relatively stable, with persistent overrepresentation of Black victims versus U.S. population share.",
-    route: "/data-analysis",
+    route: "/data-analysis#question-2",
     routeLabel: "View Question 2 Analysis",
   },
   {
@@ -39,7 +39,7 @@ const FINDINGS: Finding[] = [
       "Where is mental-illness labeling concentrated, and in what incident contexts?",
     takeaway:
       "Labeling varies sharply by state and context, clustering in non-flee incidents and specific threat/weapon profiles, suggesting strong reporting and policy effects.",
-    route: "/data-analysis",
+    route: "/data-analysis#question-3",
     routeLabel: "View Question 3 Analysis",
   },
 ];
@@ -168,7 +168,9 @@ export default function HomePage() {
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
                   Time Span
                 </dt>
-                <dd className="mt-1 text-2xl font-semibold leading-none">2015-2024</dd>
+                <dd className="mt-1 text-2xl font-semibold leading-none">
+                  2015-2024
+                </dd>
               </div>
               <div className="border border-black px-4 py-3">
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
@@ -209,7 +211,9 @@ export default function HomePage() {
                 <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55">
                   Finding
                 </p>
-                <p className="mt-2 text-2xl font-semibold leading-none">{finding.id}</p>
+                <p className="mt-2 text-2xl font-semibold leading-none">
+                  {finding.id}
+                </p>
               </div>
 
               <div className="border-b border-black px-5 py-5 lg:border-b-0 lg:px-6 lg:py-6">
@@ -235,60 +239,38 @@ export default function HomePage() {
       </section>
 
       <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
-        <div className="grid gap-0 lg:grid-cols-[1fr_320px]">
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-              Site Status
-            </p>
-            <h2 className="mt-3 max-w-3xl text-4xl font-medium leading-tight sm:text-5xl">
-              Full pass: what is complete and what is still being built
-            </h2>
-            <div className="mt-8 grid gap-0 border-y border-black">
-              {SITE_STATUS.map((section, index) => (
-                <article
-                  key={section.href}
-                  className={`grid gap-4 px-4 py-4 sm:grid-cols-[180px_1fr_auto] sm:items-center ${
-                    index > 0 ? "border-t border-black" : ""
-                  }`}
-                >
-                  <TransitionLink
-                    href={section.href}
-                    className="text-xl font-semibold leading-tight transition-opacity duration-150 hover:opacity-70"
-                  >
-                    {section.label}
-                  </TransitionLink>
-                  <p className="text-sm leading-relaxed text-black/75">{section.note}</p>
-                  <span
-                    className={`inline-flex w-fit items-center px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] ${statusClasses(
-                      section.status,
-                    )}`}
-                  >
-                    {section.status}
-                  </span>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <aside className="border-t border-black pt-8 lg:ml-8 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-              Reading Path
-            </p>
-            <ol className="mt-4 space-y-4 text-sm leading-relaxed text-black/80">
-              <li className="border border-black px-4 py-3">
-                Start with <strong>Timeline</strong> for context.
-              </li>
-              <li className="border border-black px-4 py-3">
-                Move to <strong>Data Analysis</strong> for claims and evidence.
-              </li>
-              <li className="border border-black px-4 py-3">
-                Use <strong>Datasets</strong> and <strong>Data Critique</strong> to verify methods and limits.
-              </li>
-              <li className="border border-black px-4 py-3">
-                Check <strong>Bibliography</strong> for supporting scholarship.
-              </li>
-            </ol>
-          </aside>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
+          Site Status
+        </p>
+        <h2 className="mt-3 max-w-3xl text-4xl font-medium leading-tight sm:text-5xl">
+          Full pass: what is complete and what is still being built
+        </h2>
+        <div className="mt-8 grid gap-0 border-y border-black">
+          {SITE_STATUS.map((section, index) => (
+            <article
+              key={section.href}
+              className={`grid gap-4 px-4 py-4 sm:grid-cols-[180px_1fr_auto] sm:items-center ${
+                index > 0 ? "border-t border-black" : ""
+              }`}
+            >
+              <TransitionLink
+                href={section.href}
+                className="text-xl font-semibold leading-tight transition-opacity duration-150 hover:opacity-70"
+              >
+                {section.label}
+              </TransitionLink>
+              <p className="text-sm leading-relaxed text-black/75">
+                {section.note}
+              </p>
+              <span
+                className={`inline-flex w-fit items-center px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] ${statusClasses(
+                  section.status,
+                )}`}
+              >
+                {section.status}
+              </span>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -297,7 +279,8 @@ export default function HomePage() {
           About the Team
         </p>
         <h2 className="mt-3 max-w-4xl text-4xl font-medium leading-tight sm:text-5xl">
-          Built collaboratively across data, writing, design, and web development
+          Built collaboratively across data, writing, design, and web
+          development
         </h2>
         <p className="mt-5 max-w-4xl text-base leading-relaxed text-black/80">
           This site integrates quantitative analysis, critical interpretation,

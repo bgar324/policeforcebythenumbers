@@ -81,6 +81,19 @@ export default function SiteNavbar() {
     };
   }, [mobileOpen]);
 
+  const toggleTheme = () => {
+    const root = document.documentElement;
+    const isDark = root.classList.contains("dark");
+    const nextTheme = isDark ? "light" : "dark";
+    root.classList.toggle("dark", nextTheme === "dark");
+
+    try {
+      localStorage.setItem("pfbn-theme", nextTheme);
+    } catch {
+      // ignore storage failures in restricted environments
+    }
+  };
+
   const isActive = (href: string) => pathname === href;
   const overlayActive = Boolean(activeDropdown || mobileOpen);
 
@@ -107,10 +120,10 @@ export default function SiteNavbar() {
             href="/"
             onClick={closeMenus}
             aria-label="Police Force by the Numbers Home"
-            className={`group relative flex h-full w-min flex-col items-start justify-center border-x border-black px-3 sm:px-4 ${
+            className={`group relative flex h-full w-min flex-col items-start justify-center border-r border-black px-3 sm:px-4 ${
               isActive("/")
-                ? "bg-black !text-white"
-                : "text-black hover:bg-black hover:!text-white"
+                ? "bg-black !text-white dark:!bg-white dark:!text-black"
+                : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
             }`}
           >
             <div className="flex flex-col leading-none">
@@ -131,8 +144,8 @@ export default function SiteNavbar() {
                 onClick={closeMenus}
                 className={`${DESKTOP_ITEM} border-l border-black ${
                   isActive(link.href)
-                    ? "bg-black !text-white"
-                    : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white"
+                    ? "bg-black !text-white dark:!bg-white dark:!text-black"
+                    : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
                 }`}
               >
                 {link.label}
@@ -150,8 +163,8 @@ export default function SiteNavbar() {
                   type="button"
                   className={`${DESKTOP_ITEM} gap-2 ${
                     activeDropdown === section.key
-                      ? "bg-black !text-white"
-                      : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white"
+                      ? "bg-black !text-white dark:!bg-white dark:!text-black"
+                      : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
                   }`}
                 >
                   {section.label}
@@ -180,8 +193,8 @@ export default function SiteNavbar() {
                         i === 0 ? "" : "border-t border-black"
                       } ${
                         isActive(item.href)
-                          ? "bg-black !text-white"
-                          : "text-black hover:bg-black hover:!text-white"
+                          ? "bg-black !text-white dark:!bg-white dark:!text-black"
+                          : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
                       }`}
                     >
                       {item.label}
@@ -190,6 +203,17 @@ export default function SiteNavbar() {
                 </div>
               </div>
             ))}
+
+            <button
+              type="button"
+              aria-label="Toggle light and dark mode"
+              onClick={toggleTheme}
+              className={`${DESKTOP_ITEM} w-[56px] cursor-pointer justify-center border-l border-black px-0 text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black`}
+            >
+              <span className="text-[15px] leading-none" aria-hidden>
+                ●
+              </span>
+            </button>
           </nav>
 
           <button
@@ -253,8 +277,8 @@ export default function SiteNavbar() {
                         onClick={closeMenus}
                         className={`block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.14em] ${
                           isActive(item.href)
-                            ? "bg-black !text-white"
-                            : "text-black hover:bg-black hover:!text-white"
+                            ? "bg-black !text-white dark:!bg-white dark:!text-black"
+                            : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
                         }`}
                       >
                         {item.label}
@@ -264,6 +288,16 @@ export default function SiteNavbar() {
                 </ul>
               </section>
             ))}
+            <section className="border-t border-black">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                aria-label="Toggle light and dark mode"
+                className="cursor-pointer block w-full px-6 py-3 text-center text-[15px] leading-none text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
+              >
+                <span aria-hidden>●</span>
+              </button>
+            </section>
           </div>
         </div>
       </header>
