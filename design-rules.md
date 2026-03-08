@@ -1,143 +1,193 @@
 # Police Force by the Numbers Design Rules
 
-This document codifies the current UI system so future pages/components stay visually consistent.
+This file is a handoff document for future Codex instances. Read it before making any visual, layout, or content-structure changes.
 
-## 1) Core Direction
+## 1) Operating Principle
 
-- Style: editorial newspaper interface with modern interaction polish
-- Mood: serious, analytical, high-contrast, disciplined
-- Principle: content-first, with structure and hierarchy communicated through rules, typography, and spacing
+- This site is an editorial, black-and-white, data-storytelling interface.
+- The design language is disciplined, structural, and content-first.
+- Consistency work means standardizing existing patterns, not inventing new ones.
+- A harmony pass is not permission to add new copy, new framing text, new counters, new asides, or new content architecture unless the user explicitly asks for them.
 
-## 2) Color System
+## 2) Mandatory Source of Truth
 
-- Base background: `#ffffff`
-- Primary text/rules: near-black (`#050505` globally, with black utility classes in components)
-- Selection treatment: black background + white text
-- Opacity steps for hierarchy:
-`text-black/55`, `text-black/60`, `text-black/65`, `text-black/70`, `text-black/75`, `text-black/80`
-- Interaction inversion pattern:
-default white surface + black text -> hover/active black surface + white text
+Read these first before touching page UI:
 
-## 3) Typography System
+- `app/components/page-chrome.tsx`
+- `app/globals.css`
+- `app/components/SiteNavbar.tsx`
+- `app/components/SiteFooter.tsx`
+- `app/components/transition/TransitionLink.tsx`
+- `app/layout.tsx`
 
-- Body/UI font: `Source Sans 3` (`--font-nav`)
-- Display/serif font: `Newsreader` (`--font-masthead`)
-- Accent/transition font: `Chomsky` (used in route transition identity mark)
+If editing a specific page type, also read one nearby page that already feels correct before changing anything.
 
-### Type Roles
+## 3) Current Visual Direction
 
-- Metadata label:
-`10-12px`, `font-semibold`, `uppercase`, `tracking-[0.14em]` (sometimes `0.15em`)
-- Body copy:
-`text-sm` or `text-base`, `leading-relaxed`, typically `text-black/75` or `text-black/80`
-- Headline tiers:
-`text-2xl` to `text-6xl` with tight leading, semibold/medium weight
+- Tone: serious, analytical, restrained
+- Visual model: editorial/newspaper framing, not SaaS cards, not playful marketing UI
+- Primary hierarchy tool: 1px black rules and disciplined spacing
+- Secondary hierarchy tool: typography and opacity, not color accents
+- Interaction model: inversion and keylines, not glow/shadow-heavy decoration
 
-## 4) Layout and Grid
+## 4) Color and Theme
 
-- Canonical content frame:
-`mx-auto w-full max-w-[1200px] border-x border-black`
-- Shell:
-sticky top navbar, flowing main content, bordered footer
-- Section structure:
-large blocks separated by hard `border-b border-black`
-- Responsive strategy:
-single-column default, enhanced split grids at `lg`/`md`
+- Base surface is white in light mode and near-black in dark mode.
+- Primary ink is near-black in light mode and near-white in dark mode.
+- Keep the palette monochrome unless the user asks for a system-level change.
+- Use opacity steps for hierarchy: `text-black/55`, `/60`, `/65`, `/70`, `/75`, `/80`
+- Dark mode is already handled globally in `app/globals.css` and `app/layout.tsx`. Do not introduce page-level theme logic unless necessary.
 
-## 5) Rule/Border Language
+## 5) Typography
 
-- Borders are structural, not decorative
-- Use 1px black rules to:
-segment nav items, split columns, bracket lists, and define cards
-- Prefer explicit keylines over shadows for hierarchy
-- Exception:
-cards may use subtle gradient fills and offset-shadow illusions, but still anchored by black borders
+- UI/body font: `Source Sans 3` via `--font-nav`
+- Display serif: `Newsreader` via `--font-masthead`
+- Use the serif selectively for masthead-style emphasis, not everywhere.
 
-## 6) Spacing Rhythm
+Type roles:
 
-- Typical horizontal padding:
-`px-6` on mobile, `sm:px-10` on larger screens
-- Vertical cadence:
-`py-8` to `py-16` depending on section importance
-- Internal spacing:
-`mt-3`, `mt-4`, `mt-5`, `mt-6` used as a consistent reading rhythm
+- Page eyebrow: `text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70`
+- Section eyebrow: `text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60`
+- Meta label: `text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55`
+- Page title default: `text-4xl sm:text-6xl`, medium or semibold depending on page
+- Body copy: `text-base leading-relaxed text-black/75` or `text-black/80`
 
-## 7) Interaction Model
+Do not introduce new type scales when the existing shared ones are sufficient.
 
-- Primary interaction pattern:
-color inversion on hover/focus/active
-- Transition durations:
-`150ms` for most color/UI state changes
-`200-300ms` for menu and card motion
-- Motion style:
-crisp, minimal, purposeful; no playful bounce or large easing theatrics in components
+## 6) Layout System
 
-## 8) Navigation Pattern
+The canonical page frame is:
 
-- Desktop:
-segmented horizontal bar with dropdown blocks
-- Mobile:
-collapsible index with section headers and ruled list rows
-- Active route:
-black background + white text
-- Overlay behavior:
-translucent click-capture layer to close open menus
+- `mx-auto w-full max-w-[1200px] border-x border-black`
 
-## 9) Page Composition Pattern
+The canonical page gutters are:
 
-- Page intro block:
-small uppercase section label -> large title -> restrained descriptive paragraph
-- Content blocks:
-split-layout essays, numbered sections, and ruled list indexes
-- Lists and indexes:
-rendered as editorial directories with top/bottom borders and row separators
+- `px-6 sm:px-10`
 
-## 10) Card Pattern (Team)
+The canonical page spacing is:
 
-- Outer card:
-black border with subtle layered/offset hover depth
-- Media area:
-square image region, grayscale-to-color hover reveal
-- Content area:
-role label (micro uppercase), masthead-style name, then narrative sections
-- Icon actions:
-boxed, border-first controls with inversion on hover/focus
+- Header block: `py-10 sm:py-14`
+- Standard section block: `py-10 sm:py-12`
 
-## 11) Motion Identity (Route Transition)
+Use the shared primitives in `app/components/page-chrome.tsx` instead of retyping near-duplicates:
 
-- All internal route links use `TransitionLink` to run custom curtain transition
-- Curtain style:
-pixel-grid cover and reveal in near-black
-- Timing:
-~420ms cover + ~420ms reveal
-- Identity stamp:
-centered `PFBN` in `Chomsky` during cover phase
-- Accessibility:
-respects `prefers-reduced-motion`
+- `PageShell`
+- `PageInset`
+- `PageHeader`
+- `PageSection`
 
-## 12) Content Voice Rules
+If a page is drifting from the system, fix it by adopting these primitives first.
 
-- Tone:
-precise, analytical, non-sensational
-- Framing:
-scope and methodological limits are surfaced early and repeatedly
-- UI copy:
-short, directive labels (`Open`, `Data`, `Front Page`, `Scope Note`, etc.)
+## 7) Divider and Border Rules
 
-## 13) Reuse Checklist for New Pages
+- Borders are structural and should span the full width of the framed page area.
+- Do not inset divider lines accidentally by putting page padding on the outer `main` when the border belongs to the section or header.
+- Major page divisions should usually use `border-b border-black`.
+- Lists, directories, and split layouts should use explicit row separators and column rules.
+- Prefer borders over soft shadows for hierarchy.
 
-- Use the canonical framed container (`max-w-[1200px]` + `border-x`)
-- Start with metadata label + strong headline + constrained lead paragraph
-- Maintain uppercase label style (`10-12px`, `tracking ~0.14em`)
-- Separate major sections with black keylines
-- Keep interactions inversion-based and fast
-- Use `TransitionLink` for internal navigation
-- Keep colors monochrome except for subtle neutral gradients where needed
+This was a real source of dissonance in the codebase. Treat full-width editorial rules as a non-negotiable.
+
+## 8) Navigation and Footer
+
+- Navbar is a segmented ruled bar, not a floating app shell.
+- Desktop nav uses bordered segments and dropdown panels.
+- Mobile nav uses a bordered collapsing menu with section headers.
+- Active nav state uses inversion: black background, white text.
+- Footer must align with the same page width and gutter rhythm as the main content shell.
+
+When changing nav/footer, preserve the existing editorial bar logic.
+
+## 9) Buttons and Links
+
+Primary action pattern:
+
+- white surface
+- black border
+- uppercase micro label
+- invert to black background / white text on hover and focus
+
+Use shared action classes from `page-chrome.tsx` when possible:
+
+- `pageActionClassName`
+- `pageActionCompactClassName`
+
+All internal route navigation should use `TransitionLink`.
+
+## 10) Motion
+
+- Route transitions currently use `next-view-transitions` through `TransitionLink` and `ViewTransitions`.
+- Do not document or rebuild the old curtain/pixel-grid transition unless the user explicitly wants that system restored.
+- Motion should stay crisp and minimal.
+- Typical durations: `150ms` for state changes, `200-300ms` for menu/card motion.
+
+## 11) Page Composition Rules
+
+Default page composition:
+
+- eyebrow
+- title
+- optional restrained description
+- full-width ruled separation
+- sections below with consistent gutters and section spacing
+
+Good repeated patterns in this codebase:
+
+- ruled section stacks
+- split grids with a narrow index/meta column
+- bordered list directories
+- framed data blocks
+
+Bad pattern to introduce during cleanup:
+
+- arbitrary new sidebars
+- invented roster counters
+- explanatory filler paragraphs not asked for by the user
+- decorative wrappers that change the information architecture
+
+## 12) Content Discipline
+
+This is critical.
+
+- Do not add new narrative copy to “improve” a page unless the user asked for copywriting.
+- Do not add explanatory blurbs, summaries, labels, counters, badges, or side modules just because a page feels empty.
+- Do not change the meaning or framing of a page during a styling pass.
+- If the task is visual consistency, preserve the existing content model and standardize spacing, borders, sizing, and alignment only.
+
+If you think a page needs extra structure, ask first or make the smallest possible structural change that is already implied by existing site patterns.
+
+## 13) How to Do Consistency Passes
+
+Preferred order:
+
+1. Read `page-chrome.tsx`, the target page, and a neighboring page that already feels on-system.
+2. Identify whether the problem is spacing drift, border drift, typography drift, or content-structure drift.
+3. Standardize using shared primitives and shared classes.
+4. Avoid introducing any new content or layout concepts unless required.
+5. Build and verify.
+
+If multiple pages share the same near-duplicate classes, extract a reusable primitive instead of patching each one differently.
 
 ## 14) Guardrails
 
-- Do not introduce random accent colors without system-level intent
-- Do not replace border hierarchy with soft card-only UI
-- Do not mix in playful motion curves/styles that break editorial tone
-- Do not use generic default font stacks for core hierarchy
+- Do not replace the border-led hierarchy with generic card-heavy UI.
+- Do not add accent colors casually.
+- Do not introduce trendy product-design patterns that break the editorial tone.
+- Do not add new page copy during a design pass unless asked.
+- Do not let divider lines become inset when the rest of the site uses full-width section rules.
+- Do not create one-off layout exceptions when the shared page chrome can solve the issue.
 
+## 15) Pre-Completion Checklist
+
+Before handing off, verify:
+
+- Page frame is `max-w-[1200px]` with `border-x border-black`
+- Header and section gutters match the system
+- Divider lines span the correct full width
+- Eyebrow/meta labels use the established uppercase microtype
+- Actions use the existing inversion pattern
+- Internal links use `TransitionLink`
+- No unnecessary new copy or structural modules were introduced
+- `npm run build` passes
+
+If you changed a page and also changed what it says, you probably overstepped unless the user explicitly asked for content changes.
