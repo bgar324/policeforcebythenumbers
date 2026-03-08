@@ -1,3 +1,9 @@
+import {
+  PageHeader,
+  PageShell,
+  pageMetaLabelClassName,
+} from "@/app/components/page-chrome";
+
 type Acknowledgement = {
   name: string;
   message: string;
@@ -18,37 +24,39 @@ const ACKNOWLEDGEMENTS: Acknowledgement[] = [
 
 export default function AcknowledgementsPage() {
   return (
-    <main className="mx-auto w-full max-w-[1200px] border-x border-black px-6 py-10 sm:px-10 sm:py-14">
-      <header className="border-b border-black pb-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
-          About
-        </p>
-        <h1 className="mt-4 text-4xl font-medium leading-tight sm:text-6xl">
-          Acknowledgements
-        </h1>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-black/75">
-          We are grateful to the people who supported this project and guided our
-          research process.
-        </p>
-      </header>
+    <PageShell>
+      <PageHeader
+        eyebrow="About"
+        title="Acknowledgements"
+        description="We are grateful to the people who supported this project and guided our research process."
+      />
 
-      <section className="mt-8 border border-black">
+      <section>
         {ACKNOWLEDGEMENTS.map((entry, index) => (
           <article
             key={entry.name}
-            className={`px-5 py-6 sm:px-7 sm:py-7 ${
-              index > 0 ? "border-t border-black" : ""
+            className={`grid gap-0 lg:grid-cols-[180px_1fr] ${
+              index < ACKNOWLEDGEMENTS.length - 1 ? "border-b border-black" : ""
             }`}
           >
-            <h2 className="text-xl font-semibold leading-tight sm:text-2xl">
-              {entry.name}
-            </h2>
-            <p className="mt-3 max-w-4xl text-sm leading-relaxed text-black/80 sm:text-base">
-              {entry.message}
-            </p>
+            <aside className="border-b border-black px-6 py-6 sm:px-10 lg:border-r lg:border-b-0 lg:px-6 lg:py-8">
+              <p className={pageMetaLabelClassName}>Acknowledgement</p>
+              <p className="mt-3 text-3xl font-semibold leading-none">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+            </aside>
+
+            <div className="px-6 py-8 sm:px-10 sm:py-8">
+              <h2 className="text-2xl font-semibold leading-tight sm:text-3xl">
+                {entry.name}
+              </h2>
+              <p className="mt-4 max-w-4xl text-base leading-relaxed text-black/80">
+                {entry.message}
+              </p>
+            </div>
           </article>
         ))}
       </section>
-    </main>
+    </PageShell>
   );
 }

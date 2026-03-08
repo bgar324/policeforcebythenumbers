@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Newsreader, Source_Sans_3, Geist } from "next/font/google";
-import TransitionProvider from "@/app/components/transition/TransitionProvider";
+import { ViewTransitions } from "next-view-transitions";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -35,17 +35,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link
-          rel="preconnect"
-          href="https://fonts.cdnfonts.com"
-          crossOrigin=""
-        />
-        <link
-          rel="preload"
-          as="style"
-          href="https://fonts.cdnfonts.com/css/chomsky"
-        />
-        <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/chomsky" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -65,7 +54,7 @@ export default function RootLayout({
       <body
         className={`${masthead.variable} ${navSans.variable} bg-white text-black antialiased`}
       >
-        <TransitionProvider>{children}</TransitionProvider>
+        <ViewTransitions>{children}</ViewTransitions>
       </body>
     </html>
   );

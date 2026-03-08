@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  PageHeader,
+  PageShell,
+  pageActionCompactClassName,
+  pageDescriptionWideClassName,
+  pageMetaLabelClassName,
+  pageTitleStrongClassName,
+} from "@/app/components/page-chrome";
 import { useEffect, useRef, useState } from "react";
 
 type BibliographyEntry = {
@@ -241,18 +249,14 @@ export default function BibliographyPage() {
 
   return (
     <>
-      <main className="mx-auto w-full max-w-[1200px] border-x border-black font-[family:var(--font-nav)]">
-        <header className="border-b border-black px-6 py-10 sm:px-10 sm:py-14">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
-            About
-          </p>
-          <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-[1.05] sm:text-6xl">
-            Bibliography
-          </h1>
-          <p className="mt-5 max-w-4xl text-base leading-relaxed text-black/75">
-            Citations, short summaries, and full annotations.
-          </p>
-        </header>
+      <PageShell>
+        <PageHeader
+          eyebrow="About"
+          title="Bibliography"
+          titleClassName={pageTitleStrongClassName}
+          description="Citations, short summaries, and full annotations."
+          descriptionClassName={pageDescriptionWideClassName}
+        />
 
         <section>
           {BIBLIOGRAPHY_ENTRIES.map((entry, index) => {
@@ -266,9 +270,7 @@ export default function BibliographyPage() {
                 }`}
               >
                 <aside className="border-b border-black px-6 py-6 sm:px-10 lg:border-r lg:border-b-0 lg:px-6 lg:py-8">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55">
-                    Source
-                  </p>
+                  <p className={pageMetaLabelClassName}>Source</p>
                   <p className="mt-2 text-3xl font-semibold leading-none">
                     {String(index + 1).padStart(2, "0")}
                   </p>
@@ -287,7 +289,7 @@ export default function BibliographyPage() {
                     <button
                       type="button"
                       onClick={() => setActiveAnnotation(entry)}
-                      className="inline-flex border border-black px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:text-white cursor-pointer"
+                      className={`${pageActionCompactClassName} cursor-pointer`}
                     >
                       read full annotation
                     </button>
@@ -296,7 +298,7 @@ export default function BibliographyPage() {
                       href={entry.sourceUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex border border-black px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:text-white"
+                      className={pageActionCompactClassName}
                     >
                       open source
                     </a>
@@ -306,7 +308,7 @@ export default function BibliographyPage() {
             );
           })}
         </section>
-      </main>
+      </PageShell>
 
       <dialog
         ref={sourceDialogRef}
@@ -330,9 +332,7 @@ export default function BibliographyPage() {
               X
             </button>
 
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55">
-              Full Annotation
-            </p>
+            <p className={pageMetaLabelClassName}>Full Annotation</p>
             <p className="mt-3 pr-8 text-sm leading-relaxed text-black/90 sm:text-base">
               {activeAnnotation.citation}
             </p>

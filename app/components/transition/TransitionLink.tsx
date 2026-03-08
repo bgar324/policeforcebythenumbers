@@ -1,83 +1,35 @@
 "use client";
 
-import Link from "next/link";
+import { Link as ViewTransitionLink } from "next-view-transitions";
 import {
   forwardRef,
   type ComponentPropsWithoutRef,
-  type MouseEvent,
 } from "react";
-import type { TransitionStartOptions } from "./TransitionProvider";
-import { useCurtainTransition } from "./useCurtainTransition";
+
+export type TransitionStartOptions = {
+  replace?: boolean;
+  scroll?: boolean;
+};
 
 export type TransitionLinkProps = Omit<
-  ComponentPropsWithoutRef<typeof Link>,
+  ComponentPropsWithoutRef<typeof ViewTransitionLink>,
   "href"
 > & {
   href: string;
   transition?: TransitionStartOptions;
 };
 
-function isModifiedEvent(event: MouseEvent<HTMLAnchorElement>) {
-  return (
-    event.button !== 0 ||
-    event.metaKey ||
-    event.altKey ||
-    event.ctrlKey ||
-    event.shiftKey
-  );
-}
-
 const TransitionLink = forwardRef<HTMLAnchorElement, TransitionLinkProps>(
   function TransitionLink(
-    { href, onClick, target, download, replace, scroll, transition, ...rest },
+    { href, replace, scroll, transition, ...rest },
     ref,
   ) {
-    const { startTransition } = useCurtainTransition();
-
-    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
-      onClick?.(event);
-
-      if (event.defaultPrevented || isModifiedEvent(event)) {
-        return;
-      }
-
-      if (target && target !== "_self") {
-        return;
-      }
-
-      if (typeof download !== "undefined" && download !== false) {
-        return;
-      }
-
-      const destination = new URL(href, window.location.href);
-      if (destination.origin !== window.location.origin) {
-        return;
-      }
-
-      const current = new URL(window.location.href);
-      if (
-        destination.pathname === current.pathname &&
-        destination.search === current.search
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-      void startTransition(`${destination.pathname}${destination.search}${destination.hash}`, {
-        replace: transition?.replace ?? Boolean(replace),
-        scroll: transition?.scroll ?? scroll,
-      });
-    };
-
     return (
-      <Link
+      <ViewTransitionLink
         ref={ref}
         href={href}
-        target={target}
-        download={download}
-        replace={replace}
-        scroll={scroll}
-        onClick={handleClick}
+        replace={transition?.replace ?? replace}
+        scroll={transition?.scroll ?? scroll}
         {...rest}
       />
     );

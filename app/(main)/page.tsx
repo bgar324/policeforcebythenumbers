@@ -1,4 +1,11 @@
 import TransitionLink from "@/app/components/transition/TransitionLink";
+import {
+  PageShell,
+  pageActionClassName,
+  pageActionCompactClassName,
+  pageMetaLabelClassName,
+  pageSectionEyebrowClassName,
+} from "@/app/components/page-chrome";
 
 type Finding = {
   id: string;
@@ -121,7 +128,7 @@ function statusClasses(status: SectionStatus["status"]) {
 
 export default function HomePage() {
   return (
-    <main className="mx-auto w-full max-w-[1200px] border-x border-black font-[family:var(--font-nav)]">
+    <PageShell>
       <header className="border-b border-black">
         <div className="grid gap-0 lg:grid-cols-[1.25fr_0.75fr]">
           <section className="px-6 py-12 sm:px-10 sm:py-16">
@@ -140,19 +147,19 @@ export default function HomePage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <TransitionLink
                 href="/data-analysis"
-                className="inline-flex items-center border border-black px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white"
+                className={pageActionClassName}
               >
                 open data analysis
               </TransitionLink>
               <TransitionLink
                 href="/datasets"
-                className="inline-flex items-center border border-black px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white"
+                className={pageActionClassName}
               >
                 inspect dataset
               </TransitionLink>
               <TransitionLink
                 href="/data-critique"
-                className="inline-flex items-center border border-black px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white"
+                className={pageActionClassName}
               >
                 read critique
               </TransitionLink>
@@ -160,28 +167,20 @@ export default function HomePage() {
           </section>
 
           <aside className="border-t border-black px-6 py-10 sm:px-10 lg:border-l lg:border-t-0 lg:py-16">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-              Project Snapshot
-            </p>
+            <p className={pageSectionEyebrowClassName}>Project Snapshot</p>
             <dl className="mt-5 grid gap-3">
               <div className="border border-black px-4 py-3">
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-                  Time Span
-                </dt>
+                <dt className={pageSectionEyebrowClassName}>Time Span</dt>
                 <dd className="mt-1 text-2xl font-semibold leading-none">
                   2015-2024
                 </dd>
               </div>
               <div className="border border-black px-4 py-3">
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-                  Core Questions
-                </dt>
+                <dt className={pageSectionEyebrowClassName}>Core Questions</dt>
                 <dd className="mt-1 text-2xl font-semibold leading-none">3</dd>
               </div>
               <div className="border border-black px-4 py-3">
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-                  Primary Source
-                </dt>
+                <dt className={pageSectionEyebrowClassName}>Primary Source</dt>
                 <dd className="mt-1 text-base leading-snug text-black/85">
                   Washington Post fatal police shootings dataset
                 </dd>
@@ -192,9 +191,7 @@ export default function HomePage() {
       </header>
 
       <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-          Synthesis
-        </p>
+        <p className={pageSectionEyebrowClassName}>Synthesis</p>
         <h2 className="mt-3 max-w-4xl text-4xl font-medium leading-tight sm:text-5xl">
           What the project shows so far
         </h2>
@@ -208,9 +205,7 @@ export default function HomePage() {
               }`}
             >
               <div className="border-b border-black px-5 py-5 lg:border-r lg:border-b-0 lg:px-4 lg:py-6">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55">
-                  Finding
-                </p>
+                <p className={pageMetaLabelClassName}>Finding</p>
                 <p className="mt-2 text-2xl font-semibold leading-none">
                   {finding.id}
                 </p>
@@ -228,7 +223,7 @@ export default function HomePage() {
               <div className="px-5 py-5 lg:border-l lg:px-4 lg:py-6">
                 <TransitionLink
                   href={finding.route}
-                  className="inline-flex w-full items-center justify-center border border-black px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white"
+                  className={`${pageActionCompactClassName} w-full`}
                 >
                   {finding.routeLabel}
                 </TransitionLink>
@@ -239,9 +234,7 @@ export default function HomePage() {
       </section>
 
       <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-          Site Status
-        </p>
+        <p className={pageSectionEyebrowClassName}>Site Status</p>
         <h2 className="mt-3 max-w-3xl text-4xl font-medium leading-tight sm:text-5xl">
           Full pass: what is complete and what is still being built
         </h2>
@@ -275,9 +268,7 @@ export default function HomePage() {
       </section>
 
       <section className="px-6 py-10 sm:px-10 sm:py-12">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-          About the Team
-        </p>
+        <p className={pageSectionEyebrowClassName}>About the Team</p>
         <h2 className="mt-3 max-w-4xl text-4xl font-medium leading-tight sm:text-5xl">
           Built collaboratively across data, writing, design, and web
           development
@@ -290,18 +281,18 @@ export default function HomePage() {
         <div className="mt-7 flex flex-wrap gap-3">
           <TransitionLink
             href="/meet-the-team"
-            className="inline-flex items-center border border-black px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white"
+            className={pageActionClassName}
           >
             meet the team
           </TransitionLink>
           <TransitionLink
             href="/acknowledgements"
-            className="inline-flex items-center border border-black px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white"
+            className={pageActionClassName}
           >
             acknowledgements
           </TransitionLink>
         </div>
       </section>
-    </main>
+    </PageShell>
   );
 }

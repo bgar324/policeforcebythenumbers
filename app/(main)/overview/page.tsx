@@ -1,3 +1,9 @@
+import {
+  PageHeader,
+  PageShell,
+  pageMetaLabelClassName,
+} from "@/app/components/page-chrome";
+
 const PROCESSING_PARAGRAPHS = [
   "To analyze and present this data, we used R as our primary environment for data cleaning and preparation, leveraging packages including the Tidyverse for data wrangling, and ggplot2 and Plotly for generating statistical visualizations. Interactive and supplementary visualizations were built in Tableau to provide additional analytical depth. Finalized outputs were then exported and integrated into this site to make the findings accessible to a general audience.",
   "Data was grouped and summarized across several dimensions to appropriately show correlation between important variables of data. Minimum sample thresholds and category limits were applied where necessary to ensure the accuracy and clarity of the visualizations.",
@@ -35,19 +41,13 @@ const OVERVIEW_SECTIONS: OverviewSection[] = [
 
 export default function OverviewPage() {
   return (
-    <main className="mx-auto w-full max-w-[1200px] border-x border-black font-[family:var(--font-nav)]">
-      <header className="border-b border-black px-6 py-10 sm:px-10 sm:py-14">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
-          About
-        </p>
-        <h1 className="mt-4 text-4xl font-medium leading-tight sm:text-6xl">
-          Overview
-        </h1>
-        <p className="mt-4 max-w-3xl text-base leading-relaxed text-black/75 sm:text-lg">
-          How this project moves from source work to data processing and final
-          web presentation.
-        </p>
-      </header>
+    <PageShell>
+      <PageHeader
+        eyebrow="About"
+        title="Overview"
+        description="How this project moves from source work to data processing and final web presentation."
+        descriptionClassName="mt-4 max-w-3xl text-base leading-relaxed text-black/75 sm:text-lg"
+      />
 
       {OVERVIEW_SECTIONS.map((section, index) => (
         <section
@@ -57,9 +57,7 @@ export default function OverviewPage() {
           }`}
         >
           <aside className="border-b border-black px-6 py-6 sm:px-10 lg:border-r lg:border-b-0 lg:px-6 lg:py-10">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55">
-              Section
-            </p>
+            <p className={pageMetaLabelClassName}>Section</p>
             <p className="mt-3 text-3xl font-semibold leading-none">
               {section.id}
             </p>
@@ -96,6 +94,6 @@ export default function OverviewPage() {
           </div>
         </section>
       ))}
-    </main>
+    </PageShell>
   );
 }

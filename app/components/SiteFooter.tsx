@@ -50,7 +50,7 @@ export default function SiteFooter() {
     <footer className="w-full border-t border-black bg-white">
       <div className="mx-auto w-full max-w-[1200px] border-x border-black">
         <div className="grid grid-cols-1 md:grid-cols-12">
-          <section className="border-b border-black px-6 py-6 md:col-span-3 md:border-b-0 md:border-r">
+          <section className="border-b border-black px-6 py-6 sm:px-10 md:col-span-3 md:border-b-0 md:border-r md:px-6">
             <div className="space-y-3">
               <p className="text-3xl font-medium leading-none">Police Force by the Numbers</p>
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/65">
@@ -59,7 +59,7 @@ export default function SiteFooter() {
             </div>
           </section>
 
-          <section className="border-b border-black px-6 py-6 md:col-span-3 md:border-b-0 md:border-r">
+          <section className="border-b border-black px-6 py-6 sm:px-10 md:col-span-3 md:border-b-0 md:border-r md:px-6">
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">Project Details</p>
             <dl className="mt-3 space-y-2 text-sm leading-relaxed">
               <div>
@@ -73,7 +73,7 @@ export default function SiteFooter() {
             </dl>
           </section>
 
-          <section className="px-6 py-6 md:col-span-6">
+          <section className="px-6 py-6 sm:px-10 md:col-span-6 md:px-6">
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">Navigate</p>
             <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {NAVIGATE_GROUPS.map((group) => (
@@ -97,7 +97,7 @@ export default function SiteFooter() {
           </section>
         </div>
 
-        <div className="flex flex-col gap-1 border-t border-black px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-black/65 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-1 border-t border-black px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-black/65 sm:flex-row sm:items-center sm:justify-between sm:px-10 md:px-6">
           <p>Police Force by the Numbers</p>
           <p>© {year}</p>
         </div>

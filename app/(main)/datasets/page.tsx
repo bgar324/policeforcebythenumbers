@@ -1,3 +1,13 @@
+import {
+  PageHeader,
+  PageShell,
+  pageActionClassName,
+  pageDescriptionWideClassName,
+  pageMetaLabelClassName,
+  pageSectionEyebrowClassName,
+  pageTitleStrongClassName,
+} from "@/app/components/page-chrome";
+
 type FieldDefinition = {
   name: string;
   description: string;
@@ -262,9 +272,7 @@ function DatasetFieldList({
     <section
       className={`${withBottomBorder ? "border-b border-black" : ""} px-6 py-10 sm:px-10 sm:py-12`}
     >
-      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-        {heading}
-      </p>
+      <p className={pageSectionEyebrowClassName}>{heading}</p>
 
       <div className="mt-5 grid gap-0 border-y border-black">
         {fields.map((field, index) => (
@@ -305,15 +313,11 @@ function DatasetFieldList({
 
               <dl className="grid w-full grid-cols-2 gap-4 border-t border-black pt-4 text-sm lg:w-[260px] lg:border-t-0 lg:pt-0">
                 <div>
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55">
-                    Type
-                  </dt>
+                  <dt className={pageMetaLabelClassName}>Type</dt>
                   <dd className="mt-1 text-black/80">{field.type}</dd>
                 </div>
                 <div>
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55">
-                    Example
-                  </dt>
+                  <dt className={pageMetaLabelClassName}>Example</dt>
                   <dd className="mt-1 break-words font-mono text-black/80">
                     {field.example}
                   </dd>
@@ -329,19 +333,14 @@ function DatasetFieldList({
 
 export default function DatasetsPage() {
   return (
-    <main className="mx-auto w-full max-w-[1200px] border-x border-black font-[family:var(--font-nav)]">
-      <header className="border-b border-black px-6 py-10 sm:px-10 sm:py-14">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
-          Data
-        </p>
-        <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-[1.05] sm:text-6xl">
-          Datasets
-        </h1>
-        <p className="mt-5 max-w-4xl text-base leading-relaxed text-black/75">
-          This project uses Washington Post fatal police shooting records that
-          are researched daily, documented with at least two sources per
-          incident, and reviewed by editors before release.
-        </p>
+    <PageShell>
+      <PageHeader
+        eyebrow="Data"
+        title="Datasets"
+        titleClassName={pageTitleStrongClassName}
+        description="This project uses Washington Post fatal police shooting records that are researched daily, documented with at least two sources per incident, and reviewed by editors before release."
+        descriptionClassName={pageDescriptionWideClassName}
+      >
         <p className="mt-4 max-w-4xl text-sm leading-relaxed text-black/80">
           Browse source files and documentation in the{" "}
           <a
@@ -359,33 +358,31 @@ export default function DatasetsPage() {
           <a
             href={DEATH_RECORDS_CSV_URL}
             download="fatal-police-shootings-data.csv"
-            className="inline-flex items-center justify-center border border-black px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white"
+            className={pageActionClassName}
           >
             Preview Death Records CSV
           </a>
           <a
             href={AGENCIES_CSV_URL}
             download="fatal-police-shootings-agencies.csv"
-            className="inline-flex items-center justify-center border border-black px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white"
+            className={pageActionClassName}
           >
             Preview Agencies CSV
           </a>
           <a
             href={CLEANED_CSV_URL}
             download="police_shootings.csv"
-            className="inline-flex items-center justify-center border border-black px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white"
+            className={pageActionClassName}
           >
             Download Cleaned CSV
           </a>
         </div>
-      </header>
+      </PageHeader>
 
       <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
         <div className="grid gap-0 lg:grid-cols-[200px_1fr]">
           <aside className="border-b border-black pb-5 lg:border-r lg:border-b-0 lg:pr-6 lg:pb-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-              Data Structure
-            </p>
+            <p className={pageSectionEyebrowClassName}>Data Structure</p>
           </aside>
           <div className="pt-5 lg:pl-6 lg:pt-0">
             <p className="max-w-4xl text-base leading-relaxed text-black/80">
@@ -408,9 +405,7 @@ export default function DatasetsPage() {
       </section>
 
       <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-          File
-        </p>
+        <p className={pageSectionEyebrowClassName}>File</p>
         <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
           Death Records
         </h2>
@@ -434,9 +429,7 @@ export default function DatasetsPage() {
       />
 
       <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
-          File
-        </p>
+        <p className={pageSectionEyebrowClassName}>File</p>
         <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
           Agencies
         </h2>
@@ -455,6 +448,6 @@ export default function DatasetsPage() {
         fields={AGENCY_FIELDS}
         withBottomBorder={false}
       />
-    </main>
+    </PageShell>
   );
 }
