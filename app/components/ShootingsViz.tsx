@@ -151,6 +151,25 @@ function ChartBlock({
 export default function ShootingsViz() {
   const [figures, setFigures] = useState<Record<string, PlotFigure>>({});
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 639px)");
+
+    const updateIsMobile = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    updateIsMobile();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateIsMobile);
+      return () => mediaQuery.removeEventListener("change", updateIsMobile);
+    }
+
+    mediaQuery.addListener(updateIsMobile);
+    return () => mediaQuery.removeListener(updateIsMobile);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -199,14 +218,30 @@ export default function ShootingsViz() {
     return <p className="text-sm text-black/70">Loading charts...</p>;
   }
 
+  const chartStyles = isMobile
+    ? {
+        map: { width: "100%", minHeight: 380 },
+        states: { width: "100%", minHeight: 400 },
+        threat: { width: "100%", minHeight: 360 },
+        flee: { width: "100%", minHeight: 360 },
+        armed: { width: "100%", minHeight: 400 },
+      }
+    : {
+        map: CHARTS[0].style,
+        states: CHARTS[1].style,
+        threat: CHARTS[2].style,
+        flee: CHARTS[3].style,
+        armed: CHARTS[4].style,
+      };
+
   return (
     <div className="space-y-12">
       <article className="space-y-4">
         <div className="border border-black">
-          <ChartBlock figure={figures.map} style={CHARTS[0].style} />
+          <ChartBlock figure={figures.map} style={chartStyles.map} />
         </div>
 
-        <div className="space-y-4 border border-black px-4 py-4">
+        <div className="space-y-4 border border-black px-4 py-4 sm:px-5">
           <h3 className="text-xl font-medium leading-tight">
             1. US State Choropleth Map
           </h3>
@@ -252,10 +287,10 @@ export default function ShootingsViz() {
 
       <article className="space-y-4 border-t border-black pt-8">
         <div className="border border-black">
-          <ChartBlock figure={figures.states} style={CHARTS[1].style} />
+          <ChartBlock figure={figures.states} style={chartStyles.states} />
         </div>
 
-        <div className="space-y-4 border border-black px-4 py-4">
+        <div className="space-y-4 border border-black px-4 py-4 sm:px-5">
           <h3 className="text-xl font-medium leading-tight">
             2. Top &amp; Bottom 10 States Bar Chart
           </h3>
@@ -298,10 +333,10 @@ export default function ShootingsViz() {
 
       <article className="space-y-4 border-t border-black pt-8">
         <div className="border border-black">
-          <ChartBlock figure={figures.threat} style={CHARTS[2].style} />
+          <ChartBlock figure={figures.threat} style={chartStyles.threat} />
         </div>
 
-        <div className="space-y-4 border border-black px-4 py-4">
+        <div className="space-y-4 border border-black px-4 py-4 sm:px-5">
           <h3 className="text-xl font-medium leading-tight">
             3. Threat Type Bar Chart
           </h3>
@@ -343,10 +378,10 @@ export default function ShootingsViz() {
 
       <article className="space-y-4 border-t border-black pt-8">
         <div className="border border-black">
-          <ChartBlock figure={figures.flee} style={CHARTS[3].style} />
+          <ChartBlock figure={figures.flee} style={chartStyles.flee} />
         </div>
 
-        <div className="space-y-4 border border-black px-4 py-4">
+        <div className="space-y-4 border border-black px-4 py-4 sm:px-5">
           <h3 className="text-xl font-medium leading-tight">
             4. Flee Status Bar Chart
           </h3>
@@ -388,10 +423,10 @@ export default function ShootingsViz() {
 
       <article className="space-y-4 border-t border-black pt-8">
         <div className="border border-black">
-          <ChartBlock figure={figures.armed} style={CHARTS[4].style} />
+          <ChartBlock figure={figures.armed} style={chartStyles.armed} />
         </div>
 
-        <div className="space-y-4 border border-black px-4 py-4">
+        <div className="space-y-4 border border-black px-4 py-4 sm:px-5">
           <h3 className="text-xl font-medium leading-tight">
             5. Armed With Bar Chart
           </h3>

@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 type TableauView = {
   id: string;
   title: string;
@@ -34,7 +38,7 @@ const TABLEAU_VIEWS: TableauView[] = [
 ];
 
 const TABLEAU_EMBED_QUERY =
-  "?:showVizHome=no&:embed=y&:device=desktop&:tabs=no&:toolbar=no&:showShareOptions=false&:display_count=n&:language=en-US&publish=yes";
+  "?:showVizHome=no&:embed=y&:tabs=no&:toolbar=no&:showShareOptions=false&:display_count=n&:language=en-US&publish=yes";
 
 const TABLEAU_NARRATIVES: Record<string, TableauNarrative> = {
   "fatal-over-time": {
@@ -80,6 +84,28 @@ export default function TableauEmbeds({
   ids,
   includeDescriptionPlaceholders = true,
 }: TableauEmbedsProps) {
+  const [embedDevice, setEmbedDevice] = useState<"desktop" | "phone">(
+    "desktop",
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 639px)");
+
+    const updateDevice = () => {
+      setEmbedDevice(mediaQuery.matches ? "phone" : "desktop");
+    };
+
+    updateDevice();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateDevice);
+      return () => mediaQuery.removeEventListener("change", updateDevice);
+    }
+
+    mediaQuery.addListener(updateDevice);
+    return () => mediaQuery.removeListener(updateDevice);
+  }, []);
+
   const views = ids
     ? TABLEAU_VIEWS.filter((view) => ids.includes(view.id))
     : TABLEAU_VIEWS;
@@ -93,9 +119,9 @@ export default function TableauEmbeds({
           <article key={view.id} className="space-y-4">
             <div className="border border-black">
               <iframe
-                src={`https://public.tableau.com/views/${view.path}${TABLEAU_EMBED_QUERY}`}
+                src={`https://public.tableau.com/views/${view.path}${TABLEAU_EMBED_QUERY}&:device=${embedDevice}`}
                 title={view.title}
-                className="h-[420px] w-full sm:h-[520px] lg:h-[620px]"
+                className="h-[360px] w-full min-[420px]:h-[420px] sm:h-[520px] lg:h-[620px]"
                 width="100%"
                 loading="lazy"
                 allowFullScreen
@@ -103,7 +129,7 @@ export default function TableauEmbeds({
             </div>
 
             {narrative ? (
-              <div className="space-y-4 border border-black px-4 py-4">
+              <div className="space-y-4 border border-black px-4 py-4 sm:px-5">
                 <h3 className="text-xl font-medium leading-tight">
                   {narrative.visualizationHeading}
                 </h3>
@@ -127,7 +153,7 @@ export default function TableauEmbeds({
                 </div>
               </div>
             ) : includeDescriptionPlaceholders ? (
-              <div className="border border-dashed border-black/40 px-4 py-3">
+              <div className="border border-dashed border-black/40 px-4 py-3 sm:px-5">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/60">
                   Placeholder
                 </p>

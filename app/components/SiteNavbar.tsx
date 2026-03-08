@@ -120,14 +120,14 @@ export default function SiteNavbar() {
             href="/"
             onClick={closeMenus}
             aria-label="Police Force by the Numbers Home"
-            className={`group relative flex h-full w-min flex-col items-start justify-center border-r border-black px-3 sm:px-4 ${
+            className={`group relative flex h-full min-w-0 flex-1 flex-col items-start justify-center border-r border-black px-3 sm:px-4 md:w-min md:flex-none ${
               isActive("/")
                 ? "bg-black !text-white dark:!bg-white dark:!text-black"
                 : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
             }`}
           >
             <div className="flex flex-col leading-none">
-              <span className="whitespace-nowrap text-[1.1rem] font-semibold tracking-tight transition-colors duration-200 sm:text-[1.15rem]">
+              <span className="text-[0.94rem] leading-[0.92] font-semibold tracking-tight transition-colors duration-200 min-[380px]:text-[1rem] sm:whitespace-nowrap sm:text-[1.15rem] sm:leading-none">
                 Police Force by the Numbers
               </span>
             </div>
@@ -221,14 +221,14 @@ export default function SiteNavbar() {
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-controls="mobile-site-menu"
             aria-expanded={mobileOpen}
-            className={`inline-flex h-full min-w-[92px] items-center justify-center gap-3 border-l border-black px-4 font-[family:var(--font-nav)] transition-colors duration-200 md:hidden ${
+            className={`inline-flex h-full min-w-[82px] items-center justify-center gap-2 border-l border-black px-3 font-[family:var(--font-nav)] transition-colors duration-200 min-[380px]:min-w-[92px] min-[380px]:gap-3 min-[380px]:px-4 md:hidden ${
               mobileOpen
                 ? "bg-black text-white"
                 : "bg-white text-black hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white"
             }`}
             onClick={() => setMobileOpen((o) => !o)}
           >
-            <span className="w-12 text-center text-[10px] font-semibold uppercase tracking-[0.18em]">
+            <span className="w-10 text-center text-[9px] font-semibold uppercase tracking-[0.16em] min-[380px]:w-12 min-[380px]:text-[10px] min-[380px]:tracking-[0.18em]">
               {mobileOpen ? "Close" : "Menu"}
             </span>
             <span className="relative block h-4 w-5 shrink-0">
@@ -254,10 +254,10 @@ export default function SiteNavbar() {
         <div
           id="mobile-site-menu"
           className={`overflow-hidden border-b border-black bg-white transition-[max-height,opacity] duration-300 ease-out md:hidden ${
-            mobileOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
+            mobileOpen ? "max-h-[calc(100dvh-60px)] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="max-h-[calc(100vh-60px)] overflow-y-auto">
+          <div className="max-h-[calc(100dvh-60px)] overflow-y-auto">
             {MOBILE_SECTIONS.map((section, index) => (
               <section
                 key={section.heading}

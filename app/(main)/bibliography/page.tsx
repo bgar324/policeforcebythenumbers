@@ -319,21 +319,21 @@ export default function BibliographyPage() {
             setActiveAnnotation(null);
           }
         }}
-        className="fixed left-1/2 top-1/2 m-0 h-min w-1/2 -translate-x-1/2 -translate-y-1/2 border border-black bg-white p-0 backdrop:bg-white/10 backdrop:backdrop-blur-[2px]"
+        className="fixed left-1/2 top-1/2 m-0 h-min max-h-[calc(100dvh-1.5rem)] w-[calc(100vw-1.5rem)] max-w-[calc(100vw-1.5rem)] -translate-x-1/2 -translate-y-1/2 border border-black bg-white p-0 backdrop:bg-white/10 backdrop:backdrop-blur-[2px] sm:max-h-[calc(100dvh-2rem)] sm:w-[calc(100vw-2rem)] sm:max-w-[calc(100vw-2rem)] lg:w-1/2 lg:max-w-none"
       >
         {activeAnnotation ? (
-          <div className="relative h-full w-full overflow-y-auto p-5">
+          <div className="relative h-full w-full overflow-y-auto p-4 sm:p-5">
             <button
               type="button"
               onClick={() => setActiveAnnotation(null)}
               aria-label="Close annotation modal"
-              className="absolute right-0 top-0 inline-flex h-10 w-10 items-center justify-center border border-black text-xs font-semibold uppercase transition-colors duration-150 hover:bg-black hover:text-white m-3 cursor-pointer"
+              className="absolute right-0 top-0 m-2 inline-flex h-10 w-10 items-center justify-center border border-black text-xs font-semibold uppercase transition-colors duration-150 hover:bg-black hover:text-white sm:m-3 cursor-pointer"
             >
               X
             </button>
 
             <p className={pageMetaLabelClassName}>Full Annotation</p>
-            <p className="mt-3 pr-8 text-sm leading-relaxed text-black/90 sm:text-base">
+            <p className="mt-3 pr-10 text-sm leading-relaxed text-black/90 sm:pr-8 sm:text-base">
               {activeAnnotation.citation}
             </p>
             <div className="mt-4 border border-black p-4">
