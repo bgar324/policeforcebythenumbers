@@ -90,8 +90,13 @@ export default function SiteNavbar() {
     try {
       localStorage.setItem("pfbn-theme", nextTheme);
     } catch {
-      // ignore storage failures in restricted environments
+      // ignore storage failures
     }
+  };
+
+  const handleDropdownToggle = (key: DropdownKey) => {
+    // If clicking the one already open, close it. Otherwise, open the new one.
+    setActiveDropdown((prev) => (prev === key ? null : key));
   };
 
   const isActive = (href: string) => pathname === href;
@@ -99,6 +104,9 @@ export default function SiteNavbar() {
 
   return (
     <>
+      {/* BACKDROP: This handles the "Clicking somewhere takes it out of focus" requirement.
+          Since it's Z-40 and the Header is Z-50, clicking the background closes everything.
+      */}
       <button
         type="button"
         aria-label="Close navigation"
@@ -106,7 +114,7 @@ export default function SiteNavbar() {
         onClick={closeMenus}
         className={`fixed inset-0 z-40 transition-all duration-200 ${
           overlayActive
-            ? "pointer-events-auto backdrop-blur-[2px] bg-white/10 opacity-100"
+            ? "pointer-events-auto bg-white/10 opacity-100 backdrop-blur-[2px]"
             : "pointer-events-none bg-transparent opacity-0"
         }`}
       />
@@ -127,7 +135,7 @@ export default function SiteNavbar() {
             }`}
           >
             <div className="flex flex-col leading-none">
-              <span className="text-[0.94rem] leading-[0.92] font-semibold tracking-tight transition-colors duration-200 min-[380px]:text-[1rem] sm:whitespace-nowrap sm:text-[1.15rem] sm:leading-none">
+              <span className="text-[0.94rem] font-semibold leading-[0.92] tracking-tight transition-colors duration-200 min-[380px]:text-[1rem] sm:whitespace-nowrap sm:text-[1.15rem] sm:leading-none">
                 Police Force by the Numbers
               </span>
             </div>
@@ -156,11 +164,14 @@ export default function SiteNavbar() {
               <div
                 key={section.key}
                 className="relative h-full border-l border-black"
+                // Keep Hover functionality for mouse users
                 onMouseEnter={() => setActiveDropdown(section.key)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <button
                   type="button"
+                  // Implement Click functionality for touch screens/manual toggle
+                  onClick={() => handleDropdownToggle(section.key)}
                   className={`${DESKTOP_ITEM} gap-2 ${
                     activeDropdown === section.key
                       ? "bg-black !text-white dark:!bg-white dark:!text-black"
@@ -216,6 +227,7 @@ export default function SiteNavbar() {
             </button>
           </nav>
 
+          {/* Mobile Toggle Button */}
           <button
             type="button"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -251,6 +263,7 @@ export default function SiteNavbar() {
           </button>
         </div>
 
+        {/* Mobile Dropdown View */}
         <div
           id="mobile-site-menu"
           className={`overflow-hidden border-b border-black bg-white transition-[max-height,opacity] duration-300 ease-out md:hidden ${
@@ -293,7 +306,7 @@ export default function SiteNavbar() {
                 type="button"
                 onClick={toggleTheme}
                 aria-label="Toggle light and dark mode"
-                className="cursor-pointer block w-full px-6 py-3 text-center text-[15px] leading-none text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
+                className="block w-full cursor-pointer px-6 py-3 text-center text-[15px] leading-none text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
               >
                 <span aria-hidden>●</span>
               </button>
