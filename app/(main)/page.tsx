@@ -204,7 +204,7 @@ export default function HomePage() {
         <div className="py-10 sm:py-12">
           <p className={pageSectionEyebrowClassName}>Research Questions</p>
           <h2 className="mt-3 max-w-4xl text-4xl font-medium leading-tight sm:text-5xl">
-            Three questions structure the analysis
+            Three guiding questions structure our analysis.
           </h2>
         </div>
 
