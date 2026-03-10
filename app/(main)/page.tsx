@@ -163,6 +163,31 @@ export default function HomePage() {
         title="Police Force by the Numbers"
         description="A collaborative digital humanities project that studies fatal police shooting records through literature review, data critique, and interactive analysis of post-pandemic change, racial distribution, and mental-illness labeling."
         descriptionClassName="mt-4 max-w-4xl text-base leading-relaxed text-black/75 sm:text-lg"
+        mainClassName="py-12 sm:py-16"
+        asideClassName="py-10 sm:py-16"
+        aside={
+          <>
+            <p className={pageSectionEyebrowClassName}>Project Snapshot</p>
+            <dl className="mt-5 grid gap-3">
+              <div className="border border-black px-4 py-3">
+                <dt className={pageSectionEyebrowClassName}>Time Span</dt>
+                <dd className="mt-1 text-2xl font-semibold leading-none">
+                  2015-2024
+                </dd>
+              </div>
+              <div className="border border-black px-4 py-3">
+                <dt className={pageSectionEyebrowClassName}>Core Questions</dt>
+                <dd className="mt-1 text-2xl font-semibold leading-none">3</dd>
+              </div>
+              <div className="border border-black px-4 py-3">
+                <dt className={pageSectionEyebrowClassName}>Primary Source</dt>
+                <dd className="mt-1 text-base leading-snug text-black/85">
+                  Washington Post fatal police shootings dataset
+                </dd>
+              </div>
+            </dl>
+          </>
+        }
       >
         <div className="mt-8 flex flex-wrap gap-3">
           <TransitionLink href="/data-analysis" className={pageActionClassName}>

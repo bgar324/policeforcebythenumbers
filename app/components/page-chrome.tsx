@@ -54,6 +54,9 @@ type PageHeaderProps = ComponentPropsWithoutRef<"header"> & {
   title: ReactNode;
   description?: ReactNode;
   innerClassName?: string;
+  mainClassName?: string;
+  aside?: ReactNode;
+  asideClassName?: string;
   eyebrowClassName?: string;
   titleClassName?: string;
   descriptionClassName?: string;
@@ -63,15 +66,55 @@ type PageHeaderProps = ComponentPropsWithoutRef<"header"> & {
 export function PageHeader({
   className,
   innerClassName,
+  mainClassName,
   eyebrow,
   title,
   description,
+  aside,
+  asideClassName,
   eyebrowClassName,
   titleClassName,
   descriptionClassName,
   children,
   ...props
 }: PageHeaderProps) {
+  if (aside) {
+    return (
+      <header className={cn("border-b border-black", className)} {...props}>
+        <PageInset
+          className={cn("grid gap-0 py-0 lg:grid-cols-[1.4fr_0.6fr]", innerClassName)}
+        >
+          <div
+            className={cn(pageHeaderSpacingClassName, "lg:pr-10", mainClassName)}
+          >
+            <p className={cn(pageEyebrowClassName, eyebrowClassName)}>
+              {eyebrow}
+            </p>
+            <h1 className={cn(pageTitleClassName, titleClassName)}>{title}</h1>
+            {description ? (
+              <p
+                className={cn(pageDescriptionClassName, descriptionClassName)}
+              >
+                {description}
+              </p>
+            ) : null}
+            {children}
+          </div>
+
+          <aside
+            className={cn(
+              "border-t border-black lg:border-l lg:border-t-0 lg:pl-10",
+              pageHeaderSpacingClassName,
+              asideClassName,
+            )}
+          >
+            {aside}
+          </aside>
+        </PageInset>
+      </header>
+    );
+  }
+
   return (
     <header className={cn("border-b border-black", className)} {...props}>
       <PageInset className={cn(pageHeaderSpacingClassName, innerClassName)}>
