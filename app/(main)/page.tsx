@@ -226,14 +226,12 @@ export default function HomePage() {
       ))}
 
       <PageSection innerClassName="py-0">
-        <div className="py-10 sm:pb-12">
           <p className={pageSectionEyebrowClassName}>Research Questions</p>
-          <h2 className="mt-3 max-w-4xl text-4xl font-medium leading-tight sm:text-5xl">
+          <h2 className="mt-3 max-w-5xl text-4xl font-medium leading-tight sm:text-5xl">
             Three guiding questions structure our analysis.
           </h2>
-        </div>
 
-        <div className="border-y border-black">
+        <div className="border-y border-black mt-8">
           {RESEARCH_QUESTIONS.map((question, index) => (
             <article
               key={question.id}
