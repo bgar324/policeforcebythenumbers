@@ -1,18 +1,25 @@
 import TransitionLink from "@/app/components/transition/TransitionLink";
 import {
+  PageHeader,
+  PageSection,
   PageShell,
   pageActionClassName,
-  pageActionCompactClassName,
   pageMetaLabelClassName,
   pageSectionEyebrowClassName,
 } from "@/app/components/page-chrome";
 
-type Finding = {
+type ResearchQuestion = {
   id: string;
   question: string;
   takeaway: string;
   route: string;
   routeLabel: string;
+};
+
+type LandingSection = {
+  id: string;
+  heading: string;
+  body: string;
 };
 
 type SectionStatus = {
@@ -22,7 +29,7 @@ type SectionStatus = {
   note: string;
 };
 
-const FINDINGS: Finding[] = [
+const RESEARCH_QUESTIONS: ResearchQuestion[] = [
   {
     id: "Q1",
     question: "How did fatal police shootings change after COVID-19?",
@@ -50,6 +57,24 @@ const FINDINGS: Finding[] = [
     routeLabel: "View Question 3 Analysis",
   },
 ];
+
+const LANDING_SECTIONS: LandingSection[] = [
+  {
+    id: "01",
+    heading: "Introduction",
+    body: `Our project follows a dataset containing detailed records of fatal police shootings in the United States, taken from The Washington Post. This data was drawn from federal law enforcement datasets. The data itself includes information such as the manner of death, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location. It also includes information about the person who was killed. Victim variables include name, age, gender, race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers. The dataset also includes a separate set of agency-level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.`,
+  },
+  {
+    id: "02",
+    heading: "Place in the literature",
+    body: `Existing findings on fatal police shootings has largely focused on patterns of race, mental health, and institutional variation. Many studies find that people experiencing mental illness are overrepresented among those killed by police, particularly during crisis encounters, though researchers disagree on how reliably mental illness is identified and recorded in available data. Some scholars argue that the classification of an incident as mental-illness-related depends heavily on agency practices, state policies, and reporting norms rather than consistent criteria. Others note that contextual factors such as perceived threat, whether the individual was armed, and whether they attempted to flee often shape how incidents are interpreted and documented. Various pieces of literature also examine changes over time, with mixed findings about whether fatal police shootings increased, decreased, or remained stable following the onset of the COVID-19 pandemic. While there is broad agreement that racial disparities in fatal police shootings persist, there is less consensus on how the racial composition of victims has shifted since 2015. Scholars consistently find that fatal police shootings are not evenly distributed across racial groups, though they argue whether these disparities stem from structural inequalities, over-policing, situational dynamics, or agency-level variation. Researchers also question the reliability and completeness of existing federal reporting systems, noting that methodological limitations shape how incidents are categorized and ultimately how conclusions about accountability are drawn. Overall, scholars agree on the importance of detailed, transparent data, but questions remain about how institutional context, mental health labeling, and temporal change interact within existing datasets.`,
+  },
+  {
+    id: "03",
+    heading: "Significance",
+    body: `The way this dataset turns events into data has ideological effects. By focusing only on fatal shootings, it centers death by gunfire as the key measure of police violence. Other forms of harm become less visible. The structure also relies on official or media-reported categories such as threat type or armed status. These categories may reflect law enforcement narratives or early reports rather than full investigations. The ontology of the dataset treats each incident as a discrete event tied to an individual victim. It does not capture long histories of community police relations or systemic conditions. The dataset is powerful, but it is shaped by choices about what counts as data and what does not.`,
+  },
+] as const;
 
 const SITE_STATUS: SectionStatus[] = [
   {
@@ -114,6 +139,10 @@ const SITE_STATUS: SectionStatus[] = [
   },
 ];
 
+const PENDING_SITE_STATUS = SITE_STATUS.filter(
+  (section) => section.status !== "Complete",
+);
+
 function statusClasses(status: SectionStatus["status"]) {
   if (status === "Complete") {
     return "bg-black text-white";
@@ -129,143 +158,92 @@ function statusClasses(status: SectionStatus["status"]) {
 export default function HomePage() {
   return (
     <PageShell>
-      <header className="border-b border-black">
-        <div className="grid gap-0 lg:grid-cols-[1.25fr_0.75fr]">
-          <section className="px-6 py-12 sm:px-10 sm:py-16">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/65">
-              DGT HUM 101 Research Project
-            </p>
-            <h1 className="mt-4 max-w-4xl text-5xl font-medium leading-[0.96] sm:text-7xl">
-              Police Force by the Numbers
-            </h1>
-            <p className="mt-6 max-w-3xl text-base leading-relaxed text-black/80 sm:text-lg">
-              A collaborative digital humanities project that analyzes fatal
-              police shooting records to study post-pandemic change, racial
-              distribution, and how incident categories shape interpretation.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <TransitionLink
-                href="/data-analysis"
-                className={pageActionClassName}
-              >
-                open data analysis
-              </TransitionLink>
-              <TransitionLink
-                href="/datasets"
-                className={pageActionClassName}
-              >
-                inspect dataset
-              </TransitionLink>
-              <TransitionLink
-                href="/data-critique"
-                className={pageActionClassName}
-              >
-                read critique
-              </TransitionLink>
-            </div>
-          </section>
-
-          <aside className="border-t border-black px-6 py-10 sm:px-10 lg:border-l lg:border-t-0 lg:py-16">
-            <p className={pageSectionEyebrowClassName}>Project Snapshot</p>
-            <dl className="mt-5 grid gap-3">
-              <div className="border border-black px-4 py-3">
-                <dt className={pageSectionEyebrowClassName}>Time Span</dt>
-                <dd className="mt-1 text-2xl font-semibold leading-none">
-                  2015-2024
-                </dd>
-              </div>
-              <div className="border border-black px-4 py-3">
-                <dt className={pageSectionEyebrowClassName}>Core Questions</dt>
-                <dd className="mt-1 text-2xl font-semibold leading-none">3</dd>
-              </div>
-              <div className="border border-black px-4 py-3">
-                <dt className={pageSectionEyebrowClassName}>Primary Source</dt>
-                <dd className="mt-1 text-base leading-snug text-black/85">
-                  Washington Post fatal police shootings dataset
-                </dd>
-              </div>
-            </dl>
-          </aside>
+      <PageHeader
+        eyebrow="DGT HUM 101 Research Project"
+        title="Police Force by the Numbers"
+        description="A collaborative digital humanities project that studies fatal police shooting records through literature review, data critique, and interactive analysis of post-pandemic change, racial distribution, and mental-illness labeling."
+        descriptionClassName="mt-4 max-w-4xl text-base leading-relaxed text-black/75 sm:text-lg"
+      >
+        <div className="mt-8 flex flex-wrap gap-3">
+          <TransitionLink href="/data-analysis" className={pageActionClassName}>
+            open data analysis
+          </TransitionLink>
+          <TransitionLink href="/datasets" className={pageActionClassName}>
+            inspect dataset
+          </TransitionLink>
+          <TransitionLink href="/data-critique" className={pageActionClassName}>
+            read critique
+          </TransitionLink>
         </div>
-      </header>
+      </PageHeader>
 
-      <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
-        <p className={pageSectionEyebrowClassName}>Synthesis</p>
-        <h2 className="mt-3 max-w-4xl text-4xl font-medium leading-tight sm:text-5xl">
-          What the project shows so far
-        </h2>
+      {LANDING_SECTIONS.map((section) => (
+        <section
+          key={section.id}
+          className="grid gap-0 border-b border-black lg:grid-cols-[150px_1fr]"
+        >
+          <aside className="border-b border-black px-6 py-6 sm:px-10 lg:border-r lg:border-b-0 lg:px-6 lg:py-10">
+            <p className={pageMetaLabelClassName}>Section</p>
+            <p className="mt-3 text-3xl font-semibold leading-none">
+              {section.id}
+            </p>
+          </aside>
 
-        <div className="mt-8 grid gap-0 border-y border-black">
-          {FINDINGS.map((finding, index) => (
+          <div className="px-6 py-8 sm:px-10 sm:py-10">
+            <h2 className="text-3xl font-semibold leading-tight sm:text-4xl">
+              {section.heading}
+            </h2>
+            <p className="mt-6 max-w-5xl text-base leading-relaxed text-black/80">
+              {section.body}
+            </p>
+          </div>
+        </section>
+      ))}
+
+      <PageSection innerClassName="py-0">
+        <div className="py-10 sm:py-12">
+          <p className={pageSectionEyebrowClassName}>Research Questions</p>
+          <h2 className="mt-3 max-w-4xl text-4xl font-medium leading-tight sm:text-5xl">
+            Three questions structure the analysis
+          </h2>
+        </div>
+
+        <div className="border-y border-black">
+          {RESEARCH_QUESTIONS.map((question, index) => (
             <article
-              key={finding.id}
-              className={`grid gap-0 lg:grid-cols-[90px_1fr_240px] ${
+              key={question.id}
+              className={`grid gap-0 lg:grid-cols-[120px_minmax(0,1fr)_240px] ${
                 index > 0 ? "border-t border-black" : ""
               }`}
             >
-              <div className="border-b border-black px-5 py-5 lg:border-r lg:border-b-0 lg:px-4 lg:py-6">
+              <div className="border-b border-black px-6 py-6 sm:px-10 lg:border-r lg:border-b-0 lg:px-4 lg:py-8">
                 <p className={pageMetaLabelClassName}>Finding</p>
-                <p className="mt-2 text-2xl font-semibold leading-none">
-                  {finding.id}
+                <p className="mt-3 text-3xl font-semibold leading-none">
+                  {question.id}
                 </p>
               </div>
 
-              <div className="border-b border-black px-5 py-5 lg:border-b-0 lg:px-6 lg:py-6">
-                <h3 className="text-2xl font-semibold leading-tight sm:text-3xl">
-                  {finding.question}
-                </h3>
-                <p className="mt-3 max-w-4xl text-base leading-relaxed text-black/80">
-                  {finding.takeaway}
+              <div className="border-b border-black px-6 py-8 sm:px-10 lg:border-b-0 lg:px-6 lg:py-8">
+                <h2 className="text-2xl font-semibold leading-tight sm:text-3xl">
+                  {question.question}
+                </h2>
+                <p className="mt-4 max-w-4xl text-base leading-relaxed text-black/80">
+                  {question.takeaway}
                 </p>
               </div>
 
-              <div className="px-5 py-5 lg:border-l lg:px-4 lg:py-6">
+              <div className="px-6 py-6 sm:px-10 lg:border-l lg:px-4 lg:py-8">
                 <TransitionLink
-                  href={finding.route}
-                  className={`${pageActionCompactClassName} w-full`}
+                  href={question.route}
+                  className={`${pageActionClassName} w-full`}
                 >
-                  {finding.routeLabel}
+                  {question.routeLabel}
                 </TransitionLink>
               </div>
             </article>
           ))}
         </div>
-      </section>
-
-      <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
-        <p className={pageSectionEyebrowClassName}>Site Status</p>
-        <h2 className="mt-3 max-w-3xl text-4xl font-medium leading-tight sm:text-5xl">
-          Full pass: what is complete and what is still being built
-        </h2>
-        <div className="mt-8 grid gap-0 border-y border-black">
-          {SITE_STATUS.map((section, index) => (
-            <article
-              key={section.href}
-              className={`grid gap-4 px-4 py-4 sm:grid-cols-[180px_1fr_auto] sm:items-center ${
-                index > 0 ? "border-t border-black" : ""
-              }`}
-            >
-              <TransitionLink
-                href={section.href}
-                className="text-xl font-semibold leading-tight transition-opacity duration-150 hover:opacity-70"
-              >
-                {section.label}
-              </TransitionLink>
-              <p className="text-sm leading-relaxed text-black/75">
-                {section.note}
-              </p>
-              <span
-                className={`inline-flex w-fit items-center px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] ${statusClasses(
-                  section.status,
-                )}`}
-              >
-                {section.status}
-              </span>
-            </article>
-          ))}
-        </div>
-      </section>
+      </PageSection>
 
       <section className="px-6 py-10 sm:px-10 sm:py-12">
         <p className={pageSectionEyebrowClassName}>About the Team</p>
@@ -279,10 +257,7 @@ export default function HomePage() {
           limitations visible in the same interface.
         </p>
         <div className="mt-7 flex flex-wrap gap-3">
-          <TransitionLink
-            href="/meet-the-team"
-            className={pageActionClassName}
-          >
+          <TransitionLink href="/meet-the-team" className={pageActionClassName}>
             meet the team
           </TransitionLink>
           <TransitionLink

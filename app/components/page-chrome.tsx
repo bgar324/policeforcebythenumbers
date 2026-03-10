@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { type ComponentPropsWithoutRef, type ReactNode } from "react";
 
 export const pageShellClassName =
-  "mx-auto w-full max-w-[1200px] border-x border-black font-[family:var(--font-nav)]";
+  "mx-auto w-full max-w-[1197px] border-x border-black font-[family:var(--font-nav)]";
 
 export const pageGutterClassName = "px-6 sm:px-10";
 
