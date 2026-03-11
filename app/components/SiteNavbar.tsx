@@ -1,5 +1,6 @@
 "use client";
 
+import { SiteButton } from "@/app/components/SiteButton";
 import TransitionLink from "@/app/components/transition/TransitionLink";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -107,16 +108,12 @@ export default function SiteNavbar() {
       {/* BACKDROP: This handles the "Clicking somewhere takes it out of focus" requirement.
           Since it's Z-40 and the Header is Z-50, clicking the background closes everything.
       */}
-      <button
-        type="button"
+      <SiteButton
         aria-label="Close navigation"
         tabIndex={overlayActive ? 0 : -1}
         onClick={closeMenus}
-        className={`fixed inset-0 z-40 transition-all duration-200 ${
-          overlayActive
-            ? "pointer-events-auto bg-white/10 opacity-100 backdrop-blur-[2px]"
-            : "pointer-events-none bg-transparent opacity-0"
-        }`}
+        variant="overlay"
+        active={overlayActive}
       />
 
       <header
@@ -168,15 +165,12 @@ export default function SiteNavbar() {
                 onMouseEnter={() => setActiveDropdown(section.key)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button
-                  type="button"
+                <SiteButton
                   // Implement Click functionality for touch screens/manual toggle
                   onClick={() => handleDropdownToggle(section.key)}
-                  className={`${DESKTOP_ITEM} gap-2 ${
-                    activeDropdown === section.key
-                      ? "bg-black !text-white dark:!bg-white dark:!text-black"
-                      : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
-                  }`}
+                  variant="navControl"
+                  active={activeDropdown === section.key}
+                  className="gap-2"
                 >
                   {section.label}
                   <span
@@ -186,7 +180,7 @@ export default function SiteNavbar() {
                   >
                     +
                   </span>
-                </button>
+                </SiteButton>
 
                 <div
                   className={`absolute right-0 top-full min-w-[230px] border border-black bg-white transition-all duration-200 ${
@@ -215,29 +209,25 @@ export default function SiteNavbar() {
               </div>
             ))}
 
-            <button
-              type="button"
+            <SiteButton
               aria-label="Toggle light and dark mode"
               onClick={toggleTheme}
-              className={`${DESKTOP_ITEM} w-[56px] cursor-pointer justify-center border-l border-black px-0 text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black`}
+              variant="navControl"
+              className="w-[56px] border-l border-black px-0"
             >
               <span className="text-[15px] leading-none" aria-hidden>
                 ●
               </span>
-            </button>
+            </SiteButton>
           </nav>
 
           {/* Mobile Toggle Button */}
-          <button
-            type="button"
+          <SiteButton
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-controls="mobile-site-menu"
             aria-expanded={mobileOpen}
-            className={`inline-flex h-full min-w-[82px] items-center justify-center gap-2 border-l border-black px-3 font-[family:var(--font-nav)] transition-colors duration-200 min-[380px]:min-w-[92px] min-[380px]:gap-3 min-[380px]:px-4 md:hidden ${
-              mobileOpen
-                ? "bg-black text-white"
-                : "bg-white text-black hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white"
-            }`}
+            variant="mobileMenuToggle"
+            active={mobileOpen}
             onClick={() => setMobileOpen((o) => !o)}
           >
             <span className="w-10 text-center text-[9px] font-semibold uppercase tracking-[0.16em] min-[380px]:w-12 min-[380px]:text-[10px] min-[380px]:tracking-[0.18em]">
@@ -260,7 +250,7 @@ export default function SiteNavbar() {
                 }`}
               />
             </span>
-          </button>
+          </SiteButton>
         </div>
 
         {/* Mobile Dropdown View */}
@@ -302,14 +292,13 @@ export default function SiteNavbar() {
               </section>
             ))}
             <section className="border-t border-black">
-              <button
-                type="button"
+              <SiteButton
                 onClick={toggleTheme}
                 aria-label="Toggle light and dark mode"
-                className="block w-full cursor-pointer px-6 py-3 text-center text-[15px] leading-none text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
+                variant="mobileThemeToggle"
               >
                 <span aria-hidden>●</span>
-              </button>
+              </SiteButton>
             </section>
           </div>
         </div>

@@ -88,7 +88,7 @@ export default function TeamMemberCard({
                 <a
                   href={emailHref}
                   aria-label={`Email ${name}`}
-                  className="inline-flex h-10 w-10 items-center justify-center border !border-[rgb(0,0,0)] !bg-[rgb(255,255,255)] !text-[rgb(0,0,0)] transition-transform duration-150 hover:-translate-y-0.5 focus-visible:-translate-y-0.5"
+                  className="inline-flex h-10 w-10 items-center justify-center border !border-[rgb(0,0,0)] !bg-[rgb(255,255,255)] !text-[rgb(0,0,0)] duration-150 hover:!bg-black hover:!text-white transition-300 ease-in-out transtition-300"
                 >
                   <EmailIcon />
                 </a>
@@ -100,7 +100,7 @@ export default function TeamMemberCard({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${name} LinkedIn`}
-                  className="inline-flex h-10 w-10 items-center justify-center border !border-[rgb(0,0,0)] !bg-[rgb(255,255,255)] !text-[rgb(0,0,0)] transition-transform duration-150 hover:-translate-y-0.5 focus-visible:-translate-y-0.5"
+                  className="inline-flex h-10 w-10 items-center justify-center border !border-[rgb(0,0,0)] !bg-[rgb(255,255,255)] !text-[rgb(0,0,0)] duration-150 hover:!bg-black hover:!text-white transition-300 ease-in-out"
                 >
                   <LinkedInIcon />
                 </a>
@@ -113,8 +113,12 @@ export default function TeamMemberCard({
               <>
                 {hasBio ? (
                   <section className="space-y-2">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/55">Bio</p>
-                    <p className="text-sm leading-relaxed text-black/80">{bioText}</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/55">
+                      Bio
+                    </p>
+                    <p className="text-sm leading-relaxed text-black/80">
+                      {bioText}
+                    </p>
                   </section>
                 ) : null}
 
@@ -123,7 +127,9 @@ export default function TeamMemberCard({
                     <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/55">
                       Responsibility
                     </p>
-                    <p className="text-sm leading-relaxed text-black/80">{researchText}</p>
+                    <p className="text-sm leading-relaxed text-black/80">
+                      {researchText}
+                    </p>
                   </section>
                 ) : null}
               </>

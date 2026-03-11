@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { type ComponentPropsWithoutRef, type ReactNode } from "react";
 
 export const pageShellClassName =
-  "mx-auto w-full max-w-[1197px] border-x border-black font-[family:var(--font-nav)]";
+  "mx-auto w-full max-w-[1200px] border-x border-black font-[family:var(--font-nav)]";
 
 export const pageGutterClassName = "px-6 sm:px-10";
 
@@ -30,12 +30,6 @@ export const pageDescriptionClassName =
 
 export const pageDescriptionWideClassName =
   "mt-5 max-w-4xl text-base leading-relaxed text-black/75";
-
-export const pageActionClassName =
-  "inline-flex items-center justify-center border border-black px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white";
-
-export const pageActionCompactClassName =
-  "inline-flex items-center justify-center border border-black px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150 hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white";
 
 type PageShellProps = ComponentPropsWithoutRef<"main">;
 

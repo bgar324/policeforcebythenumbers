@@ -1,9 +1,9 @@
+import { SiteButton } from "@/app/components/SiteButton";
 import TransitionLink from "@/app/components/transition/TransitionLink";
 import {
   PageHeader,
   PageSection,
   PageShell,
-  pageActionClassName,
   pageMetaLabelClassName,
   pageSectionEyebrowClassName,
 } from "@/app/components/page-chrome";
@@ -20,13 +20,6 @@ type LandingSection = {
   id: string;
   heading: string;
   body: string;
-};
-
-type SectionStatus = {
-  label: string;
-  href: string;
-  status: "Complete" | "Partial" | "In Progress";
-  note: string;
 };
 
 const RESEARCH_QUESTIONS: ResearchQuestion[] = [
@@ -76,85 +69,6 @@ const LANDING_SECTIONS: LandingSection[] = [
   },
 ] as const;
 
-const SITE_STATUS: SectionStatus[] = [
-  {
-    label: "Timeline",
-    href: "/timeline",
-    status: "Complete",
-    note: "Political, social, and policing context from 2016 to 2023.",
-  },
-  {
-    label: "Data Analysis",
-    href: "/data-analysis",
-    status: "Complete",
-    note: "Three research questions with Tableau and Plotly visual findings.",
-  },
-  {
-    label: "Datasets",
-    href: "/datasets",
-    status: "Complete",
-    note: "Source files, schema fields, categories, and download links.",
-  },
-  {
-    label: "Data Critique",
-    href: "/data-critique",
-    status: "Complete",
-    note: "Method limits, representational constraints, and ontology critique.",
-  },
-  {
-    label: "Bibliography",
-    href: "/bibliography",
-    status: "Complete",
-    note: "Annotated sources and full citation modal references.",
-  },
-  {
-    label: "Overview",
-    href: "/overview",
-    status: "Partial",
-    note: "Processing and presentation sections complete; sources block still marked under construction.",
-  },
-  {
-    label: "Introduction",
-    href: "/introduction",
-    status: "In Progress",
-    note: "Currently a placeholder route awaiting final narrative text.",
-  },
-  {
-    label: "Conclusion",
-    href: "/conclusion",
-    status: "In Progress",
-    note: "Currently a placeholder route awaiting final synthesis text.",
-  },
-  {
-    label: "Meet the Team",
-    href: "/meet-the-team",
-    status: "Complete",
-    note: "Role-based contributor bios and contact links.",
-  },
-  {
-    label: "Acknowledgements",
-    href: "/acknowledgements",
-    status: "Complete",
-    note: "Instructor and discussion support acknowledgements.",
-  },
-];
-
-const PENDING_SITE_STATUS = SITE_STATUS.filter(
-  (section) => section.status !== "Complete",
-);
-
-function statusClasses(status: SectionStatus["status"]) {
-  if (status === "Complete") {
-    return "bg-black text-white";
-  }
-
-  if (status === "Partial") {
-    return "bg-black/15 text-black";
-  }
-
-  return "bg-white text-black border border-black";
-}
-
 export default function HomePage() {
   return (
     <PageShell>
@@ -190,15 +104,17 @@ export default function HomePage() {
         }
       >
         <div className="mt-8 flex flex-wrap gap-3">
-          <TransitionLink href="/data-analysis" className={pageActionClassName}>
-            open data analysis
-          </TransitionLink>
-          <TransitionLink href="/datasets" className={pageActionClassName}>
-            inspect dataset
-          </TransitionLink>
-          <TransitionLink href="/data-critique" className={pageActionClassName}>
-            read critique
-          </TransitionLink>
+          <SiteButton asChild variant="action">
+            <TransitionLink href="/data-analysis">
+              open data analysis
+            </TransitionLink>
+          </SiteButton>
+          <SiteButton asChild variant="action">
+            <TransitionLink href="/datasets">inspect dataset</TransitionLink>
+          </SiteButton>
+          <SiteButton asChild variant="action">
+            <TransitionLink href="/data-critique">read critique</TransitionLink>
+          </SiteButton>
         </div>
       </PageHeader>
 
@@ -256,12 +172,11 @@ export default function HomePage() {
               </div>
 
               <div className="px-6 py-6 sm:px-10 lg:border-l lg:px-4 lg:py-8">
-                <TransitionLink
-                  href={question.route}
-                  className={`${pageActionClassName} w-full`}
-                >
-                  {question.routeLabel}
-                </TransitionLink>
+                <SiteButton asChild variant="action" className="w-full">
+                  <TransitionLink href={question.route}>
+                    {question.routeLabel}
+                  </TransitionLink>
+                </SiteButton>
               </div>
             </article>
           ))}
@@ -280,15 +195,14 @@ export default function HomePage() {
           limitations visible in the same interface.
         </p>
         <div className="mt-7 flex flex-wrap gap-3">
-          <TransitionLink href="/meet-the-team" className={pageActionClassName}>
-            meet the team
-          </TransitionLink>
-          <TransitionLink
-            href="/acknowledgements"
-            className={pageActionClassName}
-          >
-            acknowledgements
-          </TransitionLink>
+          <SiteButton asChild variant="action">
+            <TransitionLink href="/meet-the-team">meet the team</TransitionLink>
+          </SiteButton>
+          <SiteButton asChild variant="action">
+            <TransitionLink href="/acknowledgements">
+              acknowledgements
+            </TransitionLink>
+          </SiteButton>
         </div>
       </section>
     </PageShell>

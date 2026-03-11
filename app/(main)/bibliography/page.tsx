@@ -3,11 +3,11 @@
 import {
   PageHeader,
   PageShell,
-  pageActionCompactClassName,
   pageDescriptionWideClassName,
   pageMetaLabelClassName,
   pageTitleStrongClassName,
 } from "@/app/components/page-chrome";
+import { SiteButton } from "@/app/components/SiteButton";
 import { useEffect, useRef, useState } from "react";
 
 type BibliographyEntry = {
@@ -286,22 +286,18 @@ export default function BibliographyPage() {
                   </p>
 
                   <div className="mt-4 flex flex-wrap gap-2">
-                    <button
-                      type="button"
+                    <SiteButton
+                      variant="actionCompact"
                       onClick={() => setActiveAnnotation(entry)}
-                      className={`${pageActionCompactClassName} cursor-pointer`}
                     >
                       read full annotation
-                    </button>
+                    </SiteButton>
 
-                    <a
-                      href={entry.sourceUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={pageActionCompactClassName}
-                    >
-                      open source
-                    </a>
+                    <SiteButton asChild variant="actionCompact">
+                      <a href={entry.sourceUrl} target="_blank" rel="noreferrer">
+                        open source
+                      </a>
+                    </SiteButton>
                   </div>
                 </div>
               </article>
@@ -323,14 +319,14 @@ export default function BibliographyPage() {
       >
         {activeAnnotation ? (
           <div className="relative h-full w-full overflow-y-auto p-4 sm:p-5">
-            <button
-              type="button"
+            <SiteButton
+              variant="utilityIcon"
               onClick={() => setActiveAnnotation(null)}
               aria-label="Close annotation modal"
-              className="absolute right-0 top-0 m-2 inline-flex h-10 w-10 items-center justify-center border border-black text-xs font-semibold uppercase transition-colors duration-150 hover:bg-black hover:text-white sm:m-3 cursor-pointer"
+              className="absolute right-0 top-0 m-2 sm:m-3"
             >
               X
-            </button>
+            </SiteButton>
 
             <p className={pageMetaLabelClassName}>Full Annotation</p>
             <p className="mt-3 pr-10 text-sm leading-relaxed text-black/90 sm:pr-8 sm:text-base">

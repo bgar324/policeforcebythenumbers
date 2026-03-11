@@ -1,12 +1,12 @@
 import {
   PageHeader,
   PageShell,
-  pageActionClassName,
   pageDescriptionWideClassName,
   pageMetaLabelClassName,
   pageSectionEyebrowClassName,
   pageTitleStrongClassName,
 } from "@/app/components/page-chrome";
+import { SiteButton } from "@/app/components/SiteButton";
 
 type FieldDefinition = {
   name: string;
@@ -355,27 +355,27 @@ export default function DatasetsPage() {
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <a
-            href={DEATH_RECORDS_CSV_URL}
-            download="fatal-police-shootings-data.csv"
-            className={pageActionClassName}
-          >
-            Preview Death Records CSV
-          </a>
-          <a
-            href={AGENCIES_CSV_URL}
-            download="fatal-police-shootings-agencies.csv"
-            className={pageActionClassName}
-          >
-            Preview Agencies CSV
-          </a>
-          <a
-            href={CLEANED_CSV_URL}
-            download="police_shootings.csv"
-            className={pageActionClassName}
-          >
-            Download Cleaned CSV
-          </a>
+          <SiteButton asChild variant="action">
+            <a
+              href={DEATH_RECORDS_CSV_URL}
+              download="fatal-police-shootings-data.csv"
+            >
+              Preview Death Records CSV
+            </a>
+          </SiteButton>
+          <SiteButton asChild variant="action">
+            <a
+              href={AGENCIES_CSV_URL}
+              download="fatal-police-shootings-agencies.csv"
+            >
+              Preview Agencies CSV
+            </a>
+          </SiteButton>
+          <SiteButton asChild variant="action">
+            <a href={CLEANED_CSV_URL} download="police_shootings.csv">
+              Download Cleaned CSV
+            </a>
+          </SiteButton>
         </div>
       </PageHeader>
 
