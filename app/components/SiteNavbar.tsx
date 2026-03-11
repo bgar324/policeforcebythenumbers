@@ -213,7 +213,7 @@ export default function SiteNavbar() {
               aria-label="Toggle light and dark mode"
               onClick={toggleTheme}
               variant="navControl"
-              className="w-[56px] border-l border-black px-0"
+              className="w-[56px] border-l border-black px-0 cursor-pointer"
             >
               <span className="text-[15px] leading-none" aria-hidden>
                 ●
@@ -296,6 +296,7 @@ export default function SiteNavbar() {
                 onClick={toggleTheme}
                 aria-label="Toggle light and dark mode"
                 variant="mobileThemeToggle"
+                className = "cursor-pointer"
               >
                 <span aria-hidden>●</span>
               </SiteButton>
