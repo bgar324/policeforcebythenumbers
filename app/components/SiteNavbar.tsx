@@ -91,12 +91,10 @@ export default function SiteNavbar() {
     try {
       localStorage.setItem("pfbn-theme", nextTheme);
     } catch {
-      // ignore storage failures
     }
   };
 
   const handleDropdownToggle = (key: DropdownKey) => {
-    // If clicking the one already open, close it. Otherwise, open the new one.
     setActiveDropdown((prev) => (prev === key ? null : key));
   };
 
@@ -105,9 +103,6 @@ export default function SiteNavbar() {
 
   return (
     <>
-      {/* BACKDROP: This handles the "Clicking somewhere takes it out of focus" requirement.
-          Since it's Z-40 and the Header is Z-50, clicking the background closes everything.
-      */}
       <SiteButton
         aria-label="Close navigation"
         tabIndex={overlayActive ? 0 : -1}
