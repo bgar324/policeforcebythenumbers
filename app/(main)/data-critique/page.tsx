@@ -5,49 +5,113 @@ import {
   pageMetaLabelClassName,
   pageTitleStrongClassName,
 } from "@/app/components/page-chrome";
+import { cn } from "@/lib/utils";
+
+type CritiqueSubsection = {
+  title: string;
+  body: string;
+  className?: string;
+};
 
 type CritiqueSection = {
   id: string;
-  heading: string;
-  paragraphs: string[];
+  slug: string;
+  title: string;
+  items: CritiqueSubsection[];
+  gridClassName?: string;
 };
 
 const CRITIQUE_SECTIONS: CritiqueSection[] = [
   {
     id: "01",
-    heading: "Dataset Scope and Variables",
-    paragraphs: [
-      "This dataset contains detailed records of fatal police shootings in the United States. Each entry includes information about the death itself, such as an ID number, date, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location. It also includes information about the person who was killed. Victim variables include name, age, gender, race, the source used to determine race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers. The dataset also includes a separate set of agency level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.",
-      "Because of this structure, the dataset can illuminate patterns in fatal police shootings. It allows researchers to examine who is being killed, where these incidents occur, and some of the reported circumstances. The geographic data also makes it possible to study regional trends. Demographic fields allow analysis of age, race, and gender patterns. Variables such as armed status, threat type, and flee status help describe how these encounters are officially framed. The inclusion of agency identifiers also allows comparisons across departments and jurisdictions.",
-      "However, the dataset is limited to one very specific outcome. It only documents incidents in which an on duty police officer shoots and kills a civilian. It does not represent all police use of force, and it does not represent all deaths that occur during contact with police.",
+    slug: "dataset-scope-and-variables",
+    title: "Dataset Scope and Variables",
+    items: [
+      {
+        title: "What the Dataset Records",
+        body: "This dataset contains detailed records of fatal police shootings in the United States. Each entry includes information about the death itself, such as an ID number, date, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location. It also includes information about the person who was killed. Victim variables include name, age, gender, race, the source used to determine race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers. The dataset also includes a separate set of agency level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.",
+        className: "lg:col-span-2",
+      },
+      {
+        title: "What the Structure Allows Researchers to Study",
+        body: "Because of this structure, the dataset can illuminate patterns in fatal police shootings. It allows researchers to examine who is being killed, where these incidents occur, and some of the reported circumstances. The geographic data also makes it possible to study regional trends. Demographic fields allow analysis of age, race, and gender patterns. Variables such as armed status, threat type, and flee status help describe how these encounters are officially framed. The inclusion of agency identifiers also allows comparisons across departments and jurisdictions.",
+      },
+      {
+        title: "Scope Limitation of the Dataset",
+        body: "However, the dataset is limited to one very specific outcome. It only documents incidents in which an on duty police officer shoots and kills a civilian. It does not represent all police use of force, and it does not represent all deaths that occur during contact with police.",
+      },
     ],
   },
   {
     id: "02",
-    heading: "What This Dataset Cannot Reveal",
-    paragraphs: [
-      "There are several important things this dataset cannot reveal. It does not include the population of each city or state for each year. This means it cannot on its own provide rates or per capita comparisons. It does not include deaths of people in custody, such as deaths in jail cells or during restraint without gunfire. It excludes fatal shootings carried out by off duty officers. It also leaves out incidents in which police fired their weapons but the person survived. As a result, it captures only the most extreme and final outcome, which shapes the kinds of questions that can be asked.",
+    slug: "what-this-dataset-cannot-reveal",
+    title: "What This Dataset Cannot Reveal",
+    items: [
+      {
+        title: "Questions This Data Cannot Answer",
+        body: "There are several important things this dataset cannot reveal. It does not include the population of each city or state for each year. This means it cannot on its own provide rates or per capita comparisons. It does not include deaths of people in custody, such as deaths in jail cells or during restraint without gunfire. It excludes fatal shootings carried out by off duty officers. It also leaves out incidents in which police fired their weapons but the person survived. As a result, it captures only the most extreme and final outcome, which shapes the kinds of questions that can be asked.",
+        className: "lg:col-span-2",
+      },
     ],
   },
   {
     id: "03",
-    heading: "How The Dataset Is Produced",
-    paragraphs: [
-      "The data was generated by The Washington Post. Reporters compiled and maintain the database. They draw on agency data and federal law enforcement datasets. The original sources include information from the FBI and the Department of Justice related to fatal shootings by police. In 2022, The Post made a specific effort to improve agency identification. They worked to increase the coverage of federal Originating Agency Identifier codes. Reporters used both automated and manual matching of names and ORI codes to fill in missing data. This shows that the dataset is not simply downloaded from a single official source. It is assembled through journalistic work, technical matching, and editorial decisions about inclusion and categorization. The creation and maintenance of the dataset is funded by The Washington Post as a media organization.",
+    slug: "how-the-dataset-is-produced",
+    title: "How the Dataset Is Produced",
+    items: [
+      {
+        title: "Where the Dataset Comes From",
+        body: "The data was generated by The Washington Post. Reporters compiled and maintain the database. They draw on agency data and federal law enforcement datasets. The original sources include information from the FBI and the Department of Justice related to fatal shootings by police.",
+        className: "lg:col-span-2",
+      },
+      {
+        title: "Data Collection and Matching Methods",
+        body: "In 2022, The Post made a specific effort to improve agency identification. They worked to increase the coverage of federal Originating Agency Identifier codes. Reporters used both automated and manual matching of names and ORI codes to fill in missing data.",
+      },
+      {
+        title: "Editorial and Institutional Role in Dataset Creation",
+        body: "This shows that the dataset is not simply downloaded from a single official source. It is assembled through journalistic work, technical matching, and editorial decisions about inclusion and categorization. The creation and maintenance of the dataset is funded by The Washington Post as a media organization.",
+      },
     ],
   },
   {
     id: "04",
-    heading: "Missing Context and Representation Limits",
-    paragraphs: [
-      "Important information is left out of the spreadsheet. It does not include broader social context such as poverty levels, local crime rates, or community demographics. It does not provide full medical or legal details about the manner of death beyond the fact that police gunfire was involved. Although there is a variable for whether the incident was related to mental illness, this category is limited and may not capture diagnoses, history, or nuance. Ethnicity is not clearly separated from race, and there may be no consistent way to represent mixed racial or mixed ethnic identities. This simplifies complex identities into fixed boxes.",
+    slug: "missing-context-and-representation-limits",
+    title: "What the Spreadsheet Leaves Out",
+    items: [
+      {
+        title: "Missing Social and Incident Context",
+        body: "Important information is left out of the spreadsheet. It does not include broader social context such as poverty levels, local crime rates, or community demographics. It does not provide full medical or legal details about the manner of death beyond the fact that police gunfire was involved.",
+      },
+      {
+        title: "Limits of Identity and Mental Health Categories",
+        body: "Although there is a variable for whether the incident was related to mental illness, this category is limited and may not capture diagnoses, history, or nuance. Ethnicity is not clearly separated from race, and there may be no consistent way to represent mixed racial or mixed ethnic identities. This simplifies complex identities into fixed boxes.",
+      },
     ],
   },
   {
     id: "05",
-    heading: "Ideological Effects of Data Structure",
-    paragraphs: [
-      "The way this dataset turns events into data has ideological effects. By focusing only on fatal shootings, it centers death by gunfire as the key measure of police violence. Other forms of harm become less visible. The structure also relies on official or media reported categories such as threat type or armed status. These categories may reflect law enforcement narratives or early reports rather than full investigations. The ontology of the dataset treats each incident as a discrete event tied to an individual victim. It does not capture long histories of community police relations or systemic conditions. If this dataset were the only source, we would know who died in these shootings and some basic details. We would not know how often police use force without killing, how communities experience policing more broadly, or how structural factors shape these encounters. The dataset is powerful, but it is shaped by choices about what counts as data and what does not.",
+    slug: "ideological-effects-of-data-structure",
+    title: "Ideological Effects of Data Structure",
+    gridClassName: "lg:grid-cols-3",
+    items: [
+      {
+        title: "How the Data Frame Shapes Meaning",
+        body: "The way this dataset turns events into data has ideological effects. By focusing only on fatal shootings, it centers death by gunfire as the key measure of police violence. Other forms of harm become less visible.",
+      },
+      {
+        title: "Reliance on Official Reporting Categories",
+        body: "The structure also relies on official or media reported categories such as threat type or armed status. These categories may reflect law enforcement narratives or early reports rather than full investigations.",
+      },
+      {
+        title: "Structural Limits of the Dataset",
+        body: "The ontology of the dataset treats each incident as a discrete event tied to an individual victim. It does not capture long histories of community police relations or systemic conditions.",
+      },
+      {
+        title: "Limits of Interpretation From the Dataset Alone",
+        body: "If this dataset were the only source, we would know who died in these shootings and some basic details. We would not know how often police use force without killing, how communities experience policing more broadly, or how structural factors shape these encounters. The dataset is powerful, but it is shaped by choices about what counts as data and what does not.",
+        className: "lg:col-span-3",
+      },
     ],
   },
 ];
@@ -65,25 +129,54 @@ export default function DataCritiquePage() {
 
       {CRITIQUE_SECTIONS.map((section, index) => (
         <section
+          id={section.slug}
           key={section.id}
-          className={`grid gap-0 lg:grid-cols-[150px_1fr] ${
-            index < CRITIQUE_SECTIONS.length - 1 ? "border-b border-black" : ""
-          }`}
+          className={cn(
+            "scroll-mt-16",
+            index < CRITIQUE_SECTIONS.length - 1 && "border-b border-black",
+          )}
         >
-          <aside className="border-b border-black px-6 py-6 sm:px-10 lg:border-r lg:border-b-0 lg:px-6 lg:py-10">
-            <p className={pageMetaLabelClassName}>Section</p>
-            <p className="mt-3 text-3xl font-semibold leading-none">{section.id}</p>
-          </aside>
+          <header className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
+            <div className="flex items-center gap-6">
+              <p className={cn(pageMetaLabelClassName, "mb-0")}>
+                Section {section.id}
+              </p>
+              <h2 className="text-xl font-bold uppercase tracking-tight sm:text-2xl">
+                {section.title}
+              </h2>
+            </div>
+          </header>
 
-          <div className="px-6 py-8 sm:px-10 sm:py-10">
-            <h2 className="text-3xl font-semibold leading-tight sm:text-4xl">
-              {section.heading}
-            </h2>
-            <div className="mt-6 space-y-5">
-              {section.paragraphs.map((paragraph) => (
-                <p key={paragraph} className="max-w-5xl text-base leading-relaxed text-black/80">
-                  {paragraph}
-                </p>
+          <div className="px-6 py-8 sm:px-10 sm:py-12">
+            <div
+              className={cn("grid gap-6 lg:grid-cols-2", section.gridClassName)}
+            >
+              {section.items.map((item, index) => (
+                <article
+                  key={item.title}
+                  className={cn(
+                    "min-h-[220px] border border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
+                    item.className,
+                  )}
+                >
+                  <div className="flex h-full flex-col justify-start p-5 sm:p-6">
+                    <div>
+                      <div className="flex items-start justify-between gap-4">
+                        <p className={pageMetaLabelClassName}>Subsection</p>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+                          {section.id}.{String(index + 1).padStart(2, "0")}
+                        </p>
+                      </div>
+                      <h3 className="mt-2 max-w-2xl text-2xl font-semibold leading-tight sm:text-[2rem]">
+                        {item.title}
+                      </h3>
+                      {/* Body text now follows immediately after the header */}
+                      <p className="mt-3 max-w-3xl text-sm leading-relaxed text-black/80 sm:text-base">
+                        {item.body}
+                      </p>
+                    </div>
+                  </div>
+                </article>
               ))}
             </div>
           </div>

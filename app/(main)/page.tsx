@@ -36,7 +36,7 @@ type LandingSection = {
 
 const RESEARCH_QUESTIONS: ResearchQuestion[] = [
   {
-    id: "Q1",
+    id: "Question 1",
     question: "How did fatal police shootings change after COVID-19?",
     takeaway:
       "Shootings rose from 4,923 (2015-2019) to 5,507 (2020-2024), a roughly 12% increase that persists beyond the immediate pandemic period.",
@@ -44,7 +44,7 @@ const RESEARCH_QUESTIONS: ResearchQuestion[] = [
     routeLabel: "View Question 1 Analysis",
   },
   {
-    id: "Q2",
+    id: "Question 2",
     question:
       "How has the racial distribution changed from 2015 to the present?",
     takeaway:
@@ -53,7 +53,7 @@ const RESEARCH_QUESTIONS: ResearchQuestion[] = [
     routeLabel: "View Question 2 Analysis",
   },
   {
-    id: "Q3",
+    id: "Question 3",
     question:
       "Where is mental-illness labeling concentrated, and in what incident contexts?",
     takeaway:
@@ -71,19 +71,16 @@ const LANDING_SECTIONS: LandingSection[] = [
     items: [
       {
         title: "Dataset Source and Scope",
-        body:
-          "Our project follows a dataset containing detailed records of fatal police shootings in the United States, taken from The Washington Post. This data was drawn from federal law enforcement datasets. The data itself includes information such as the manner of death, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location.",
+        body: "Our project follows a dataset containing detailed records of fatal police shootings in the United States, taken from The Washington Post. This data was drawn from federal law enforcement datasets. The data itself includes information such as the manner of death, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location.",
         className: "lg:col-span-2",
       },
       {
         title: "Victim Information",
-        body:
-          "It also includes information about the person who was killed. Victim variables include name, age, gender, race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers.",
+        body: "It also includes information about the person who was killed. Victim variables include name, age, gender, race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers.",
       },
       {
         title: "Agency-Level Data",
-        body:
-          "The dataset also includes a separate set of agency-level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.",
+        body: "The dataset also includes a separate set of agency-level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.",
       },
     ],
   },
@@ -94,14 +91,12 @@ const LANDING_SECTIONS: LandingSection[] = [
     items: [
       {
         title: "Patterns Examined in Prior Research",
-        body:
-          "Existing findings on fatal police shootings has largely focused on patterns of race, mental health, and institutional variation. Many studies find that people experiencing mental illness are overrepresented among those killed by police, particularly during crisis encounters, though researchers disagree on how reliably mental illness is identified and recorded in available data. Some scholars argue that the classification of an incident as mental-illness-related depends heavily on agency practices, state policies, and reporting norms rather than consistent criteria.",
+        body: "Existing findings on fatal police shootings has largely focused on patterns of race, mental health, and institutional variation. Many studies find that people experiencing mental illness are overrepresented among those killed by police, particularly during crisis encounters, though researchers disagree on how reliably mental illness is identified and recorded in available data. Some scholars argue that the classification of an incident as mental-illness-related depends heavily on agency practices, state policies, and reporting norms rather than consistent criteria.",
         className: "lg:col-span-2",
       },
       {
         title: "Contextual Factors and Documentation",
-        body:
-          "Others note that contextual factors such as perceived threat, whether the individual was armed, and whether they attempted to flee often shape how incidents are interpreted and documented. Various pieces of literature also examine changes over time, with mixed findings about whether fatal police shootings increased, decreased, or remained stable following the onset of the COVID-19 pandemic.",
+        body: "Others note that contextual factors such as perceived threat, whether the individual was armed, and whether they attempted to flee often shape how incidents are interpreted and documented. Various pieces of literature also examine changes over time, with mixed findings about whether fatal police shootings increased, decreased, or remained stable following the onset of the COVID-19 pandemic.",
         className: "lg:col-span-2",
         imageSrc:
           "/static/images/Contextual%20Factors%20and%20Documentation_Graph.png",
@@ -111,14 +106,12 @@ const LANDING_SECTIONS: LandingSection[] = [
       },
       {
         title: "Racial Disparities and Reporting Limitations",
-        body:
-          "While there is broad agreement that racial disparities in fatal police shootings persist, there is less consensus on how the racial composition of victims has shifted since 2015. Scholars consistently find that fatal police shootings are not evenly distributed across racial groups, though they argue whether these disparities stem from structural inequalities, over-policing, situational dynamics, or agency-level variation. Researchers also question the reliability and completeness of existing federal reporting systems, noting that methodological limitations shape how incidents are categorized and ultimately how conclusions about accountability are drawn.",
+        body: "While there is broad agreement that racial disparities in fatal police shootings persist, there is less consensus on how the racial composition of victims has shifted since 2015. Scholars consistently find that fatal police shootings are not evenly distributed across racial groups, though they argue whether these disparities stem from structural inequalities, over-policing, situational dynamics, or agency-level variation. Researchers also question the reliability and completeness of existing federal reporting systems, noting that methodological limitations shape how incidents are categorized and ultimately how conclusions about accountability are drawn.",
         className: "lg:col-span-2",
       },
       {
         title: "Data Transparency and Ongoing Questions",
-        body:
-          "Overall, scholars agree on the importance of detailed, transparent data, but questions remain about how institutional context, mental health labeling, and temporal change interact within existing datasets.",
+        body: "Overall, scholars agree on the importance of detailed, transparent data, but questions remain about how institutional context, mental health labeling, and temporal change interact within existing datasets.",
         className: "lg:col-span-2",
         imageSrc:
           "/static/images/Data%20Transparency%20and%20Ongoing%20Questions_picture.png",
@@ -135,18 +128,15 @@ const LANDING_SECTIONS: LandingSection[] = [
     items: [
       {
         title: "What the Dataset Makes Visible",
-        body:
-          "The way this dataset turns events into data has ideological effects. By focusing only on fatal shootings, it centers death by gunfire as the key measure of police violence. Other forms of harm become less visible.",
+        body: "The way this dataset turns events into data has ideological effects. By focusing only on fatal shootings, it centers death by gunfire as the key measure of police violence. Other forms of harm become less visible.",
       },
       {
         title: "Categories and Interpretation",
-        body:
-          "The structure also relies on official or media-reported categories such as threat type or armed status. These categories may reflect law enforcement narratives or early reports rather than full investigations.",
+        body: "The structure also relies on official or media-reported categories such as threat type or armed status. These categories may reflect law enforcement narratives or early reports rather than full investigations.",
       },
       {
         title: "Structural Limits of the Dataset",
-        body:
-          "The ontology of the dataset treats each incident as a discrete event tied to an individual victim. It does not capture long histories of community police relations or systemic conditions. The dataset is powerful, but it is shaped by choices about what counts as data and what does not.",
+        body: "The ontology of the dataset treats each incident as a discrete event tied to an individual victim. It does not capture long histories of community police relations or systemic conditions. The dataset is powerful, but it is shaped by choices about what counts as data and what does not.",
         className: "lg:col-span-2",
       },
     ],
@@ -174,7 +164,9 @@ export default function HomePage() {
                 </dd>
               </div>
               <div className="border border-black px-4 py-3">
-                <dt className={pageSectionEyebrowClassName}>Core Questions</dt>
+                <dt className={pageSectionEyebrowClassName}>
+                  Research Questions
+                </dt>
                 <dd className="mt-1 text-2xl font-semibold leading-none">3</dd>
               </div>
               <div className="border border-black px-4 py-3">
@@ -227,7 +219,7 @@ export default function HomePage() {
                   key={item.title}
                   className={cn(
                     "min-h-[220px] border border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
-                    item.className
+                    item.className,
                   )}
                 >
                   {item.imageSrc ? (
@@ -236,7 +228,7 @@ export default function HomePage() {
                         "grid h-full",
                         item.imagePlacement === "left"
                           ? "lg:grid-cols-[0.92fr_minmax(0,1fr)]"
-                          : "lg:grid-cols-[minmax(0,1fr)_0.92fr]"
+                          : "lg:grid-cols-[minmax(0,1fr)_0.92fr]",
                       )}
                     >
                       {item.imagePlacement === "left" ? (
@@ -257,7 +249,8 @@ export default function HomePage() {
                                   Subsection
                                 </p>
                                 <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
-                                  {section.id}.{String(index + 1).padStart(2, "0")}
+                                  {section.id}.
+                                  {String(index + 1).padStart(2, "0")}
                                 </p>
                               </div>
                               <h3 className="mt-4 max-w-2xl text-2xl font-semibold leading-tight sm:text-[2rem]">
@@ -278,7 +271,8 @@ export default function HomePage() {
                                   Subsection
                                 </p>
                                 <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
-                                  {section.id}.{String(index + 1).padStart(2, "0")}
+                                  {section.id}.
+                                  {String(index + 1).padStart(2, "0")}
                                 </p>
                               </div>
                               <h3 className="mt-4 max-w-2xl text-2xl font-semibold leading-tight sm:text-[2rem]">
@@ -332,31 +326,40 @@ export default function HomePage() {
           Three guiding questions structure our analysis.
         </h2>
 
-        <div className="mt-8 border-y border-black">
-          {RESEARCH_QUESTIONS.map((question, index) => (
+        {/* Changed to a 3-column grid on large screens */}
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {RESEARCH_QUESTIONS.map((question) => (
             <article
               key={question.id}
-              className={`grid gap-0 lg:grid-cols-[120px_minmax(0,1fr)_240px] ${
-                index > 0 ? "border-t border-black" : ""
-              }`}
+              // Vertical stack layout with the same elevated styling
+              className="flex flex-col border border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
             >
-              <div className="border-b border-black px-6 py-6 sm:px-10 lg:border-r lg:border-b-0 lg:px-4 lg:py-8">
-                <p className={pageMetaLabelClassName}>Finding</p>
-                <p className="mt-3 text-3xl font-semibold leading-none">
-                  {question.id}
-                </p>
+              <div className="flex justify-around border-b-2 border-black bg-zinc-800 py-1.5">
+                {[...Array(6)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-3 w-3 rounded-full bg-white border border-black shadow-inner"
+                  />
+                ))}
               </div>
-
-              <div className="border-b border-black px-6 py-8 sm:px-10 lg:border-b-0 lg:px-6 lg:py-8">
-                <h2 className="text-2xl font-semibold leading-tight sm:text-3xl">
+              <div className="border-b border-black bg-zinc-100 px-6 py-4 flex justify-between items-end">
+                <div>
+                  <p className="text-3xl font-bold leading-none">
+                    {question.id}
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-grow flex-col px-6 py-6">
+                <h3 className="text-xl font-semibold leading-tight">
                   {question.question}
-                </h2>
-                <p className="mt-4 max-w-4xl text-base leading-relaxed text-black/80">
+                </h3>
+                <p className="mt-4 text-sm leading-relaxed text-black/80">
                   {question.takeaway}
                 </p>
               </div>
 
-              <div className="px-6 py-6 sm:px-10 lg:border-l lg:px-4 lg:py-8">
+              {/* Bottom: Action */}
+              <div className="mt-auto border-t border-black p-4">
                 <SiteButton asChild variant="action" className="w-full">
                   <TransitionLink href={question.route}>
                     {question.routeLabel}
