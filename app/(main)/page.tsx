@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SiteButton } from "@/app/components/SiteButton";
 import TransitionLink from "@/app/components/transition/TransitionLink";
 import {
@@ -7,6 +8,7 @@ import {
   pageMetaLabelClassName,
   pageSectionEyebrowClassName,
 } from "@/app/components/page-chrome";
+import { cn } from "@/lib/utils";
 
 type ResearchQuestion = {
   id: string;
@@ -16,10 +18,20 @@ type ResearchQuestion = {
   routeLabel: string;
 };
 
+type LandingSubsection = {
+  title: string;
+  body: string;
+  className?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  imagePlacement?: "left" | "right";
+};
+
 type LandingSection = {
   id: string;
-  heading: string;
-  body: string;
+  slug: string;
+  title: string;
+  items: LandingSubsection[];
 };
 
 const RESEARCH_QUESTIONS: ResearchQuestion[] = [
@@ -54,20 +66,92 @@ const RESEARCH_QUESTIONS: ResearchQuestion[] = [
 const LANDING_SECTIONS: LandingSection[] = [
   {
     id: "01",
-    heading: "Introduction",
-    body: `Our project follows a dataset containing detailed records of fatal police shootings in the United States, taken from The Washington Post. This data was drawn from federal law enforcement datasets. The data itself includes information such as the manner of death, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location. It also includes information about the person who was killed. Victim variables include name, age, gender, race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers. The dataset also includes a separate set of agency-level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.`,
+    slug: "introduction",
+    title: "Introduction",
+    items: [
+      {
+        title: "Dataset Source and Scope",
+        body:
+          "Our project follows a dataset containing detailed records of fatal police shootings in the United States, taken from The Washington Post. This data was drawn from federal law enforcement datasets. The data itself includes information such as the manner of death, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location.",
+        className: "lg:col-span-2",
+      },
+      {
+        title: "Victim Information",
+        body:
+          "It also includes information about the person who was killed. Victim variables include name, age, gender, race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers.",
+      },
+      {
+        title: "Agency-Level Data",
+        body:
+          "The dataset also includes a separate set of agency-level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.",
+      },
+    ],
   },
   {
     id: "02",
-    heading: "Place in the literature",
-    body: `Existing findings on fatal police shootings has largely focused on patterns of race, mental health, and institutional variation. Many studies find that people experiencing mental illness are overrepresented among those killed by police, particularly during crisis encounters, though researchers disagree on how reliably mental illness is identified and recorded in available data. Some scholars argue that the classification of an incident as mental-illness-related depends heavily on agency practices, state policies, and reporting norms rather than consistent criteria. Others note that contextual factors such as perceived threat, whether the individual was armed, and whether they attempted to flee often shape how incidents are interpreted and documented. Various pieces of literature also examine changes over time, with mixed findings about whether fatal police shootings increased, decreased, or remained stable following the onset of the COVID-19 pandemic. While there is broad agreement that racial disparities in fatal police shootings persist, there is less consensus on how the racial composition of victims has shifted since 2015. Scholars consistently find that fatal police shootings are not evenly distributed across racial groups, though they argue whether these disparities stem from structural inequalities, over-policing, situational dynamics, or agency-level variation. Researchers also question the reliability and completeness of existing federal reporting systems, noting that methodological limitations shape how incidents are categorized and ultimately how conclusions about accountability are drawn. Overall, scholars agree on the importance of detailed, transparent data, but questions remain about how institutional context, mental health labeling, and temporal change interact within existing datasets.`,
+    slug: "place-in-the-literature",
+    title: "Place in the Literature",
+    items: [
+      {
+        title: "Patterns Examined in Prior Research",
+        body:
+          "Existing findings on fatal police shootings has largely focused on patterns of race, mental health, and institutional variation. Many studies find that people experiencing mental illness are overrepresented among those killed by police, particularly during crisis encounters, though researchers disagree on how reliably mental illness is identified and recorded in available data. Some scholars argue that the classification of an incident as mental-illness-related depends heavily on agency practices, state policies, and reporting norms rather than consistent criteria.",
+        className: "lg:col-span-2",
+      },
+      {
+        title: "Contextual Factors and Documentation",
+        body:
+          "Others note that contextual factors such as perceived threat, whether the individual was armed, and whether they attempted to flee often shape how incidents are interpreted and documented. Various pieces of literature also examine changes over time, with mixed findings about whether fatal police shootings increased, decreased, or remained stable following the onset of the COVID-19 pandemic.",
+        className: "lg:col-span-2",
+        imageSrc:
+          "/static/images/Contextual%20Factors%20and%20Documentation_Graph.png",
+        imageAlt:
+          "Graph for contextual factors and documentation in fatal police shooting research.",
+        imagePlacement: "right",
+      },
+      {
+        title: "Racial Disparities and Reporting Limitations",
+        body:
+          "While there is broad agreement that racial disparities in fatal police shootings persist, there is less consensus on how the racial composition of victims has shifted since 2015. Scholars consistently find that fatal police shootings are not evenly distributed across racial groups, though they argue whether these disparities stem from structural inequalities, over-policing, situational dynamics, or agency-level variation. Researchers also question the reliability and completeness of existing federal reporting systems, noting that methodological limitations shape how incidents are categorized and ultimately how conclusions about accountability are drawn.",
+        className: "lg:col-span-2",
+      },
+      {
+        title: "Data Transparency and Ongoing Questions",
+        body:
+          "Overall, scholars agree on the importance of detailed, transparent data, but questions remain about how institutional context, mental health labeling, and temporal change interact within existing datasets.",
+        className: "lg:col-span-2",
+        imageSrc:
+          "/static/images/Data%20Transparency%20and%20Ongoing%20Questions_picture.png",
+        imageAlt:
+          "Visual for data transparency and ongoing questions in fatal police shooting research.",
+        imagePlacement: "left",
+      },
+    ],
   },
   {
     id: "03",
-    heading: "Significance",
-    body: `The way this dataset turns events into data has ideological effects. By focusing only on fatal shootings, it centers death by gunfire as the key measure of police violence. Other forms of harm become less visible. The structure also relies on official or media-reported categories such as threat type or armed status. These categories may reflect law enforcement narratives or early reports rather than full investigations. The ontology of the dataset treats each incident as a discrete event tied to an individual victim. It does not capture long histories of community police relations or systemic conditions. The dataset is powerful, but it is shaped by choices about what counts as data and what does not.`,
+    slug: "significance",
+    title: "Significance",
+    items: [
+      {
+        title: "What the Dataset Makes Visible",
+        body:
+          "The way this dataset turns events into data has ideological effects. By focusing only on fatal shootings, it centers death by gunfire as the key measure of police violence. Other forms of harm become less visible.",
+      },
+      {
+        title: "Categories and Interpretation",
+        body:
+          "The structure also relies on official or media-reported categories such as threat type or armed status. These categories may reflect law enforcement narratives or early reports rather than full investigations.",
+      },
+      {
+        title: "Structural Limits of the Dataset",
+        body:
+          "The ontology of the dataset treats each incident as a discrete event tied to an individual victim. It does not capture long histories of community police relations or systemic conditions. The dataset is powerful, but it is shaped by choices about what counts as data and what does not.",
+        className: "lg:col-span-2",
+      },
+    ],
   },
-] as const;
+];
 
 export default function HomePage() {
   return (
@@ -120,34 +204,135 @@ export default function HomePage() {
 
       {LANDING_SECTIONS.map((section) => (
         <section
-          key={section.id}
-          className="grid gap-0 border-b border-black lg:grid-cols-[150px_1fr]"
+          id={section.slug}
+          key={section.slug}
+          className="scroll-mt-16 border-b border-black"
         >
-          <aside className="border-b border-black px-6 py-6 sm:px-10 lg:border-r lg:border-b-0 lg:px-6 lg:py-10">
-            <p className={pageMetaLabelClassName}>Section</p>
-            <p className="mt-3 text-3xl font-semibold leading-none">
-              {section.id}
-            </p>
-          </aside>
+          {/* STICKY TOP BAR (THE RIBBON) */}
+          <header className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
+            <div className="flex items-center gap-6">
+              <p className={cn(pageMetaLabelClassName, "mb-0")}>
+                Section {section.id}
+              </p>
+              <h2 className="text-xl font-bold uppercase tracking-tight sm:text-2xl">
+                {section.title}
+              </h2>
+            </div>
+          </header>
 
-          <div className="px-6 py-8 sm:px-10 sm:py-10">
-            <h2 className="text-3xl font-semibold leading-tight sm:text-4xl">
-              {section.heading}
-            </h2>
-            <p className="mt-6 max-w-5xl text-base leading-relaxed text-black/80">
-              {section.body}
-            </p>
+          <div className="px-6 py-8 sm:px-10 sm:py-12">
+            <div className="grid gap-6 lg:grid-cols-2">
+              {section.items.map((item, index) => (
+                <article
+                  key={item.title}
+                  className={cn(
+                    "min-h-[220px] border border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
+                    item.className
+                  )}
+                >
+                  {item.imageSrc ? (
+                    <div
+                      className={cn(
+                        "grid h-full",
+                        item.imagePlacement === "left"
+                          ? "lg:grid-cols-[0.92fr_minmax(0,1fr)]"
+                          : "lg:grid-cols-[minmax(0,1fr)_0.92fr]"
+                      )}
+                    >
+                      {item.imagePlacement === "left" ? (
+                        <>
+                          <div className="relative min-h-[250px] border-b border-black bg-[#f2f2f2] lg:min-h-[320px] lg:border-r lg:border-b-0">
+                            <Image
+                              src={item.imageSrc}
+                              alt={item.imageAlt ?? item.title}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 1023px) 100vw, 34vw"
+                            />
+                          </div>
+                          <div className="flex h-full flex-col justify-between p-5 sm:p-6">
+                            <div>
+                              <div className="flex items-start justify-between gap-4">
+                                <p className={pageMetaLabelClassName}>
+                                  Subsection
+                                </p>
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+                                  {section.id}.{String(index + 1).padStart(2, "0")}
+                                </p>
+                              </div>
+                              <h3 className="mt-4 max-w-2xl text-2xl font-semibold leading-tight sm:text-[2rem]">
+                                {item.title}
+                              </h3>
+                            </div>
+                            <p className="mt-6 max-w-3xl text-sm leading-relaxed text-black/80 sm:text-base">
+                              {item.body}
+                            </p>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex h-full flex-col justify-between p-5 sm:p-6">
+                            <div>
+                              <div className="flex items-start justify-between gap-4">
+                                <p className={pageMetaLabelClassName}>
+                                  Subsection
+                                </p>
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+                                  {section.id}.{String(index + 1).padStart(2, "0")}
+                                </p>
+                              </div>
+                              <h3 className="mt-4 max-w-2xl text-2xl font-semibold leading-tight sm:text-[2rem]">
+                                {item.title}
+                              </h3>
+                            </div>
+                            <p className="mt-6 max-w-3xl text-sm leading-relaxed text-black/80 sm:text-base">
+                              {item.body}
+                            </p>
+                          </div>
+                          <div className="relative min-h-[250px] border-t border-black bg-[#f2f2f2] lg:min-h-[320px] lg:border-l lg:border-t-0">
+                            <Image
+                              src={item.imageSrc}
+                              alt={item.imageAlt ?? item.title}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 1023px) 100vw, 34vw"
+                            />
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex h-full flex-col justify-between p-5 sm:p-6">
+                      <div>
+                        <div className="flex items-start justify-between gap-4">
+                          <p className={pageMetaLabelClassName}>Subsection</p>
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+                            {section.id}.{String(index + 1).padStart(2, "0")}
+                          </p>
+                        </div>
+                        <h3 className="mt-4 max-w-2xl text-2xl font-semibold leading-tight sm:text-[2rem]">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <p className="mt-6 max-w-3xl text-sm leading-relaxed text-black/80 sm:text-base">
+                        {item.body}
+                      </p>
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
           </div>
         </section>
       ))}
 
-      <PageSection innerClassName="py-0">
-          <p className={pageSectionEyebrowClassName}>Research Questions</p>
-          <h2 className="mt-3 max-w-5xl text-4xl font-medium leading-tight sm:text-5xl">
-            Three guiding questions structure our analysis.
-          </h2>
+      <PageSection innerClassName="py-12 sm:py-16">
+        <p className={pageSectionEyebrowClassName}>Research Questions</p>
+        <h2 className="mt-3 max-w-5xl text-4xl font-medium leading-tight sm:text-5xl">
+          Three guiding questions structure our analysis.
+        </h2>
 
-        <div className="border-y border-black mt-8">
+        <div className="mt-8 border-y border-black">
           {RESEARCH_QUESTIONS.map((question, index) => (
             <article
               key={question.id}
@@ -183,7 +368,7 @@ export default function HomePage() {
         </div>
       </PageSection>
 
-      <section className="px-6 py-10 sm:px-10 sm:py-12">
+      <section className="px-6 py-10 sm:px-10 sm:py-16">
         <p className={pageSectionEyebrowClassName}>About the Team</p>
         <h2 className="mt-3 max-w-4xl text-4xl font-medium leading-tight sm:text-5xl">
           Built collaboratively across data, writing, design, and web
