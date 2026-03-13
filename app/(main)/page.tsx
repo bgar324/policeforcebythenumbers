@@ -55,7 +55,7 @@ const RESEARCH_QUESTIONS: ResearchQuestion[] = [
   {
     id: "Question 3",
     question:
-      "Where is mental-illness labeling concentrated, and in what incident contexts?",
+      "How does the likelihood that a shooting is marked as mental-illness-related differ across agency types and states, and what incident context are most associated with the mental illness label?",
     takeaway:
       "Labeling varies sharply by state and context, clustering in non-flee incidents and specific threat/weapon profiles, suggesting strong reporting and policy effects.",
     route: "/data-analysis#question-3",
