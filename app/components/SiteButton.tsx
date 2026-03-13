@@ -15,7 +15,7 @@ const siteButtonVariants = cva(
         mobileMenuToggle:
           "h-full min-w-[82px] gap-2 border-l border-black bg-white px-3 font-[family:var(--font-nav)] transition-colors duration-150 min-[380px]:min-w-[92px] min-[380px]:gap-3 min-[380px]:px-4 md:hidden",
         mobileThemeToggle:
-          "block w-full bg-white px-6 py-3 text-center text-[15px] leading-none text-black transition-colors duration-150 font-[family:var(--font-nav)] hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black",
+          "block w-full bg-white px-6 py-3 text-center text-[15px] leading-none text-black transition-colors duration-150 font-[family:var(--font-nav)] hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-[rgb(var(--site-ink-rgb))] dark:hover:!text-[rgb(var(--site-surface-rgb))] dark:focus-visible:!bg-[rgb(var(--site-ink-rgb))] dark:focus-visible:!text-[rgb(var(--site-surface-rgb))]",
         utilityIcon: "group/site-button relative isolate overflow-visible",
         overlay: "fixed inset-0 z-40",
       },
@@ -28,13 +28,14 @@ const siteButtonVariants = cva(
       {
         variant: "navControl",
         active: true,
-        className: "bg-black !text-white dark:!bg-white dark:!text-black",
+        className:
+          "bg-black !text-white dark:!bg-[rgb(var(--site-ink-rgb))] dark:!text-[rgb(var(--site-surface-rgb))]",
       },
       {
         variant: "navControl",
         active: false,
         className:
-          "hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black",
+          "hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-[rgb(var(--site-ink-rgb))] dark:hover:!text-[rgb(var(--site-surface-rgb))] dark:focus-visible:!bg-[rgb(var(--site-ink-rgb))] dark:focus-visible:!text-[rgb(var(--site-surface-rgb))]",
       },
       {
         variant: "mobileMenuToggle",

@@ -59,6 +59,10 @@ const MOBILE_SECTIONS: Array<{ heading: string; items: NavItem[] }> = [
 
 const DESKTOP_ITEM =
   "inline-flex h-full items-center px-4 text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors duration-150";
+const ACTIVE_NAV_STATE =
+  "bg-black !text-white dark:!bg-[rgb(var(--site-ink-rgb))] dark:!text-[rgb(var(--site-surface-rgb))]";
+const INACTIVE_NAV_STATE =
+  "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-[rgb(var(--site-ink-rgb))] dark:hover:!text-[rgb(var(--site-surface-rgb))] dark:focus-visible:!bg-[rgb(var(--site-ink-rgb))] dark:focus-visible:!text-[rgb(var(--site-surface-rgb))]";
 
 export default function SiteNavbar() {
   const pathname = usePathname();
@@ -121,9 +125,7 @@ export default function SiteNavbar() {
             onClick={closeMenus}
             aria-label="Police Force by the Numbers Home"
             className={`group relative flex h-full min-w-0 flex-1 flex-col items-start justify-center border-r border-black px-3 sm:px-4 md:w-min md:flex-none ${
-              isActive("/")
-                ? "bg-black !text-white dark:!bg-white dark:!text-black"
-                : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
+              isActive("/") ? ACTIVE_NAV_STATE : INACTIVE_NAV_STATE
             }`}
           >
             <div className="flex flex-col leading-none">
@@ -143,9 +145,7 @@ export default function SiteNavbar() {
                 href={link.href}
                 onClick={closeMenus}
                 className={`${DESKTOP_ITEM} border-l border-black ${
-                  isActive(link.href)
-                    ? "bg-black !text-white dark:!bg-white dark:!text-black"
-                    : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
+                  isActive(link.href) ? ACTIVE_NAV_STATE : INACTIVE_NAV_STATE
                 }`}
               >
                 {link.label}
@@ -156,12 +156,10 @@ export default function SiteNavbar() {
               <div
                 key={section.key}
                 className="relative h-full border-l border-black"
-                // Keep Hover functionality for mouse users
                 onMouseEnter={() => setActiveDropdown(section.key)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <SiteButton
-                  // Implement Click functionality for touch screens/manual toggle
                   onClick={() => handleDropdownToggle(section.key)}
                   variant="navControl"
                   active={activeDropdown === section.key}
@@ -193,8 +191,8 @@ export default function SiteNavbar() {
                         i === 0 ? "" : "border-t border-black"
                       } ${
                         isActive(item.href)
-                          ? "bg-black !text-white dark:!bg-white dark:!text-black"
-                          : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
+                          ? ACTIVE_NAV_STATE
+                          : INACTIVE_NAV_STATE
                       }`}
                     >
                       {item.label}
@@ -275,8 +273,8 @@ export default function SiteNavbar() {
                         onClick={closeMenus}
                         className={`block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.14em] ${
                           isActive(item.href)
-                            ? "bg-black !text-white dark:!bg-white dark:!text-black"
-                            : "text-black hover:bg-black hover:!text-white focus-visible:bg-black focus-visible:!text-white dark:hover:!bg-white dark:hover:!text-black dark:focus-visible:!bg-white dark:focus-visible:!text-black"
+                            ? ACTIVE_NAV_STATE
+                            : INACTIVE_NAV_STATE
                         }`}
                       >
                         {item.label}
