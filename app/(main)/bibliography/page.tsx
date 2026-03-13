@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
   PageHeader,
   PageShell,
@@ -11,6 +12,7 @@ import { SiteButton } from "@/app/components/SiteButton";
 import { useEffect, useRef, useState } from "react";
 
 type BibliographyEntry = {
+  id?: string;
   citation: string;
   summary: string;
   fullAnnotation: string;
@@ -37,6 +39,7 @@ const BIBLIOGRAPHY_ENTRIES: BibliographyEntry[] = [
     sourceUrl: "https://doi.org/10.1016/j.jcrimjus.2024.102292",
   },
   {
+    id: "hemenway-2019",
     citation:
       "Hemenway, David, et al. “Variation in Rates of Fatal Police Shootings across US States: The Role of Firearm Availability.” Journal of Urban Health : Bulletin of the New York Academy of Medicine, vol. 96, no. 1, Feb. 2019, pp. 63–73. PubMed Central, https://doi.org/10.1007/s11524-018-0313-z.",
     summary:
@@ -46,6 +49,7 @@ const BIBLIOGRAPHY_ENTRIES: BibliographyEntry[] = [
     sourceUrl: "https://doi.org/10.1007/s11524-018-0313-z",
   },
   {
+    id: "henderson-2024",
     citation:
       "Henderson, Howard, et al. “Police Shootings, Violent Crime, Race and Socio‐economic Factors in Municipalities in the United States of America.” Criminal Behaviour and Mental Health, vol. 34, no. 3, June 2024, pp. 296–310. DOI.org (Crossref), https://doi.org/10.1002/cbm.2333.",
     summary:
@@ -73,6 +77,7 @@ const BIBLIOGRAPHY_ENTRIES: BibliographyEntry[] = [
     sourceUrl: "https://doi.org/10.1016/j.jpubeco.2025.105424",
   },
   {
+    id: "lett-2021",
     citation:
       "Lett, Elle, et al. “Racial Inequity in Fatal US Police Shootings, 2015–2020.” Journal of Epidemiology and Community Health (1979-), vol. 75, no. 4, 2021, pp. 394–97. JSTOR, https://www.jstor.org/stable/27350890. Accessed 6 Feb. 2026.",
     summary:
@@ -118,6 +123,7 @@ const BIBLIOGRAPHY_ENTRIES: BibliographyEntry[] = [
     sourceUrl: "https://doi.org/10.1080/15614263.2017.1291592",
   },
   {
+    id: "scott-2017",
     citation:
       "Scott, Kendra, et al. “A Social Scientific Approach toward Understanding Racial Disparities in Police Shooting: Data from the Department of Justice (1980-2000).” Journal of Social Issues, vol. 73, no. 4, Dec. 2017, pp. 701–722, https://doi.org/10.1111/josi.12243.",
     summary:
@@ -145,6 +151,7 @@ const BIBLIOGRAPHY_ENTRIES: BibliographyEntry[] = [
     sourceUrl: "https://doi.org/10.1016/j.annepidem.2020.08.014",
   },
   {
+    id: "walsh-2022",
     citation:
       "Walsh, Anthony. “The Rhetoric and Reality of Police Shootings and the Black Lives Matter Movement.” Mankind Quarterly, vol. 63, no. 2, 2022, pp. 323–50. DOI.org (Crossref), https://doi.org/10.46469/mq.2022.63.2.11.",
     summary:
@@ -172,6 +179,7 @@ const BIBLIOGRAPHY_ENTRIES: BibliographyEntry[] = [
     sourceUrl: "https://doi.org/10.1038/d41586-025-01271-0",
   },
   {
+    id: "zare-2025",
     citation:
       "Zare, Hossein, et al. “Analyzing Fatal Police Shootings: The Roles of Social Vulnerability, Race, and Place in the U.S.” American Journal of Preventive Medicine, vol. 68, no. 1, Jan. 2025, pp. 126–36. ScienceDirect, https://doi.org/10.1016/j.amepre.2024.09.002.",
     summary:
@@ -182,6 +190,7 @@ disparities. They link fatal police shooting data (2015–2022) to ZIP-code–le
     sourceUrl: "https://doi.org/10.1016/j.amepre.2024.09.002",
   },
   {
+    id: "zare-2022",
     citation:
       "Zare, Hossein, et al. “How Place and Race Drive the Numbers of Fatal Police Shootings in the US: 2015–2020.” Preventive Medicine [SAN DIEGO], vol. 161, no. 107132, 2022, https://doi.org/10.1016/j.ypmed.2022.107132.",
     summary:
@@ -196,6 +205,9 @@ export default function BibliographyPage() {
   const [activeAnnotation, setActiveAnnotation] = useState<
     BibliographyEntry | null
   >(
+    null,
+  );
+  const [highlightedEntryId, setHighlightedEntryId] = useState<string | null>(
     null,
   );
   const sourceDialogRef = useRef<HTMLDialogElement | null>(null);
@@ -247,6 +259,20 @@ export default function BibliographyPage() {
     };
   }, [activeAnnotation]);
 
+  useEffect(() => {
+    const updateHighlightedEntry = () => {
+      const hash = window.location.hash.replace(/^#/, "");
+      setHighlightedEntryId(hash || null);
+    };
+
+    updateHighlightedEntry();
+    window.addEventListener("hashchange", updateHighlightedEntry);
+
+    return () => {
+      window.removeEventListener("hashchange", updateHighlightedEntry);
+    };
+  }, []);
+
   return (
     <>
       <PageShell>
@@ -260,23 +286,36 @@ export default function BibliographyPage() {
 
         <section>
           {BIBLIOGRAPHY_ENTRIES.map((entry, index) => {
+            const entryId = entry.id ?? `source-${String(index + 1).padStart(2, "0")}`;
+            const isHighlighted = highlightedEntryId === entryId;
+
             return (
               <article
                 key={entry.citation}
-                className={`grid gap-0 lg:grid-cols-[120px_1fr] ${
-                  index < BIBLIOGRAPHY_ENTRIES.length - 1
-                    ? "border-b border-black"
-                    : ""
-                }`}
+                id={entryId}
+                className={cn(
+                  "scroll-mt-28 grid gap-0 transition-colors duration-500 lg:grid-cols-[120px_1fr]",
+                  index < BIBLIOGRAPHY_ENTRIES.length - 1 && "border-b border-black",
+                )}
               >
-                <aside className="border-b border-black px-6 py-6 sm:px-10 lg:border-r lg:border-b-0 lg:px-6 lg:py-8">
+                <aside
+                  className={cn(
+                    "border-b border-black px-6 py-6 transition-colors duration-500 sm:px-10 lg:border-r lg:border-b-0 lg:px-6 lg:py-8",
+                    isHighlighted && "bg-[#fdf0d5]",
+                  )}
+                >
                   <p className={pageMetaLabelClassName}>Source</p>
                   <p className="mt-2 text-3xl font-semibold leading-none">
                     {String(index + 1).padStart(2, "0")}
                   </p>
                 </aside>
 
-                <div className="px-6 py-6 sm:px-10 sm:py-8">
+                <div
+                  className={cn(
+                    "px-6 py-6 transition-colors duration-500 sm:px-10 sm:py-8",
+                    isHighlighted && "bg-[#fdf0d5]/45",
+                  )}
+                >
                   <p className="max-w-5xl text-sm leading-relaxed text-black/90 sm:text-base">
                     {entry.citation}
                   </p>

@@ -1,6 +1,9 @@
 "use client";
 
-import { SHOOTINGS_VISUALIZATIONS } from "@/app/components/analysis-visualization-data";
+import {
+  SHOOTINGS_VISUALIZATIONS,
+  type RichTextContent,
+} from "@/app/components/analysis-visualization-data";
 import {
   useEffect,
   useMemo,
@@ -31,6 +34,35 @@ type ShootingsVizProps = {
   ids?: string[];
   showNarratives?: boolean;
 };
+
+function RichTextNarrative({ content }: { content: RichTextContent }) {
+  return (
+    <>
+      {content.map((paragraph, paragraphIndex) => (
+        <p
+          key={paragraphIndex}
+          className={paragraphIndex > 0 ? "mt-4 text-sm leading-relaxed text-black/80" : "mt-2 text-sm leading-relaxed text-black/80"}
+        >
+          {paragraph.map((segment, segmentIndex) =>
+            segment.type === "citation" ? (
+              <a
+                key={`${paragraphIndex}-${segmentIndex}`}
+                href={`/bibliography#${segment.bibliographyId}`}
+                className="font-semibold underline decoration-black/35 underline-offset-2 transition-colors hover:text-black hover:decoration-black"
+              >
+                {segment.label}
+              </a>
+            ) : (
+              <span key={`${paragraphIndex}-${segmentIndex}`}>
+                {segment.text}
+              </span>
+            ),
+          )}
+        </p>
+      ))}
+    </>
+  );
+}
 
 function ChartBlock({
   figure,
@@ -242,18 +274,14 @@ export default function ShootingsViz({
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
                   Chart type &amp; what it shows:
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-black/80">
-                  {chart.chartTypeAndWhatItShows}
-                </p>
+                <RichTextNarrative content={chart.chartTypeAndWhatItShows} />
               </div>
 
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
                   What it means in context:
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-black/80">
-                  {chart.whatItMeansInContext}
-                </p>
+                <RichTextNarrative content={chart.whatItMeansInContext} />
               </div>
             </div>
           ) : null}

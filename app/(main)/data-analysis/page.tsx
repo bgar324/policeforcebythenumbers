@@ -1,4 +1,5 @@
 import {
+  type RichTextContent,
   SHOOTINGS_VISUALIZATIONS,
   TABLEAU_VISUALIZATIONS,
   type ShootingsVisualization,
@@ -23,7 +24,6 @@ type VisualizationRef = {
 type AnalysisSection = {
   id: string;
   slug: string;
-  title: string;
   question: string;
   summary: string;
   visualizations: VisualizationRef[];
@@ -32,8 +32,8 @@ type AnalysisSection = {
 type VisualizationMetadata = {
   id: string;
   visualizationHeading: string;
-  chartTypeAndWhatItShows: string;
-  whatItMeansInContext: string;
+  chartTypeAndWhatItShows: RichTextContent;
+  whatItMeansInContext: RichTextContent;
 };
 
 const TABLEAU_VISUALIZATION_MAP = Object.fromEntries(
@@ -54,7 +54,6 @@ const ANALYSIS_SECTIONS: AnalysisSection[] = [
   {
     id: "01",
     slug: "question-1",
-    title: "Post-Pandemic Change",
     question:
       "How have fatal police shootings changed after the pandemic? Have they increased? Decreased?",
     summary:
@@ -67,7 +66,6 @@ const ANALYSIS_SECTIONS: AnalysisSection[] = [
   {
     id: "02",
     slug: "question-2",
-    title: "Racial Distribution Over Time",
     question:
       "How has the racial distribution of people killed in fatal police shootings in the United States changed from 2015 to the present?",
     summary:
@@ -80,7 +78,6 @@ const ANALYSIS_SECTIONS: AnalysisSection[] = [
   {
     id: "03",
     slug: "question-3",
-    title: "Mental-Illness Labeling Patterns",
     question:
       "How does the likelihood that a shooting is marked as mental-illness-related differ across agency types and states, and what incident context (threat_type, armed_with, flee_status) is most associated with the mental illness label?",
     summary:
@@ -122,7 +119,7 @@ function AnalysisNarrativeCard({
   body,
 }: {
   title: string;
-  body: string;
+  body: RichTextContent;
 }) {
   return (
     <article className="min-h-[220px] border border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
@@ -131,12 +128,48 @@ function AnalysisNarrativeCard({
           <h4 className="mt-2 max-w-2xl text-2xl font-semibold leading-tight sm:text-[2rem]">
             {title}
           </h4>
-          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-black/80 sm:text-base">
-            {body}
-          </p>
+          <AnalysisRichText
+            content={body}
+            paragraphClassName="mt-3 max-w-3xl text-sm leading-relaxed text-black/80 sm:text-base"
+          />
         </div>
       </div>
     </article>
+  );
+}
+
+function AnalysisRichText({
+  content,
+  paragraphClassName,
+}: {
+  content: RichTextContent;
+  paragraphClassName: string;
+}) {
+  return (
+    <>
+      {content.map((paragraph, paragraphIndex) => (
+        <p
+          key={paragraphIndex}
+          className={cn(paragraphClassName, paragraphIndex > 0 && "mt-4")}
+        >
+          {paragraph.map((segment, segmentIndex) =>
+            segment.type === "citation" ? (
+              <a
+                key={`${paragraphIndex}-${segmentIndex}`}
+                href={`/bibliography#${segment.bibliographyId}`}
+                className="font-semibold underline decoration-black/35 underline-offset-2 transition-colors hover:text-black hover:decoration-black"
+              >
+                {segment.label}
+              </a>
+            ) : (
+              <span key={`${paragraphIndex}-${segmentIndex}`}>
+                {segment.text}
+              </span>
+            ),
+          )}
+        </p>
+      ))}
+    </>
   );
 }
 

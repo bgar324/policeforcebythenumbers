@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TABLEAU_VISUALIZATIONS } from "@/app/components/analysis-visualization-data";
+import {
+  TABLEAU_VISUALIZATIONS,
+  type RichTextContent,
+} from "@/app/components/analysis-visualization-data";
 
 const TABLEAU_EMBED_QUERY =
   "?:showVizHome=no&:embed=y&:tabs=no&:toolbar=no&:showShareOptions=false&:display_count=n&:language=en-US&publish=yes";
@@ -11,6 +14,35 @@ type TableauEmbedsProps = {
   includeDescriptionPlaceholders?: boolean;
   showNarratives?: boolean;
 };
+
+function RichTextNarrative({ content }: { content: RichTextContent }) {
+  return (
+    <>
+      {content.map((paragraph, paragraphIndex) => (
+        <p
+          key={paragraphIndex}
+          className={paragraphIndex > 0 ? "mt-4 text-sm leading-relaxed text-black/80" : "mt-2 text-sm leading-relaxed text-black/80"}
+        >
+          {paragraph.map((segment, segmentIndex) =>
+            segment.type === "citation" ? (
+              <a
+                key={`${paragraphIndex}-${segmentIndex}`}
+                href={`/bibliography#${segment.bibliographyId}`}
+                className="font-semibold underline decoration-black/35 underline-offset-2 transition-colors hover:text-black hover:decoration-black"
+              >
+                {segment.label}
+              </a>
+            ) : (
+              <span key={`${paragraphIndex}-${segmentIndex}`}>
+                {segment.text}
+              </span>
+            ),
+          )}
+        </p>
+      ))}
+    </>
+  );
+}
 
 export default function TableauEmbeds({
   ids,
@@ -68,18 +100,14 @@ export default function TableauEmbeds({
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
                   Chart type &amp; what it shows:
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-black/80">
-                  {view.chartTypeAndWhatItShows}
-                </p>
+                <RichTextNarrative content={view.chartTypeAndWhatItShows} />
               </div>
 
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70">
                   What it means in context:
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-black/80">
-                  {view.whatItMeansInContext}
-                </p>
+                <RichTextNarrative content={view.whatItMeansInContext} />
               </div>
             </div>
           ) : includeDescriptionPlaceholders ? null : null}
