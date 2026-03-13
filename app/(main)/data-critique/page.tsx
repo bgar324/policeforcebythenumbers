@@ -136,7 +136,7 @@ export default function DataCritiquePage() {
             index < CRITIQUE_SECTIONS.length - 1 && "border-b border-black",
           )}
         >
-          <header className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
+          <header className="sticky top-[60px] z-20 flex w-full items-center justify-between border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
             <div className="flex items-center gap-6">
               <p className={cn(pageMetaLabelClassName, "mb-0")}>
                 Section {section.id}

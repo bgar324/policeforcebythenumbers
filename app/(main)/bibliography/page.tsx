@@ -285,7 +285,7 @@ export default function BibliographyPage() {
         />
 
         <section id="annotated-sources" className="scroll-mt-16">
-          <header className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
+          <header className="sticky top-[60px] z-20 flex w-full items-center justify-between border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
             <div className="flex items-center gap-6">
               <p className={cn(pageMetaLabelClassName, "mb-0")}>Section 01</p>
               <h2 className="text-xl font-bold uppercase tracking-tight sm:text-2xl">
@@ -394,7 +394,7 @@ export default function BibliographyPage() {
             </div>
 
             <div className="max-h-[calc(100dvh-10rem)] overflow-y-auto px-5 py-5 sm:px-6 sm:py-6">
-              <div className="border border-black bg-[#fcfcfc] p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:p-6">
+              <div className="border border-black bg-[linear-gradient(180deg,#ffffff_0%,#f4f4f4_100%)] p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:p-6">
                 <p className="max-w-5xl whitespace-pre-line text-sm leading-relaxed text-black/85 sm:text-base">
                   {activeAnnotation.fullAnnotation}
                 </p>

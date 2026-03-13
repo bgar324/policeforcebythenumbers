@@ -27,12 +27,40 @@ const OVERVIEW_SECTIONS: OverviewSection[] = [
     id: "01",
     slug: "sources",
     title: "Sources",
+    gridClassName: "lg:grid-cols-3",
     items: [
       {
-        title: "Source Documentation in Progress",
-        body: "This section is reserved for a concise account of the source base and citation workflow used across the project.",
+        title: "Use of the Washington Post Dataset",
+        body: "Our project uses the Washington Post fatal police shootings records to focus on the patterns of fatal police shootings across the United States over a period of 10 years from 2015 to 2024, put into context with the social, cultural, and political events and tendencies within the U.S. at the time via numerous related scholarly articles.",
+        className: "lg:col-span-3",
+      },
+      {
+        title: "Secondary Literature on Race and Mental Health",
+        body: "Due to an already prevalent narrative of police shootings being associated with racial and mental discrimination, we were able to narrow down our search of secondary sources using key words like “racial violence” and “mental illness” to get deeper into the history behind these topics. We found a number of sources that explored patterns of socio-economic conditions and community factors playing a role in how likely police officers were to take a more drastic approach.",
+      },
+      {
+        title: "Evidence from Prior Research",
+        body: "For example, one of the sources argues that fatal police shootings account for a sustained public health crisis marked by measurable and persistent racial inequities, particularly for Black, Hispanic, and Native American communities, especially among unarmed victims (Lett et al., 2021). Another one of the sources document that a substantial share of lethal police encounters involve individuals with signs of a mental health condition, including crisis indicators or substance use, and that these encounters disproportionately result in fatalities compared with other officer-involved shootings (Khan et al., 2024).",
         className: "lg:col-span-2",
-        placeholderLabel: "Under Construction",
+      },
+      {
+        title: "Integrating Multiple Perspectives",
+        body: "The arguments presented throughout these various sources provided us with plenty of information from different perspectives, which allowed us to form a significantly more holistic understanding of how the social determinants play a role in fatal police shootings in the United States.",
+        className: "lg:col-span-3",
+      },
+      {
+        title: "Timeline Sources and Contextual Events",
+        body: "For our timeline, we used a combination of primary and secondary sources. To analyze what contexts might have influenced the changes in law enforcement behavior we identified in the number of fatal police shootings pre and post the COVID-19 pandemic, we utilized a combination of both prominent mass shootings and fatal individual police encounters, along with the most culturally or politically significant events in our country, such as shifts in our government administration.",
+        className: "lg:col-span-2",
+      },
+      {
+        title: "Use of News Reporting for Political Context",
+        body: "To help us with the latter aspect of our analysis, we found it necessary to use secondary sources from online news outlets.",
+      },
+      {
+        title: "Addressing Dataset Limitations Through Research",
+        body: "Despite the limitations of our dataset, our extensive research for this project allowed us to fill in some of the gaps and put together a more thorough analysis of the increase in fatal police shootings post COVID-19, the way race and racial discrimination influences the use of lethal force, and how perceived mental illness alters the likelihood of an encounter with law enforcement turning fatal.",
+        className: "lg:col-span-3",
       },
     ],
   },
@@ -97,7 +125,7 @@ export default function OverviewPage() {
               "border-b border-black",
           )}
         >
-          <header className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
+          <header className="sticky top-[60px] z-20 flex w-full items-center justify-between border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
             <div className="flex items-center gap-6">
               <p className={cn(pageMetaLabelClassName, "mb-0")}>
                 Section {section.id}
@@ -130,14 +158,6 @@ export default function OverviewPage() {
                     <h3 className="mt-2 max-w-3xl text-2xl font-semibold leading-tight sm:text-[2rem]">
                       {item.title}
                     </h3>
-
-                    {item.placeholderLabel ? (
-                      <div className="mt-5 border border-black bg-[linear-gradient(180deg,#ffffff_0%,#fbfbfb_100%)] px-6 py-10 text-center">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/55">
-                          {item.placeholderLabel}
-                        </p>
-                      </div>
-                    ) : null}
 
                     {item.body ? (
                       <p className="mt-3 max-w-3xl text-sm leading-relaxed text-black/80 sm:text-base">
