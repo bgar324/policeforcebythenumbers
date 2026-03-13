@@ -59,6 +59,7 @@ const BIBLIOGRAPHY_ENTRIES: BibliographyEntry[] = [
     sourceUrl: "https://doi.org/10.1002/cbm.2333",
   },
   {
+    id: "khan-2024",
     citation:
       "Khan, Harun, et al. “Fatal Police Shootings of Victims with Mental Health Crises: A Descriptive Analysis of Data from the 2014–2015 National Violent Death Reporting System.” Journal of Urban Health : Bulletin of the New York Academy of Medicine, vol. 101, no. 2, Apr. 2024, pp. 262–71. PubMed Central, https://doi.org/10.1007/s11524-024-00833-3.",
     summary:

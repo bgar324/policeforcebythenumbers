@@ -72,19 +72,22 @@ const LANDING_SECTIONS: LandingSection[] = [
       {
         title: "Core Data Sources and Scope",
         body: "Our project combines the Washington Post fatal police shootings records with a companion agency file, a cleaned analysis-ready incident table, and a U.S. population reference series. The main shooting records track fatal police shootings in the United States and include details such as the manner of death, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location.",
-        className: "lg:col-span-2",
+        className: "lg:col-span-3",
       },
       {
         title: "Victim Information",
         body: "The incident records also include information about the person who was killed. Victim variables include name, age, gender, race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers.",
+        className: "lg:col-span-1",
       },
       {
         title: "Agency-Level Data",
         body: "The companion agency file adds department-level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.",
+        className: "lg:col-span-1",
       },
       {
         title: "Population Reference Data",
         body: "A separate U.S. population CSV provides annual national totals from 1950 to 2025. We use it as year-level context for population-share and denominator-based comparisons in the analysis.",
+        className: "lg:col-span-1",
       },
     ],
   },
@@ -96,12 +99,12 @@ const LANDING_SECTIONS: LandingSection[] = [
       {
         title: "Patterns Examined in Prior Research",
         body: "Existing findings on fatal police shootings has largely focused on patterns of race, mental health, and institutional variation. Many studies find that people experiencing mental illness are overrepresented among those killed by police, particularly during crisis encounters, though researchers disagree on how reliably mental illness is identified and recorded in available data. Some scholars argue that the classification of an incident as mental-illness-related depends heavily on agency practices, state policies, and reporting norms rather than consistent criteria.",
-        className: "lg:col-span-2",
+        className: "lg:col-span-3",
       },
       {
         title: "Contextual Factors and Documentation",
         body: "Others note that contextual factors such as perceived threat, whether the individual was armed, and whether they attempted to flee often shape how incidents are interpreted and documented. Various pieces of literature also examine changes over time, with mixed findings about whether fatal police shootings increased, decreased, or remained stable following the onset of the COVID-19 pandemic.",
-        className: "lg:col-span-2",
+        className: "lg:col-span-3",
         imageSrc:
           "/static/images/Contextual%20Factors%20and%20Documentation_Graph.png",
         imageAlt:
@@ -111,12 +114,12 @@ const LANDING_SECTIONS: LandingSection[] = [
       {
         title: "Racial Disparities and Reporting Limitations",
         body: "While there is broad agreement that racial disparities in fatal police shootings persist, there is less consensus on how the racial composition of victims has shifted since 2015. Scholars consistently find that fatal police shootings are not evenly distributed across racial groups, though they argue whether these disparities stem from structural inequalities, over-policing, situational dynamics, or agency-level variation. Researchers also question the reliability and completeness of existing federal reporting systems, noting that methodological limitations shape how incidents are categorized and ultimately how conclusions about accountability are drawn.",
-        className: "lg:col-span-2",
+        className: "lg:col-span-3",
       },
       {
         title: "Data Transparency and Ongoing Questions",
         body: "Overall, scholars agree on the importance of detailed, transparent data, but questions remain about how institutional context, mental health labeling, and temporal change interact within existing datasets.",
-        className: "lg:col-span-2",
+        className: "lg:col-span-3",
         imageSrc:
           "/static/images/Data%20Transparency%20and%20Ongoing%20Questions_picture.png",
         imageAlt:
@@ -133,15 +136,17 @@ const LANDING_SECTIONS: LandingSection[] = [
       {
         title: "What the Dataset Makes Visible",
         body: "The way this dataset turns events into data has ideological effects. By focusing only on fatal shootings, it centers death by gunfire as the key measure of police violence. Other forms of harm become less visible.",
+        className: "lg:col-span-1"
       },
       {
         title: "Categories and Interpretation",
         body: "The structure also relies on official or media-reported categories such as threat type or armed status. These categories may reflect law enforcement narratives or early reports rather than full investigations.",
+        className: "lg:col-span-1"
       },
       {
         title: "Structural Limits of the Dataset",
         body: "The ontology of the dataset treats each incident as a discrete event tied to an individual victim. It does not capture long histories of community police relations or systemic conditions. The dataset is powerful, but it is shaped by choices about what counts as data and what does not.",
-        className: "lg:col-span-2",
+        className: "lg:col-span-1",
       },
     ],
   },
@@ -176,7 +181,8 @@ export default function HomePage() {
               <div className="border border-black px-4 py-3">
                 <dt className={pageSectionEyebrowClassName}>Data Sources</dt>
                 <dd className="mt-1 text-base leading-snug text-black/85">
-                  Washington Post shooting and agency files and U.S. population totals
+                  Washington Post shooting and agency files and U.S. population
+                  totals
                 </dd>
               </div>
             </dl>
@@ -216,7 +222,7 @@ export default function HomePage() {
           </header>
 
           <div className="px-6 py-8 sm:px-10 sm:py-12">
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className="grid gap-6 lg:grid-cols-3">
               {section.items.map((item, index) => (
                 <article
                   key={item.title}
@@ -299,7 +305,7 @@ export default function HomePage() {
                       )}
                     </div>
                   ) : (
-                    <div className="flex h-full flex-col justify-between p-5 sm:p-6">
+                    <div className="flex h-full flex-col justify-start p-5 sm:p-6">
                       <div>
                         <div className="flex items-start justify-between gap-4">
                           <p className={pageMetaLabelClassName}>Subsection</p>
@@ -334,29 +340,28 @@ export default function HomePage() {
           {RESEARCH_QUESTIONS.map((question) => (
             <article
               key={question.id}
-              // Vertical stack layout with the same elevated styling
-              className="flex flex-col border border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              className="flex flex-col border border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:bg-[rgb(14,14,14)]"
             >
-              <div className="flex justify-around border-b-2 border-black bg-zinc-800 py-1.5">
+              <div className="flex justify-around border-b-2 border-black bg-[rgb(37,37,42)] py-1.5 dark:bg-[rgb(236,236,236)]">
                 {[...Array(6)].map((_, i) => (
                   <div
                     key={i}
-                    className="h-3 w-3 rounded-full bg-white border border-black shadow-inner"
+                    className="h-3 w-3 rounded-full border border-white/90 bg-transparent dark:border-black/70"
                   />
                 ))}
               </div>
-              <div className="border-b border-black bg-zinc-100 px-6 py-4 flex justify-between items-end">
+              <div className="flex items-end justify-between border-b border-black bg-[rgb(242,242,242)] px-6 py-4 dark:bg-[rgb(24,24,28)]">
                 <div>
-                  <p className="text-3xl font-bold leading-none">
+                  <p className="text-3xl font-bold leading-none text-black dark:text-white">
                     {question.id}
                   </p>
                 </div>
               </div>
               <div className="flex flex-grow flex-col px-6 py-6">
-                <h3 className="text-xl font-semibold leading-tight">
+                <h3 className="text-xl font-semibold leading-tight text-black dark:text-white">
                   {question.question}
                 </h3>
-                <p className="mt-4 text-sm leading-relaxed text-black/80">
+                <p className="mt-4 text-sm leading-relaxed text-black/80 dark:text-white/75">
                   {question.takeaway}
                 </p>
               </div>

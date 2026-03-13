@@ -48,7 +48,7 @@ export default function SiteFooter() {
 
   return (
     <footer className="w-full border-t border-black bg-white">
-      <div className="mx-auto w-full max-w-[1200px] border-x border-black">
+      <div className="mx-auto w-[1197px] max-w-[1200px] border-x border-black">
         <div className="grid grid-cols-1 md:grid-cols-12">
           <section className="border-b border-black px-6 py-6 sm:px-10 md:col-span-3 md:border-b-0 md:border-r md:px-6">
             <div className="space-y-3">
