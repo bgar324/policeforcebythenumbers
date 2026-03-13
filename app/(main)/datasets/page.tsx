@@ -24,6 +24,7 @@ const DEATH_RECORDS_CSV_URL =
 const AGENCIES_CSV_URL =
   "https://raw.githubusercontent.com/washingtonpost/data-police-shootings/master/v2/fatal-police-shootings-agencies.csv";
 const CLEANED_CSV_URL = "/static/police_shootings.csv";
+const US_POPULATION_CSV_URL = "/static/data/US%20population%201950-2025.csv";
 
 const INCIDENT_FIELDS: FieldDefinition[] = [
   {
@@ -259,6 +260,23 @@ const AGENCY_FIELDS: FieldDefinition[] = [
   },
 ];
 
+const POPULATION_FIELDS: FieldDefinition[] = [
+  {
+    name: "Year",
+    description:
+      "Calendar year used to align annual population totals with the year extracted from incident dates in the shootings data.",
+    type: "integer",
+    example: "2024",
+  },
+  {
+    name: "Population",
+    description:
+      "Total U.S. population recorded for that year, used as a reference denominator for contextual and proportional comparisons.",
+    type: "integer",
+    example: "341814420",
+  },
+];
+
 function DatasetFieldList({
   heading,
   fields,
@@ -338,11 +356,11 @@ export default function DatasetsPage() {
         eyebrow="Data"
         title="Datasets"
         titleClassName={pageTitleStrongClassName}
-        description="This project uses Washington Post fatal police shooting records that are researched daily, documented with at least two sources per incident, and reviewed by editors before release."
+        description="This project combines Washington Post fatal police shooting records with agency metadata, a cleaned analysis file, and a U.S. population reference series used for contextual comparison."
         descriptionClassName={pageDescriptionWideClassName}
       >
         <p className="mt-4 max-w-4xl text-sm leading-relaxed text-black/80">
-          Browse source files and documentation in the{" "}
+          Browse the Washington Post source files and documentation in the{" "}
           <a
             href={DATA_REPOSITORY_URL}
             target="_blank"
@@ -351,7 +369,7 @@ export default function DatasetsPage() {
           >
             repository directory
           </a>
-          .
+          . Project-specific cleaned and reference CSVs are available below.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -386,19 +404,23 @@ export default function DatasetsPage() {
           </aside>
           <div className="pt-5 lg:pl-6 lg:pt-0">
             <p className="max-w-4xl text-base leading-relaxed text-black/80">
-              The dataset consists of two CSV files: one containing death
-              records for each incident and victim, and another containing
-              agency records for law enforcement departments involved in at
-              least one shooting. Join the two files by matching{" "}
-              <code>agency_ids</code> in the death records with <code>id</code>{" "}
-              in the agencies dataset.
+              The project uses four CSV files: Washington Post death records,
+              Washington Post agency records, a cleaned incident file used for
+              analysis, and a U.S. population reference series. Join the death
+              and agency files by matching <code>agency_ids</code> in the death
+              records with <code>id</code> in the agencies dataset. For
+              population-based comparisons, extract the year from{" "}
+              <code>date</code> in the shootings data and align it with{" "}
+              <code>Year</code> in the population file.
             </p>
             <p className="mt-4 max-w-4xl text-base leading-relaxed text-black/80">
               Agency names were standardized to support consistent analysis, and
               ORI code coverage was expanded through matching work using FBI and
               Department of Justice reference data. Because agency hierarchy
               differs across states, some parent agencies include multiple
-              associated ORI codes.
+              associated ORI codes. The cleaned project file preserves the
+              incident-level structure used in our charts while simplifying
+              downstream analysis work.
             </p>
           </div>
         </div>
@@ -443,9 +465,35 @@ export default function DatasetsPage() {
         </p>
       </section>
 
+      <DatasetFieldList heading="Agency Fields" fields={AGENCY_FIELDS} />
+
+      <section className="border-b border-black px-6 py-10 sm:px-10 sm:py-12">
+        <p className={pageSectionEyebrowClassName}>File</p>
+        <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
+          U.S. Population Reference
+        </h2>
+        {/* <p className="mt-4 text-sm leading-relaxed text-black/75">
+          <code>/static/data/US population 1950-2025.csv</code>
+        </p> */}
+        <p className="mt-4 max-w-4xl text-base leading-relaxed text-black/80">
+          This supplementary CSV contains annual U.S. population totals from
+          1950 through 2025. It is not an incident file; it provides year-level
+          context for population-share and denominator-based comparisons used in
+          analysis.
+        </p>
+        <SiteButton asChild variant="action" className = "mt-8">
+          <a
+            href={US_POPULATION_CSV_URL}
+            download="us-population-1950-2025.csv"
+          >
+            Download U.S. Population CSV
+          </a>
+        </SiteButton>
+      </section>
+
       <DatasetFieldList
-        heading="Agency Fields"
-        fields={AGENCY_FIELDS}
+        heading="Population Reference Fields"
+        fields={POPULATION_FIELDS}
         withBottomBorder={false}
       />
     </PageShell>

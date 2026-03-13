@@ -70,17 +70,21 @@ const LANDING_SECTIONS: LandingSection[] = [
     title: "Introduction",
     items: [
       {
-        title: "Dataset Source and Scope",
-        body: "Our project follows a dataset containing detailed records of fatal police shootings in the United States, taken from The Washington Post. This data was drawn from federal law enforcement datasets. The data itself includes information such as the manner of death, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location.",
+        title: "Core Data Sources and Scope",
+        body: "Our project combines the Washington Post fatal police shootings records with a companion agency file, a cleaned analysis-ready incident table, and a U.S. population reference series. The main shooting records track fatal police shootings in the United States and include details such as the manner of death, whether body camera footage exists, city, county, state, latitude, longitude, and the precision of the location.",
         className: "lg:col-span-2",
       },
       {
         title: "Victim Information",
-        body: "It also includes information about the person who was killed. Victim variables include name, age, gender, race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers.",
+        body: "The incident records also include information about the person who was killed. Victim variables include name, age, gender, race, whether the incident was related to mental illness, the type of threat reported, whether the person was armed and with what, flee status, and agency identifiers.",
       },
       {
         title: "Agency-Level Data",
-        body: "The dataset also includes a separate set of agency-level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.",
+        body: "The companion agency file adds department-level data. These fields include agency ID, agency name, agency type, state, ORI codes, and the total number of shootings linked to that agency.",
+      },
+      {
+        title: "Population Reference Data",
+        body: "A separate U.S. population CSV provides annual national totals from 1950 to 2025. We use it as year-level context for population-share and denominator-based comparisons in the analysis.",
       },
     ],
   },
@@ -149,7 +153,7 @@ export default function HomePage() {
       <PageHeader
         eyebrow="DGT HUM 101 Research Project"
         title="Police Force by the Numbers"
-        description="A collaborative digital humanities project that studies fatal police shooting records through literature review, data critique, and interactive analysis of post-pandemic change, racial distribution, and mental-illness labeling."
+        description="A collaborative digital humanities project that studies fatal police shooting records, agency metadata, and U.S. population reference data through literature review, data critique, and interactive analysis of post-pandemic change, racial distribution, and mental-illness labeling."
         descriptionClassName="mt-4 max-w-4xl text-base leading-relaxed text-black/75 sm:text-lg"
         mainClassName="py-12 sm:py-16"
         asideClassName="py-10 sm:py-16"
@@ -170,9 +174,9 @@ export default function HomePage() {
                 <dd className="mt-1 text-2xl font-semibold leading-none">3</dd>
               </div>
               <div className="border border-black px-4 py-3">
-                <dt className={pageSectionEyebrowClassName}>Primary Source</dt>
+                <dt className={pageSectionEyebrowClassName}>Data Sources</dt>
                 <dd className="mt-1 text-base leading-snug text-black/85">
-                  Washington Post fatal police shootings dataset
+                  Washington Post shooting and agency files and U.S. population totals
                 </dd>
               </div>
             </dl>
@@ -186,7 +190,7 @@ export default function HomePage() {
             </TransitionLink>
           </SiteButton>
           <SiteButton asChild variant="action">
-            <TransitionLink href="/datasets">inspect dataset</TransitionLink>
+            <TransitionLink href="/datasets">inspect datasets</TransitionLink>
           </SiteButton>
           <SiteButton asChild variant="action">
             <TransitionLink href="/data-critique">read critique</TransitionLink>
