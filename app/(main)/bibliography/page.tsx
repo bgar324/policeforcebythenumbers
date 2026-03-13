@@ -284,64 +284,78 @@ export default function BibliographyPage() {
           descriptionClassName={pageDescriptionWideClassName}
         />
 
-        <section>
-          {BIBLIOGRAPHY_ENTRIES.map((entry, index) => {
-            const entryId = entry.id ?? `source-${String(index + 1).padStart(2, "0")}`;
-            const isHighlighted = highlightedEntryId === entryId;
+        <section id="annotated-sources" className="scroll-mt-16">
+          <header className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
+            <div className="flex items-center gap-6">
+              <p className={cn(pageMetaLabelClassName, "mb-0")}>Section 01</p>
+              <h2 className="text-xl font-bold uppercase tracking-tight sm:text-2xl">
+                Annotated Sources
+              </h2>
+            </div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+              {BIBLIOGRAPHY_ENTRIES.length} entries
+            </p>
+          </header>
 
-            return (
-              <article
-                key={entry.citation}
-                id={entryId}
-                className={cn(
-                  "scroll-mt-28 grid gap-0 transition-colors duration-500 lg:grid-cols-[120px_1fr]",
-                  index < BIBLIOGRAPHY_ENTRIES.length - 1 && "border-b border-black",
-                )}
-              >
-                <aside
-                  className={cn(
-                    "border-b border-black px-6 py-6 transition-colors duration-500 sm:px-10 lg:border-r lg:border-b-0 lg:px-6 lg:py-8",
-                    isHighlighted && "bg-[#fdf0d5]",
-                  )}
-                >
-                  <p className={pageMetaLabelClassName}>Source</p>
-                  <p className="mt-2 text-3xl font-semibold leading-none">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                </aside>
+          <div className="px-6 py-8 sm:px-10 sm:py-12">
+            <div className="grid gap-6">
+              {BIBLIOGRAPHY_ENTRIES.map((entry, index) => {
+                const entryId =
+                  entry.id ?? `source-${String(index + 1).padStart(2, "0")}`;
+                const isHighlighted = highlightedEntryId === entryId;
 
-                <div
-                  className={cn(
-                    "px-6 py-6 transition-colors duration-500 sm:px-10 sm:py-8",
-                    isHighlighted && "bg-[#fdf0d5]/45",
-                  )}
-                >
-                  <p className="max-w-5xl text-sm leading-relaxed text-black/90 sm:text-base">
-                    {entry.citation}
-                  </p>
+                return (
+                  <article
+                    key={entry.citation}
+                    id={entryId}
+                    className={cn(
+                      "scroll-mt-28 border border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors duration-500",
+                      isHighlighted && "bg-[#fdf0d5]/55",
+                    )}
+                  >
+                    <div className="p-5 sm:p-6">
+                      <div className="flex items-start justify-between gap-4">
+                        <p className={pageMetaLabelClassName}>Source</p>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+                          {String(index + 1).padStart(2, "0")}
+                        </p>
+                      </div>
 
-                  <p className="mt-3 max-w-5xl text-sm leading-relaxed text-black/75 sm:text-base">
-                    {entry.summary}
-                  </p>
+                      <p className="mt-2 max-w-5xl text-sm leading-relaxed text-black/90 sm:text-base">
+                        {entry.citation}
+                      </p>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <SiteButton
-                      variant="actionCompact"
-                      onClick={() => setActiveAnnotation(entry)}
-                    >
-                      read full annotation
-                    </SiteButton>
+                      <div className="mt-5 h-px w-full bg-black/15" />
 
-                    <SiteButton asChild variant="actionCompact">
-                      <a href={entry.sourceUrl} target="_blank" rel="noreferrer">
-                        open source
-                      </a>
-                    </SiteButton>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+                      <p className="mt-4 max-w-5xl text-sm leading-relaxed text-black/75 sm:text-base">
+                        {entry.summary}
+                      </p>
+
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        <SiteButton
+                          variant="actionCompact"
+                          onClick={() => setActiveAnnotation(entry)}
+                          className = "cursor-pointer"
+                        >
+                          read full annotation
+                        </SiteButton>
+
+                        <SiteButton asChild variant="actionCompact">
+                          <a
+                            href={entry.sourceUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            open source
+                          </a>
+                        </SiteButton>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
         </section>
       </PageShell>
 
@@ -354,27 +368,37 @@ export default function BibliographyPage() {
             setActiveAnnotation(null);
           }
         }}
-        className="fixed left-1/2 top-1/2 m-0 h-min max-h-[calc(100dvh-1.5rem)] w-[calc(100vw-1.5rem)] max-w-[calc(100vw-1.5rem)] -translate-x-1/2 -translate-y-1/2 border border-black bg-white p-0 backdrop:bg-white/10 backdrop:backdrop-blur-[2px] sm:max-h-[calc(100dvh-2rem)] sm:w-[calc(100vw-2rem)] sm:max-w-[calc(100vw-2rem)] lg:w-1/2 lg:max-w-none"
+        className="fixed left-1/2 top-1/2 m-0 w-[calc(100vw-1.5rem)] max-w-[1080px] -translate-x-1/2 -translate-y-1/2 border-0 bg-transparent p-0 backdrop:bg-black/12 backdrop:backdrop-blur-[2px] sm:w-[calc(100vw-2rem)]"
       >
         {activeAnnotation ? (
-          <div className="relative h-full w-full overflow-y-auto p-4 sm:p-5">
-            <SiteButton
-              variant="utilityIcon"
-              onClick={() => setActiveAnnotation(null)}
-              aria-label="Close annotation modal"
-              className="absolute right-0 top-0 m-2 sm:m-3"
-            >
-              X
-            </SiteButton>
+          <div className="border border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <div className="border-b border-black px-5 py-5 sm:px-6 sm:py-6">
+              <div className="flex items-start justify-between gap-6">
+                <div className="max-w-4xl">
+                  <p className={pageMetaLabelClassName}>Full Annotation</p>
+                  <p className="mt-3 text-sm leading-relaxed text-black/90 sm:text-base">
+                    {activeAnnotation.citation}
+                  </p>
+                </div>
+                <div className="pr-2 pt-1 sm:pr-3 sm:pt-2">
+                  <SiteButton
+                    variant="utilityIcon"
+                    onClick={() => setActiveAnnotation(null)}
+                    aria-label="Close annotation modal"
+                    className="shrink-0 [&>span:last-child]:size-11 [&>span:last-child]:text-[13px] cursor-pointer"
+                  >
+                    X
+                  </SiteButton>
+                </div>
+              </div>
+            </div>
 
-            <p className={pageMetaLabelClassName}>Full Annotation</p>
-            <p className="mt-3 pr-10 text-sm leading-relaxed text-black/90 sm:pr-8 sm:text-base">
-              {activeAnnotation.citation}
-            </p>
-            <div className="mt-4 border border-black p-4">
-              <p className="max-w-5xl whitespace-pre-line text-sm leading-relaxed text-black/85 sm:text-base">
-                {activeAnnotation.fullAnnotation}
-              </p>
+            <div className="max-h-[calc(100dvh-10rem)] overflow-y-auto px-5 py-5 sm:px-6 sm:py-6">
+              <div className="border border-black bg-[#fcfcfc] p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:p-6">
+                <p className="max-w-5xl whitespace-pre-line text-sm leading-relaxed text-black/85 sm:text-base">
+                  {activeAnnotation.fullAnnotation}
+                </p>
+              </div>
             </div>
           </div>
         ) : null}
