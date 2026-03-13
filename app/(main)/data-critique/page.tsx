@@ -170,7 +170,6 @@ export default function DataCritiquePage() {
                       <h3 className="mt-2 max-w-2xl text-2xl font-semibold leading-tight sm:text-[2rem]">
                         {item.title}
                       </h3>
-                      {/* Body text now follows immediately after the header */}
                       <p className="mt-3 max-w-3xl text-sm leading-relaxed text-black/80 sm:text-base">
                         {item.body}
                       </p>

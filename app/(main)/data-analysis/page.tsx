@@ -10,7 +10,6 @@ import {
   PageHeader,
   PageShell,
   pageDescriptionWideClassName,
-  pageEyebrowClassName,
   pageMetaLabelClassName,
   pageTitleStrongClassName,
 } from "@/app/components/page-chrome";
@@ -38,7 +37,10 @@ type VisualizationMetadata = {
 };
 
 const TABLEAU_VISUALIZATION_MAP = Object.fromEntries(
-  TABLEAU_VISUALIZATIONS.map((visualization) => [visualization.id, visualization]),
+  TABLEAU_VISUALIZATIONS.map((visualization) => [
+    visualization.id,
+    visualization,
+  ]),
 ) satisfies Record<string, TableauVisualization>;
 
 const SHOOTINGS_VISUALIZATION_MAP = Object.fromEntries(
@@ -118,30 +120,21 @@ function renderVisualizationChart(visualizationRef: VisualizationRef) {
 function AnalysisNarrativeCard({
   title,
   body,
-  badge,
 }: {
   title: string;
   body: string;
-  badge: string;
 }) {
   return (
     <article className="min-h-[220px] border border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-      <div className="flex h-full flex-col p-5 sm:p-6">
+      <div className="flex h-full flex-col justify-start p-5 sm:p-6">
         <div>
-          <div className="flex items-start justify-between gap-4">
-            <p className={pageMetaLabelClassName}>Narrative</p>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
-              {badge}
-            </p>
-          </div>
-          <h4 className="mt-4 max-w-2xl text-2xl font-semibold leading-tight sm:text-[2rem]">
+          <h4 className="mt-2 max-w-2xl text-2xl font-semibold leading-tight sm:text-[2rem]">
             {title}
           </h4>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-black/80 sm:text-base">
+            {body}
+          </p>
         </div>
-        <div className="mt-8 w-14 border-t border-black/30" />
-        <p className="mt-8 max-w-3xl text-sm leading-relaxed text-black/80 sm:text-base">
-          {body}
-        </p>
       </div>
     </article>
   );
@@ -163,62 +156,54 @@ export default function DataAnalysisPage() {
           id={section.slug}
           key={section.id}
           className={cn(
-            "scroll-mt-16",
+            "scroll-mt-32",
             index < ANALYSIS_SECTIONS.length - 1 && "border-b border-black",
           )}
         >
-          <header className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
-            <div className="flex items-center gap-6">
-              <p className={cn(pageMetaLabelClassName, "mb-0")}>
-                Section {section.id}
-              </p>
-              <h2 className="text-xl font-bold uppercase tracking-tight sm:text-2xl">
-                {section.title}
-              </h2>
-            </div>
+          <header className="sticky top-[60px] z-20 border-b border-black bg-white/90 px-6 py-4 backdrop-blur-sm sm:px-10">
+            <p className={cn(pageMetaLabelClassName, "mb-0")}>
+              Research Question {section.id}
+            </p>
+            <h2 className="mt-3 max-w-5xl text-xl font-bold leading-tight sm:text-2xl">
+              {section.question}
+            </h2>
           </header>
 
           <div className="px-6 py-8 sm:px-10 sm:py-12">
-            <p className={pageEyebrowClassName}>Research Question {section.id}</p>
-            <h2 className="mt-3 max-w-5xl text-3xl font-medium leading-tight sm:text-4xl">
-              {section.question}
-            </h2>
-            <p className="mt-5 max-w-4xl text-base leading-relaxed text-black/80">
-              {section.summary}
-            </p>
-
-            <div className="mt-10 space-y-10">
-              {section.visualizations.map((visualizationRef, visualizationIndex) => {
-                const visualization = getVisualizationMetadata(visualizationRef);
+            <div className="space-y-10">
+              {section.visualizations.map((visualizationRef) => {
+                const visualization =
+                  getVisualizationMetadata(visualizationRef);
 
                 return (
-                  <article key={`${section.id}-${visualization.id}`}>
-                    <header className="border-y border-black px-5 py-4 sm:px-6">
-                      <div className="flex items-start justify-between gap-4">
-                        <p className={pageMetaLabelClassName}>Visualization</p>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
-                          {section.id}.{String(visualizationIndex + 1).padStart(2, "0")}
-                        </p>
+                  <article
+                    key={`${section.id}-${visualization.id}`}
+                    className="group"
+                  >
+                    {/* NEW HEADER DESIGN */}
+                    <header className="flex border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+
+                      <div className="flex-1 p-5 sm:p-6">
+                        <h3 className="mt-2 max-w-full text-2xl font-black leading-tight sm:text-[2.5rem] tracking-tighter">
+                          {visualization.visualizationHeading}
+                        </h3>
                       </div>
-                      <h3 className="mt-4 max-w-4xl text-2xl font-semibold leading-tight sm:text-[2rem]">
-                        {visualization.visualizationHeading}
-                      </h3>
                     </header>
 
-                    <div className="mt-6">
-                      {renderVisualizationChart(visualizationRef)}
+                    <div className="mt-8">
+                      <div className="border-2 border-black bg-zinc-50 p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                        {renderVisualizationChart(visualizationRef)}
+                      </div>
                     </div>
 
                     <div className="mt-6 grid gap-6 lg:grid-cols-2">
                       <AnalysisNarrativeCard
                         title="Chart Type & What It Shows"
                         body={visualization.chartTypeAndWhatItShows}
-                        badge="Type"
                       />
                       <AnalysisNarrativeCard
                         title="What It Means in Context"
                         body={visualization.whatItMeansInContext}
-                        badge="Context"
                       />
                     </div>
                   </article>
