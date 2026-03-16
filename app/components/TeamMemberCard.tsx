@@ -53,16 +53,16 @@ export default function TeamMemberCard({
 
   return (
     <article className="group relative h-full">
-      <div className="pointer-events-none absolute inset-0 border border-black bg-black opacity-0 transition-all duration-300 ease-out group-hover:translate-x-2 group-hover:translate-y-2 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-0 border border-black bg-black opacity-0 transition-all duration-300 ease-out group-hover:translate-x-2 group-hover:translate-y-2 group-hover:opacity-100 group-focus-within:translate-x-2 group-focus-within:translate-y-2 group-focus-within:opacity-100" />
 
-      <div className="relative flex h-full flex-col overflow-hidden border border-black bg-[linear-gradient(180deg,#ffffff_0%,#fafafa_100%)] transition-transform duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1 sm:flex-row">
+      <div className="relative flex h-full flex-col overflow-hidden border border-black bg-[linear-gradient(180deg,#ffffff_0%,#fafafa_100%)] transition-transform duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1 group-focus-within:-translate-x-1 group-focus-within:-translate-y-1 sm:flex-row">
         <div className="relative aspect-square w-full border-b border-black bg-zinc-100 sm:w-[190px] sm:flex-none sm:border-r sm:border-b-0">
           {imageSrc ? (
             <Image
               src={imageSrc}
               alt={`${name} profile`}
               fill
-              className="object-cover grayscale-[25%] saturate-[90%] transition-[filter] duration-300 ease-out group-hover:grayscale-0 group-hover:saturate-100"
+              className="object-cover grayscale-[25%] saturate-[90%] transition-[filter] duration-300 ease-out group-hover:grayscale-0 group-hover:saturate-100 group-focus-within:grayscale-0 group-focus-within:saturate-100"
               sizes="(max-width: 640px) 100vw, 190px"
             />
           ) : (
@@ -76,7 +76,7 @@ export default function TeamMemberCard({
 
         <div className="flex h-full flex-col p-5 sm:p-6">
           <header className="border-b border-black/20 pb-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/55">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/70">
               {role}
             </p>
             <h3 className="mt-2 break-words font-[family:var(--font-masthead)] text-[1.7rem] leading-tight tracking-tight sm:text-[1.95rem]">
@@ -88,7 +88,7 @@ export default function TeamMemberCard({
                 <a
                   href={emailHref}
                   aria-label={`Email ${name}`}
-                  className="inline-flex h-10 w-10 items-center justify-center border !border-[rgb(0,0,0)] !bg-[rgb(255,255,255)] !text-[rgb(0,0,0)] duration-150 hover:!bg-black hover:!text-white transition-300 ease-in-out transtition-300"
+                  className="inline-flex h-10 w-10 items-center justify-center border !border-[rgb(0,0,0)] !bg-[rgb(255,255,255)] !text-[rgb(0,0,0)] duration-150 hover:!bg-black hover:!text-white focus-visible:!bg-black focus-visible:!text-white transition-300 ease-in-out transtition-300"
                 >
                   <EmailIcon />
                 </a>
@@ -99,8 +99,8 @@ export default function TeamMemberCard({
                   href={linkedinHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${name} LinkedIn`}
-                  className="inline-flex h-10 w-10 items-center justify-center border !border-[rgb(0,0,0)] !bg-[rgb(255,255,255)] !text-[rgb(0,0,0)] duration-150 hover:!bg-black hover:!text-white transition-300 ease-in-out"
+                  aria-label={`${name} LinkedIn profile, opens in a new tab`}
+                  className="inline-flex h-10 w-10 items-center justify-center border !border-[rgb(0,0,0)] !bg-[rgb(255,255,255)] !text-[rgb(0,0,0)] duration-150 hover:!bg-black hover:!text-white focus-visible:!bg-black focus-visible:!text-white transition-300 ease-in-out"
                 >
                   <LinkedInIcon />
                 </a>
@@ -113,7 +113,7 @@ export default function TeamMemberCard({
               <>
                 {hasBio ? (
                   <section className="space-y-2">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/55">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/70">
                       Bio
                     </p>
                     <p className="text-sm leading-relaxed text-black/80">
@@ -124,7 +124,7 @@ export default function TeamMemberCard({
 
                 {hasResearchResponsibility ? (
                   <section className="space-y-2">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/55">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/70">
                       Responsibility
                     </p>
                     <p className="text-sm leading-relaxed text-black/80">

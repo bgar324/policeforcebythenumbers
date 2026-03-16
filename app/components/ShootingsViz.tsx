@@ -64,12 +64,28 @@ function RichTextNarrative({ content }: { content: RichTextContent }) {
   );
 }
 
+function flattenRichTextContent(content: RichTextContent) {
+  return content
+    .map((paragraph) =>
+      paragraph
+        .map((segment) =>
+          segment.type === "citation" ? segment.label : segment.text,
+        )
+        .join(""),
+    )
+    .join(" ");
+}
+
 function ChartBlock({
   figure,
   style,
+  label,
+  descriptionId,
 }: {
   figure: PlotFigure;
   style: CSSProperties;
+  label: string;
+  descriptionId: string;
 }) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const plotlyRef = useRef<PlotlyInstance | null>(null);
@@ -150,7 +166,15 @@ function ChartBlock({
     };
   }, [figure.data, layout]);
 
-  return <div ref={rootRef} style={style} />;
+  return (
+    <div
+      ref={rootRef}
+      style={style}
+      role="img"
+      aria-label={label}
+      aria-describedby={descriptionId}
+    />
+  );
 }
 
 export default function ShootingsViz({
@@ -226,7 +250,7 @@ export default function ShootingsViz({
 
   if (loadError) {
     return (
-      <p className="border border-black px-4 py-3 text-sm text-black/70">
+      <p role="alert" className="border border-black px-4 py-3 text-sm text-black/70">
         {loadError}
       </p>
     );
@@ -234,7 +258,11 @@ export default function ShootingsViz({
 
   const isLoading = selectedCharts.some((chart) => !figures[chart.id]);
   if (isLoading) {
-    return <p className="text-sm text-black/70">Loading charts...</p>;
+    return (
+      <p role="status" aria-live="polite" className="text-sm text-black/70">
+        Loading charts...
+      </p>
+    );
   }
 
   const chartStyles: Record<string, CSSProperties> = isMobile
@@ -260,9 +288,23 @@ export default function ShootingsViz({
               : "space-y-4"
           }
         >
-          <div className="border border-black">
-            <ChartBlock figure={figures[chart.id]} style={chartStyles[chart.id]} />
-          </div>
+          <figure>
+            <div className="border border-black">
+              <ChartBlock
+                figure={figures[chart.id]}
+                style={chartStyles[chart.id]}
+                label={chart.title}
+                descriptionId={`plotly-chart-description-${chart.id}`}
+              />
+            </div>
+            <figcaption
+              id={`plotly-chart-description-${chart.id}`}
+              className="sr-only"
+            >
+              {chart.visualizationHeading}.{" "}
+              {flattenRichTextContent(chart.chartTypeAndWhatItShows)}
+            </figcaption>
+          </figure>
 
           {showNarratives ? (
             <div className="space-y-4 border border-black px-4 py-4 sm:px-5">

@@ -366,8 +366,10 @@ export default function DatasetsPage() {
             target="_blank"
             rel="noreferrer"
             className="border-b border-black text-black transition-colors duration-150"
+            aria-label="Open the Washington Post repository directory in a new tab"
           >
             repository directory
+            <span className="sr-only"> (opens in a new tab)</span>
           </a>
           . Project-specific cleaned and reference CSVs are available below.
         </p>

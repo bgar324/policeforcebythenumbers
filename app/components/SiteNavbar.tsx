@@ -3,7 +3,7 @@
 import { SiteButton } from "@/app/components/SiteButton";
 import TransitionLink from "@/app/components/transition/TransitionLink";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FocusEvent, type KeyboardEvent } from "react";
 
 type DropdownKey = "narrative" | "data" | "about";
 type NavItem = { label: string; href: string };
@@ -70,6 +70,7 @@ export default function SiteNavbar() {
     null,
   );
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   const closeMenus = () => {
     setActiveDropdown(null);
@@ -86,11 +87,25 @@ export default function SiteNavbar() {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    const syncTheme = () => {
+      setIsDarkTheme(document.documentElement.classList.contains("dark"));
+    };
+
+    syncTheme();
+    window.addEventListener("storage", syncTheme);
+
+    return () => {
+      window.removeEventListener("storage", syncTheme);
+    };
+  }, []);
+
   const toggleTheme = () => {
     const root = document.documentElement;
     const isDark = root.classList.contains("dark");
     const nextTheme = isDark ? "light" : "dark";
     root.classList.toggle("dark", nextTheme === "dark");
+    setIsDarkTheme(nextTheme === "dark");
 
     try {
       localStorage.setItem("pfbn-theme", nextTheme);
@@ -102,6 +117,29 @@ export default function SiteNavbar() {
     setActiveDropdown((prev) => (prev === key ? null : key));
   };
 
+  const handleDropdownBlur = (
+    event: FocusEvent<HTMLDivElement>,
+    key: DropdownKey,
+  ) => {
+    const nextFocused = event.relatedTarget;
+    if (!nextFocused || !event.currentTarget.contains(nextFocused as Node)) {
+      setActiveDropdown((prev) => (prev === key ? null : prev));
+    }
+  };
+
+  const handleDropdownKeyDown = (
+    event: KeyboardEvent<HTMLDivElement>,
+    key: DropdownKey,
+  ) => {
+    if (event.key === "Escape") {
+      setActiveDropdown((prev) => (prev === key ? null : prev));
+      const trigger = event.currentTarget.querySelector("button");
+      if (trigger instanceof HTMLButtonElement) {
+        trigger.focus();
+      }
+    }
+  };
+
   const isActive = (href: string) => pathname === href;
   const overlayActive = Boolean(activeDropdown || mobileOpen);
 
@@ -109,6 +147,7 @@ export default function SiteNavbar() {
     <>
       <SiteButton
         aria-label="Close navigation"
+        aria-hidden={!overlayActive}
         tabIndex={overlayActive ? 0 : -1}
         onClick={closeMenus}
         variant="overlay"
@@ -144,6 +183,7 @@ export default function SiteNavbar() {
                 key={link.href}
                 href={link.href}
                 onClick={closeMenus}
+                aria-current={isActive(link.href) ? "page" : undefined}
                 className={`${DESKTOP_ITEM} border-l border-black ${
                   isActive(link.href) ? ACTIVE_NAV_STATE : INACTIVE_NAV_STATE
                 }`}
@@ -158,15 +198,22 @@ export default function SiteNavbar() {
                 className="relative h-full border-l border-black"
                 onMouseEnter={() => setActiveDropdown(section.key)}
                 onMouseLeave={() => setActiveDropdown(null)}
+                onFocus={() => setActiveDropdown(section.key)}
+                onBlur={(event) => handleDropdownBlur(event, section.key)}
+                onKeyDown={(event) => handleDropdownKeyDown(event, section.key)}
               >
                 <SiteButton
                   onClick={() => handleDropdownToggle(section.key)}
                   variant="navControl"
                   active={activeDropdown === section.key}
                   className="gap-2"
+                  aria-haspopup="true"
+                  aria-expanded={activeDropdown === section.key}
+                  aria-controls={`${section.key}-navigation-group`}
                 >
                   {section.label}
                   <span
+                    aria-hidden
                     className={`text-sm transition-transform duration-200 ${
                       activeDropdown === section.key ? "rotate-45" : ""
                     }`}
@@ -176,6 +223,9 @@ export default function SiteNavbar() {
                 </SiteButton>
 
                 <div
+                  id={`${section.key}-navigation-group`}
+                  aria-label={`${section.label} navigation links`}
+                  aria-hidden={activeDropdown !== section.key}
                   className={`absolute right-0 top-full min-w-[230px] border border-black bg-white transition-all duration-200 ${
                     activeDropdown === section.key
                       ? "visible translate-y-0 opacity-100"
@@ -187,6 +237,7 @@ export default function SiteNavbar() {
                       key={item.href}
                       href={item.href}
                       onClick={closeMenus}
+                      aria-current={isActive(item.href) ? "page" : undefined}
                       className={`block px-4 py-3 text-[12px] font-semibold uppercase tracking-[0.14em] ${
                         i === 0 ? "" : "border-t border-black"
                       } ${
@@ -203,7 +254,8 @@ export default function SiteNavbar() {
             ))}
 
             <SiteButton
-              aria-label="Toggle light and dark mode"
+              aria-label={`Switch to ${isDarkTheme ? "light" : "dark"} mode`}
+              aria-pressed={isDarkTheme}
               onClick={toggleTheme}
               variant="navControl"
               className="w-[56px] border-l border-black px-0 cursor-pointer"
@@ -249,6 +301,8 @@ export default function SiteNavbar() {
         {/* Mobile Dropdown View */}
         <div
           id="mobile-site-menu"
+          aria-label="Mobile navigation"
+          aria-hidden={!mobileOpen}
           className={`overflow-hidden border-b border-black bg-white transition-[max-height,opacity] duration-300 ease-out md:hidden ${
             mobileOpen ? "max-h-[calc(100dvh-60px)] opacity-100" : "max-h-0 opacity-0"
           }`}
@@ -259,7 +313,7 @@ export default function SiteNavbar() {
                 key={section.heading}
                 className={`${index > 0 ? "border-t border-black" : ""}`}
               >
-                <p className="px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60">
+                <p className="px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-black/70">
                   {section.heading}
                 </p>
                 <ul className="border-t border-black">
@@ -271,6 +325,7 @@ export default function SiteNavbar() {
                       <TransitionLink
                         href={item.href}
                         onClick={closeMenus}
+                        aria-current={isActive(item.href) ? "page" : undefined}
                         className={`block px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.14em] ${
                           isActive(item.href)
                             ? ACTIVE_NAV_STATE
@@ -287,7 +342,8 @@ export default function SiteNavbar() {
             <section className="border-t border-black">
               <SiteButton
                 onClick={toggleTheme}
-                aria-label="Toggle light and dark mode"
+                aria-label={`Switch to ${isDarkTheme ? "light" : "dark"} mode`}
+                aria-pressed={isDarkTheme}
                 variant="mobileThemeToggle"
                 className = "cursor-pointer"
               >

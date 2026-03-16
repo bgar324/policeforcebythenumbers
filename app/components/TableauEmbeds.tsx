@@ -15,6 +15,18 @@ type TableauEmbedsProps = {
   showNarratives?: boolean;
 };
 
+function flattenRichTextContent(content: RichTextContent) {
+  return content
+    .map((paragraph) =>
+      paragraph
+        .map((segment) =>
+          segment.type === "citation" ? segment.label : segment.text,
+        )
+        .join(""),
+    )
+    .join(" ");
+}
+
 function RichTextNarrative({ content }: { content: RichTextContent }) {
   return (
     <>
@@ -79,16 +91,26 @@ export default function TableauEmbeds({
     <div className={showNarratives ? "space-y-8" : "space-y-0"}>
       {views.map((view) => (
         <article key={view.id} className={showNarratives ? "space-y-4" : ""}>
-          <div className="border border-black">
-            <iframe
-              src={`https://public.tableau.com/views/${view.path}${TABLEAU_EMBED_QUERY}&:device=${embedDevice}`}
-              title={view.title}
-              className="h-[360px] w-full min-[420px]:h-[420px] sm:h-[520px] lg:h-[620px]"
-              width="100%"
-              loading="lazy"
-              allowFullScreen
-            />
-          </div>
+          <figure>
+            <div className="border border-black">
+              <iframe
+                src={`https://public.tableau.com/views/${view.path}${TABLEAU_EMBED_QUERY}&:device=${embedDevice}`}
+                title={view.title}
+                aria-describedby={`tableau-chart-description-${view.id}`}
+                className="h-[360px] w-full min-[420px]:h-[420px] sm:h-[520px] lg:h-[620px]"
+                width="100%"
+                loading="lazy"
+                allowFullScreen
+              />
+            </div>
+            <figcaption
+              id={`tableau-chart-description-${view.id}`}
+              className="sr-only"
+            >
+              {view.visualizationHeading}.{" "}
+              {flattenRichTextContent(view.chartTypeAndWhatItShows)}
+            </figcaption>
+          </figure>
 
           {showNarratives ? (
             <div className="space-y-4 border border-black px-4 py-4 sm:px-5">

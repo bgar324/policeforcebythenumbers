@@ -14,10 +14,10 @@ export const pageEyebrowClassName =
   "text-[11px] font-semibold uppercase tracking-[0.14em] text-black/70";
 
 export const pageSectionEyebrowClassName =
-  "text-[10px] font-semibold uppercase tracking-[0.14em] text-black/60";
+  "text-[10px] font-semibold uppercase tracking-[0.14em] text-black/70";
 
 export const pageMetaLabelClassName =
-  "text-[10px] font-semibold uppercase tracking-[0.14em] text-black/55";
+  "text-[10px] font-semibold uppercase tracking-[0.14em] text-black/70";
 
 export const pageTitleClassName =
   "mt-4 max-w-4xl text-4xl font-medium leading-tight sm:text-6xl";
@@ -33,8 +33,20 @@ export const pageDescriptionWideClassName =
 
 type PageShellProps = ComponentPropsWithoutRef<"main">;
 
-export function PageShell({ className, ...props }: PageShellProps) {
-  return <main className={cn(pageShellClassName, className)} {...props} />;
+export function PageShell({
+  className,
+  id,
+  tabIndex,
+  ...props
+}: PageShellProps) {
+  return (
+    <main
+      id={id ?? "main-content"}
+      tabIndex={tabIndex ?? -1}
+      className={cn(pageShellClassName, className)}
+      {...props}
+    />
+  );
 }
 
 type PageInsetProps = ComponentPropsWithoutRef<"div">;

@@ -185,7 +185,7 @@ function SubsectionCard({
       <div className="flex h-full flex-col justify-start p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4">
           <p className={pageMetaLabelClassName}>Subsection</p>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/65">
             {sectionId}.{String(index + 1).padStart(2, "0")}
           </p>
         </div>

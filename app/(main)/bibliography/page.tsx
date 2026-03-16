@@ -212,6 +212,18 @@ export default function BibliographyPage() {
     null,
   );
   const sourceDialogRef = useRef<HTMLDialogElement | null>(null);
+  const lastFocusedElementRef = useRef<HTMLElement | null>(null);
+
+  const openAnnotation = (entry: BibliographyEntry) => {
+    if (document.activeElement instanceof HTMLElement) {
+      lastFocusedElementRef.current = document.activeElement;
+    }
+    setActiveAnnotation(entry);
+  };
+
+  const closeAnnotation = () => {
+    setActiveAnnotation(null);
+  };
 
   useEffect(() => {
     const dialog = sourceDialogRef.current;
@@ -229,6 +241,10 @@ export default function BibliographyPage() {
     if (dialog.open) {
       dialog.close();
     }
+
+    requestAnimationFrame(() => {
+      lastFocusedElementRef.current?.focus();
+    });
   }, [activeAnnotation]);
 
   useEffect(() => {
@@ -293,7 +309,7 @@ export default function BibliographyPage() {
                 Annotated Sources
               </h2>
             </div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/65">
               {BIBLIOGRAPHY_ENTRIES.length} entries
             </p>
           </header>
@@ -317,7 +333,7 @@ export default function BibliographyPage() {
                     <div className="p-5 sm:p-6">
                       <div className="flex items-start justify-between gap-4">
                         <p className={pageMetaLabelClassName}>Source</p>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/65">
                           {String(index + 1).padStart(2, "0")}
                         </p>
                       </div>
@@ -335,7 +351,8 @@ export default function BibliographyPage() {
                       <div className="mt-5 flex flex-wrap gap-2">
                         <SiteButton
                           variant="actionCompact"
-                          onClick={() => setActiveAnnotation(entry)}
+                          onClick={() => openAnnotation(entry)}
+                          aria-haspopup="dialog"
                           className = "cursor-pointer"
                         >
                           read full annotation
@@ -346,8 +363,10 @@ export default function BibliographyPage() {
                             href={entry.sourceUrl}
                             target="_blank"
                             rel="noreferrer"
+                            aria-label={`Open source for bibliography entry ${index + 1} in a new tab`}
                           >
                             open source
+                            <span className="sr-only"> (opens in a new tab)</span>
                           </a>
                         </SiteButton>
                       </div>
@@ -362,11 +381,16 @@ export default function BibliographyPage() {
 
       <dialog
         ref={sourceDialogRef}
-        aria-label="Full annotation"
-        onClose={() => setActiveAnnotation(null)}
+        aria-labelledby="annotation-modal-title"
+        aria-describedby="annotation-modal-description"
+        onClose={() => closeAnnotation()}
+        onCancel={(event) => {
+          event.preventDefault();
+          closeAnnotation();
+        }}
         onClick={(event) => {
           if (event.target === event.currentTarget) {
-            setActiveAnnotation(null);
+            closeAnnotation();
           }
         }}
         className="fixed left-1/2 top-1/2 m-0 w-[calc(100vw-1.5rem)] max-w-[1080px] -translate-x-1/2 -translate-y-1/2 border-0 bg-transparent p-0 backdrop:bg-black/12 backdrop:backdrop-blur-[2px] sm:w-[calc(100vw-2rem)]"
@@ -377,15 +401,19 @@ export default function BibliographyPage() {
               <div className="flex items-start justify-between gap-6">
                 <div className="max-w-4xl">
                   <p className={pageMetaLabelClassName}>Full Annotation</p>
-                  <p className="mt-3 text-sm leading-relaxed text-black/90 sm:text-base">
+                  <h3
+                    id="annotation-modal-title"
+                    className="mt-3 text-left text-sm leading-relaxed text-black/90 sm:text-base"
+                  >
                     {activeAnnotation.citation}
-                  </p>
+                  </h3>
                 </div>
                 <div className="pr-2 pt-1 sm:pr-3 sm:pt-2">
                   <SiteButton
                     variant="utilityIcon"
-                    onClick={() => setActiveAnnotation(null)}
+                    onClick={() => closeAnnotation()}
                     aria-label="Close annotation modal"
+                    autoFocus
                     className="shrink-0 [&>span:last-child]:size-11 [&>span:last-child]:text-[13px] cursor-pointer"
                   >
                     X
@@ -396,7 +424,10 @@ export default function BibliographyPage() {
 
             <div className="max-h-[calc(100dvh-10rem)] overflow-y-auto px-5 py-5 sm:px-6 sm:py-6">
               <div className="border border-black bg-[linear-gradient(180deg,#ffffff_0%,#f4f4f4_100%)] p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:p-6">
-                <p className="max-w-5xl whitespace-pre-line text-sm leading-relaxed text-black/85 sm:text-base">
+                <p
+                  id="annotation-modal-description"
+                  className="max-w-5xl whitespace-pre-line text-sm leading-relaxed text-black/85 sm:text-base"
+                >
                   {activeAnnotation.fullAnnotation}
                 </p>
               </div>

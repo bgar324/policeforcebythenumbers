@@ -32,6 +32,7 @@ type LandingSection = {
   slug: string;
   title: string;
   items: LandingSubsection[];
+  gridClassName?: string;
 };
 
 const RESEARCH_QUESTIONS: ResearchQuestion[] = [
@@ -95,36 +96,23 @@ const LANDING_SECTIONS: LandingSection[] = [
     id: "02",
     slug: "place-in-the-literature",
     title: "Place in the Literature",
+    gridClassName: "lg:grid-cols-2",
     items: [
       {
         title: "Patterns Examined in Prior Research",
         body: "Existing findings on fatal police shootings has largely focused on patterns of race, mental health, and institutional variation. Many studies find that people experiencing mental illness are overrepresented among those killed by police, particularly during crisis encounters, though researchers disagree on how reliably mental illness is identified and recorded in available data. Some scholars argue that the classification of an incident as mental-illness-related depends heavily on agency practices, state policies, and reporting norms rather than consistent criteria.",
-        className: "lg:col-span-3",
       },
       {
         title: "Contextual Factors and Documentation",
         body: "Others note that contextual factors such as perceived threat, whether the individual was armed, and whether they attempted to flee often shape how incidents are interpreted and documented. Various pieces of literature also examine changes over time, with mixed findings about whether fatal police shootings increased, decreased, or remained stable following the onset of the COVID-19 pandemic.",
-        className: "lg:col-span-3",
-        imageSrc:
-          "/static/images/Contextual%20Factors%20and%20Documentation_Graph.png",
-        imageAlt:
-          "Graph for contextual factors and documentation in fatal police shooting research.",
-        imagePlacement: "right",
       },
       {
         title: "Racial Disparities and Reporting Limitations",
         body: "While there is broad agreement that racial disparities in fatal police shootings persist, there is less consensus on how the racial composition of victims has shifted since 2015. Scholars consistently find that fatal police shootings are not evenly distributed across racial groups, though they argue whether these disparities stem from structural inequalities, over-policing, situational dynamics, or agency-level variation. Researchers also question the reliability and completeness of existing federal reporting systems, noting that methodological limitations shape how incidents are categorized and ultimately how conclusions about accountability are drawn.",
-        className: "lg:col-span-3",
       },
       {
         title: "Data Transparency and Ongoing Questions",
         body: "Overall, scholars agree on the importance of detailed, transparent data, but questions remain about how institutional context, mental health labeling, and temporal change interact within existing datasets.",
-        className: "lg:col-span-3",
-        imageSrc:
-          "/static/images/Data%20Transparency%20and%20Ongoing%20Questions_picture.png",
-        imageAlt:
-          "Visual for data transparency and ongoing questions in fatal police shooting research.",
-        imagePlacement: "left",
       },
     ],
   },
@@ -222,7 +210,9 @@ export default function HomePage() {
           </header>
 
           <div className="px-6 py-8 sm:px-10 sm:py-12">
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div
+              className={cn("grid gap-6 lg:grid-cols-3", section.gridClassName)}
+            >
               {section.items.map((item, index) => (
                 <article
                   key={item.title}
@@ -257,7 +247,7 @@ export default function HomePage() {
                                 <p className={pageMetaLabelClassName}>
                                   Subsection
                                 </p>
-                                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/65">
                                   {section.id}.
                                   {String(index + 1).padStart(2, "0")}
                                 </p>
@@ -279,7 +269,7 @@ export default function HomePage() {
                                 <p className={pageMetaLabelClassName}>
                                   Subsection
                                 </p>
-                                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/65">
                                   {section.id}.
                                   {String(index + 1).padStart(2, "0")}
                                 </p>
@@ -309,7 +299,7 @@ export default function HomePage() {
                       <div>
                         <div className="flex items-start justify-between gap-4">
                           <p className={pageMetaLabelClassName}>Subsection</p>
-                          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/45">
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-black/65">
                             {section.id}.{String(index + 1).padStart(2, "0")}
                           </p>
                         </div>
