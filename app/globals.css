@@ -264,7 +264,8 @@
     color: rgb(var(--site-ink-rgb) / 0.5) !important;
   }
 
-  .dark .text-white {
+  .dark .text-white,
+  .dark .\!text-white {
     color: var(--site-surface) !important;
   }
 
