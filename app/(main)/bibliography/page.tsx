@@ -9,6 +9,7 @@ import {
   pageTitleStrongClassName,
 } from "@/app/components/page-chrome";
 import { SiteButton } from "@/app/components/SiteButton";
+import ExternalLink from "@/app/components/transition/ExternalLink";
 import { useEffect, useRef, useState } from "react";
 
 type BibliographyEntry = {
@@ -359,15 +360,12 @@ export default function BibliographyPage() {
                         </SiteButton>
 
                         <SiteButton asChild variant="actionCompact">
-                          <a
+                          <ExternalLink
                             href={entry.sourceUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            aria-label={`Open source for bibliography entry ${index + 1} in a new tab`}
+                            aria-label={`Open source for bibliography entry ${index + 1}`}
                           >
                             open source
-                            <span className="sr-only"> (opens in a new tab)</span>
-                          </a>
+                          </ExternalLink>
                         </SiteButton>
                       </div>
                     </div>

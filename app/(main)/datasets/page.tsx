@@ -7,6 +7,7 @@ import {
   pageTitleStrongClassName,
 } from "@/app/components/page-chrome";
 import { SiteButton } from "@/app/components/SiteButton";
+import ExternalLink from "@/app/components/transition/ExternalLink";
 
 type FieldDefinition = {
   name: string;
@@ -361,35 +362,26 @@ export default function DatasetsPage() {
       >
         <p className="mt-4 max-w-4xl text-sm leading-relaxed text-black/80">
           Browse the Washington Post source files and documentation in the{" "}
-          <a
+          <ExternalLink
             href={DATA_REPOSITORY_URL}
-            target="_blank"
-            rel="noreferrer"
             className="border-b border-black text-black transition-colors duration-150"
-            aria-label="Open the Washington Post repository directory in a new tab"
+            aria-label="Open the Washington Post repository directory"
           >
             repository directory
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
+          </ExternalLink>
           . Project-specific cleaned and reference CSVs are available below.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
           <SiteButton asChild variant="action">
-            <a
-              href={DEATH_RECORDS_CSV_URL}
-              download="fatal-police-shootings-data.csv"
-            >
+            <ExternalLink href={DEATH_RECORDS_CSV_URL}>
               Preview Death Records CSV
-            </a>
+            </ExternalLink>
           </SiteButton>
           <SiteButton asChild variant="action">
-            <a
-              href={AGENCIES_CSV_URL}
-              download="fatal-police-shootings-agencies.csv"
-            >
+            <ExternalLink href={AGENCIES_CSV_URL}>
               Preview Agencies CSV
-            </a>
+            </ExternalLink>
           </SiteButton>
           <SiteButton asChild variant="action">
             <a href={CLEANED_CSV_URL} download="police_shootings.csv">

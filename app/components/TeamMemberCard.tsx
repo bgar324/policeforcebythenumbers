@@ -1,4 +1,5 @@
 import Image from "next/image";
+import ExternalLink from "@/app/components/transition/ExternalLink";
 
 type TeamMemberCardProps = {
   name: string;
@@ -95,15 +96,13 @@ export default function TeamMemberCard({
               ) : null}
 
               {linkedinHref ? (
-                <a
+                <ExternalLink
                   href={linkedinHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${name} LinkedIn profile, opens in a new tab`}
+                  aria-label={`${name} LinkedIn profile`}
                   className="inline-flex h-10 w-10 items-center justify-center border !border-[rgb(0,0,0)] !bg-[rgb(255,255,255)] !text-[rgb(0,0,0)] duration-150 hover:!bg-black hover:!text-white focus-visible:!bg-black focus-visible:!text-white transition-300 ease-in-out"
                 >
                   <LinkedInIcon />
-                </a>
+                </ExternalLink>
               ) : null}
             </div>
           </header>
